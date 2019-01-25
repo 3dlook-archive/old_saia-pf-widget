@@ -52,7 +52,8 @@ module.exports = {
     ignored: /node_modules/,
   },
   entry: {
-    'saia-pf-widget': path.resolve(`${__dirname}/src/js/index.js`),
+    'saia-pf-button': path.resolve(`${__dirname}/src/js/button.js`),
+    'saia-pf-widget': path.resolve(`${__dirname}/src/js/widget.js`),
   },
   output: {
     path: `${__dirname}/dist`,
@@ -123,6 +124,13 @@ module.exports = {
       {
         from: './src/demo.html',
         to: './index.html',
+        flatten: true,
+      },
+    ], {}),
+    new CopyWebpackPlugin([
+      {
+        from: './src/views/widget.html',
+        to: './',
         flatten: true,
       },
     ], {}),
