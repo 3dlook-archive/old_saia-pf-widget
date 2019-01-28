@@ -4,7 +4,8 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const cssnano = require('cssnano');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const { NODE_ENV } = process.env;
 const mode = (NODE_ENV && NODE_ENV.trim() === 'production') ? 'production' : 'development';
@@ -120,20 +121,19 @@ module.exports = {
     new webpack.DefinePlugin({
       API_HOST: JSON.stringify(config.API_HOST),
     }),
-    new CopyWebpackPlugin([
-      {
-        from: './src/demo.html',
-        to: './index.html',
-        flatten: true,
+    new HtmlWebpackPlugin({
+      filename: 'modal.html',
+      template: path.resolve('src/views/widget.html'),
+      inject: true,
+      inlineSource: 'widget.(js|css)$',
+      excludeChunks: ['saia-pf-button'],
+      minify: {
+        removeComments: mode === 'production',
+        collapseWhitespace: mode === 'production',
+        removeAttributeQuotes: mode === 'production',
       },
-    ], {}),
-    new CopyWebpackPlugin([
-      {
-        from: './src/views/widget.html',
-        to: './',
-        flatten: true,
-      },
-    ], {}),
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
   ],
   devtool: (mode === 'production') ? false : 'source-map',
   devServer: {
