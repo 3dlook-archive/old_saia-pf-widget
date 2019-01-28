@@ -54,7 +54,7 @@ module.exports = {
   },
   entry: {
     'saia-pf-button': path.resolve(`${__dirname}/src/js/button.js`),
-    'saia-pf-widget': path.resolve(`${__dirname}/src/js/widget.js`),
+    'saia-pf-widget': path.resolve(`${__dirname}/src/js/widget.jsx`),
   },
   output: {
     path: `${__dirname}/dist`,
@@ -74,6 +74,30 @@ module.exports = {
                   targets: {
                     browsers: ['last 2 versions', 'safari >= 7'],
                   },
+                }],
+              ],
+            },
+          },
+        ],
+      },
+
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  targets: {
+                    browsers: ['last 2 versions', 'safari >= 7'],
+                  },
+                }],
+              ],
+              plugins: [
+                ['@babel/plugin-transform-react-jsx', {
+                  pragma: 'h',
                 }],
               ],
             },
@@ -114,6 +138,14 @@ module.exports = {
     modules: [
       'node_modules',
     ],
+    alias: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat',
+      // Not necessary unless you consume a module using `createClass`
+      'create-react-class': 'preact-compat/lib/create-react-class',
+      // Not necessary unless you consume a module requiring `react-dom-factories`
+      'react-dom-factories': 'preact-compat/lib/react-dom-factories',
+    },
   },
   optimization: {
     minimizer: [
