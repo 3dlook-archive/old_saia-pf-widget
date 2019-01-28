@@ -13,12 +13,11 @@
     font-size: rem(10px);
     font-weight: 300;
     margin-top: 20px;
-    letter-spacing: 1px;
+    letter-spacing: 1.6px;
   }
 
   &__text {
-    font-size: rem(11px);
-    font-weight: 300;
     margin-bottom: 67px;
+    line-height: rem(21px);
   }
 }
