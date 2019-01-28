@@ -1,0 +1,24 @@
+.welcome {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  &__logo {
+    width: 240px;
+    margin-bottom: 36px;
+  }
+
+  &__powered {
+    font-size: rem(10px);
+    font-weight: 300;
+    margin-top: 20px;
+    letter-spacing: 1.6px;
+  }
+
+  &__text {
+    font-size: rem(11px);
+    font-weight: 300;
+    margin-bottom: 67px;
+  }
+}

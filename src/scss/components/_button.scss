@@ -11,4 +11,9 @@
   font-weight: 700;
   border: none;
   cursor: pointer;
+
+  &__icon {
+    display: inline-block;
+    margin-left: 4px;
+  }
 }
