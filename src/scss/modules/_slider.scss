@@ -1,0 +1,52 @@
+.slider {
+
+  &__slide {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  &__bullets {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 28px 0;
+  }
+
+  &__bullet {
+    width: 9px;
+    height: 9px;
+    margin: 0 5px;
+    border-radius: 50%;
+    border: 1px solid #979797;
+    transition: all ease 300ms;
+
+    &.active {
+      background: #000;
+      border-color: #000;
+    }
+  }
+
+  &__nav {
+
+  }
+
+  &__next-btn,
+  &__back-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    padding: 5px;
+    border: none;
+  }
+
+  &__next-btn {
+    right: 47px;
+  }
+
+  &__back-btn {
+    left: 47px;
+  }
+}
