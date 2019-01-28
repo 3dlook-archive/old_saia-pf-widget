@@ -3,6 +3,10 @@
   &__slide {
     display: none;
 
+    img {
+      margin: 0 auto;
+    }
+
     &.active {
       display: block;
     }
@@ -11,7 +15,7 @@
   &__bullets {
     display: flex;
     justify-content: center;
-    margin: 24px 0 28px 0;
+    margin: 30px 0 27px;
   }
 
   &__bullet {
@@ -48,5 +52,6 @@
 
   &__back-btn {
     left: 47px;
+    transform: scale(-1, 1);
   }
 }
