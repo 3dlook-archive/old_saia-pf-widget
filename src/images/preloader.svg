@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="117px" height="117px" viewBox="0 0 117 117" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>0A2AB7B8-19A6-4798-B843-7A5DAE67D506</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M52,104 C72.6817127,104 90.5434289,91.9261592 98.9210363,74.4425897 C102.176648,67.6483218 104,60.0370943 104,52 C104,23.281193 80.718807,0 52,0 C23.281193,0 0,23.281193 0,52 C0,59.858845 1.7433713,67.3105039 4.86446948,73.9893322 C13.1488915,91.717141 31.1400381,104 52,104 Z" id="path-1"></path>
+        <path d="M99.1295045,74.1350219 C102.434273,67.2775567 104.285156,59.5955329 104.285156,51.4836811 C104.285156,22.4977444 80.6524368,-1 51.5,-1" id="path-3"></path>
+    </defs>
+    <g id="OFFER" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="loading-copy" transform="translate(-240.000000, -344.000000)">
+            <g id="Group-2" transform="translate(160.000000, 245.000000)">
+                <g id="Group-3" transform="translate(86.000000, 106.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Oval" stroke="#F2F2F2" stroke-width="12" xlink:href="#path-1"></use>
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Oval" stroke="#000000" stroke-width="12" stroke-linecap="round" xlink:href="#path-3"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
