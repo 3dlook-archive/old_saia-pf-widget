@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["standard", "standard-preact"],
   "env": {
     "browser": true,
     "node": true
