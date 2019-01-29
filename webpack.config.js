@@ -22,9 +22,6 @@ const sass = {
 
 const css = {
   loader: 'css-loader',
-  options: {
-    url: false,
-  },
 };
 
 const style = {

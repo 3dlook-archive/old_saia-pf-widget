@@ -12,6 +12,7 @@
  * Components
  */
 @import './components/button';
+@import './components/checkbox';
 
 /**
  * Modules
@@ -22,3 +23,9 @@
 @import './modules/welcome';
 @import './modules/slider';
 @import './modules/tips';
+@import './modules/upload';
+@import './modules/data';
+@import './modules/gender';
+@import './modules/height';
+@import './modules/preloader';
+@import './modules/result';

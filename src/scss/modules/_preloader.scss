@@ -1,0 +1,22 @@
+.preloader {
+  text-align: center;
+  padding-bottom: 50px;
+
+  &__title {
+    margin-bottom: 50px;
+  }
+
+  &__image {
+    margin: 0 auto;
+    animation: spin 3s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
