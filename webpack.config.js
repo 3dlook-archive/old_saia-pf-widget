@@ -116,6 +116,12 @@ module.exports = {
               name: '[name].[hash].[ext]',
             },
           },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: mode !== 'production',
+            },
+          },
         ],
       },
 
