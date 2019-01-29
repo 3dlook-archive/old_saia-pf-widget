@@ -240,13 +240,56 @@
     <!-- DATA SCREEN - END -->
 
     <!-- PRELOADER SCREEN - START -->
-    <div class="screen screen--preloader active" data-screen="5">
+    <div class="screen screen--preloader" data-screen="5">
       <div class="screen__content preloader">
         <h2 class="preloader__title screen__title">We’re doing some magic…<br>Please stand by</h2>
         <img class="preloader__image" src="../images/preloader.svg" alt="Preloader image">
       </div>
     </div>
     <!-- PRELOADER SCREEN - END -->
+
+    <!-- RESULT SCREEN - START -->
+    <div class="screen screen--result active" data-screen="6">
+      <div class="screen__content result">
+        <h2 class="screen__title">your recomended size</h2>
+
+        <div class="result__product">
+          <div class="result__product-img">
+            <img src="../images/product-img.png" alt="">
+          </div>
+          <div class="result__product-info">
+            <h3 class="result__product-title">For this product:</h3>
+            <p class="result__product-desc">The Nike Air Rally Women's Crew</p>
+          </div>
+        </div>
+
+        <div class="result__sizes">
+          <div class="result__size">
+            <h3 class="result__size-num">XS</h3>
+            <p class="result__size-desc">Tight fit</p>
+          </div>
+
+          <div class="result__size result__size--big">
+            <h3 class="result__size-num">S</h3>
+            <p class="result__size-desc">Normal fit</p>
+          </div>
+
+          <div class="result__size">
+            <h3 class="result__size-num">M</h3>
+            <p class="result__size-desc">Loose fit</p>
+          </div>
+        </div>
+
+        <p class="result__text">Your <b>Perfect Fit Profile</b> is completed. <br>
+            Size recommendations for other products are now available.</p>
+
+        <button class="button">
+          back to store
+          <img class="button__icon" src="../images/arrow.svg" alt="Go next arrow icon">
+        </button>
+      </div>
+    </div>
+    <!-- RESULT SCREEN - END -->
   </div>
 </body>
 </html>
