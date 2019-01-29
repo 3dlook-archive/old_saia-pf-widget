@@ -17,6 +17,17 @@
     width: 100%;
   }
 
+  &__title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: rem(16px);
+    margin-bottom: 10px;
+  }
+
+  &__text {
+    margin-bottom: 28px;
+  }
+
   &.active {
     display: flex;
     flex-grow: 1;
