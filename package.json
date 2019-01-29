@@ -28,8 +28,12 @@
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
     "eslint": "^5.12.1",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-preact": "^1.1.6",
     "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
     "html-webpack-inline-source-plugin": "0.0.10",
@@ -48,6 +52,7 @@
     "normalize.css": "^8.0.1",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
+    "preact-router": "^2.6.1",
     "saia-sdk": "git+https://git@bitbucket.org/Hachapury/saia-sdk.git"
   }
 }
