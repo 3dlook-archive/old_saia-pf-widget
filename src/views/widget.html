@@ -42,7 +42,7 @@
     <!-- WELCOME SCREEN - END -->
 
     <!-- TIPS SCREEN - START -->
-    <div class="screen screen--tips active" data-screen="2">
+    <div class="screen screen--tips" data-screen="2">
       <div class="screen__content tips">
         <h2 class="screen__title">Hi, here are some tips</h2>
         <p class="screen__text">Simply take two photos with any smartphone<br>camera. You can be on any background.</p>
@@ -80,6 +80,90 @@
       </div>
     </div>
     <!-- TIPS SCREEN - END -->
+
+    <!-- UPLOAD SCREEN - START -->
+    <div class="screen screen--upload active" data-screen="3">
+      <div class="screen__content upload">
+        <h2 class="screen__title">upload photos</h2>
+        <p class="screen__text">Please upload two full body <br>photos of yourself:</p>
+
+        <div class="upload__files">
+          <!-- file block -->
+          <div class="upload__file-block">
+            <h3 class="upload__file-title">Front</h3>
+
+            <label class="upload__file" for="front" tabindex="0">
+              <input type="file" name="front" id="front" hidden>
+              <div class="upload__file-image upload__file-image--placeholder active">
+                <img src="../images/front.svg" alt="Front image icon">
+                <p class="upload__file-select-text">select file</p>
+              </div>
+              <div class="upload__file-image upload__file-image--preview">
+                <img src="https://gamemag.ru/images/news/c/c4fc5238a07cd07bb3a4c44236135426.png" alt="Front image preview">
+              </div>
+            </label>
+
+            <ul class="upload__file-validation">
+              <li class="upload__file-validation-status upload__file-validation-status--valid">
+                <span class="upload__file-validation-icon">
+                  <img class="valid" src="../images/check.svg" alt="Check icon">
+                  <img class="invalid" src="../images/cross.svg" alt="Cross icon">
+                </span>
+                Correct pose
+              </li>
+              <li class="upload__file-validation-status upload__file-validation-status--invalid">
+                <span class="upload__file-validation-icon">
+                  <img class="valid" src="../images/check.svg" alt="Check icon">
+                  <img class="invalid" src="../images/cross.svg" alt="Cross icon">
+                </span>
+                Full body
+              </li>
+            </ul>
+          </div>
+          <!-- file block -->
+
+          <!-- file block -->
+          <div class="upload__file-block">
+            <h3 class="upload__file-title">Side</h3>
+
+            <label class="upload__file" for="side" tabindex="0">
+              <input type="file" name="side" id="side" hidden>
+              <div class="upload__file-image upload__file-image--placeholder active">
+                <img src="../images/side.svg" alt="side image icon">
+                <p class="upload__file-select-text">select file</p>
+              </div>
+              <div class="upload__file-image upload__file-image--preview">
+                <img src="https://gamemag.ru/images/news/c/c4fc5238a07cd07bb3a4c44236135426.png" alt="side image preview">
+              </div>
+            </label>
+
+            <ul class="upload__file-validation">
+              <li class="upload__file-validation-status upload__file-validation-status--valid">
+                <span class="upload__file-validation-icon">
+                  <img class="valid" src="../images/check.svg" alt="Check icon">
+                  <img class="invalid" src="../images/cross.svg" alt="Cross icon">
+                </span>
+                Correct pose
+              </li>
+              <li class="upload__file-validation-status upload__file-validation-status--invalid">
+                <span class="upload__file-validation-icon">
+                  <img class="valid" src="../images/check.svg" alt="Check icon">
+                  <img class="invalid" src="../images/cross.svg" alt="Cross icon">
+                </span>
+                Full body
+              </li>
+            </ul>
+          </div>
+          <!-- file block -->
+        </div>
+
+        <button class="button">
+          Next step
+          <img class="button__icon" src="../images/arrow.svg" alt="Go next arrow icon">
+        </button>
+      </div>
+    </div>
+    <!-- UPLOAD SCREEN - END -->
   </div>
 </body>
 </html>
