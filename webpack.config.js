@@ -51,7 +51,7 @@ module.exports = {
   },
   entry: {
     'saia-pf-button': path.resolve(`${__dirname}/src/js/button.js`),
-    'saia-pf-widget': path.resolve(`${__dirname}/src/js/widget.jsx`),
+    'saia-pf-widget': path.resolve(`${__dirname}/src/App.jsx`),
   },
   output: {
     path: `${__dirname}/dist`,
@@ -169,8 +169,8 @@ module.exports = {
       API_HOST: JSON.stringify(config.API_HOST),
     }),
     new HtmlWebpackPlugin({
-      filename: 'modal.html',
-      template: path.resolve('src/views/widget.html'),
+      filename: 'index.html',
+      template: path.resolve('src/index.html'),
       inject: true,
       inlineSource: 'widget.(js|css)$',
       excludeChunks: ['saia-pf-button'],
