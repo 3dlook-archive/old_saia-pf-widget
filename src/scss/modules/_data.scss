@@ -1,0 +1,27 @@
+.data {
+  text-align: center;
+  padding-top: 42px;
+
+  &__block {
+    margin: 0 auto;
+    max-width: 240px;
+    width: 100%;
+    text-align: left;
+    padding-top: 10px;
+  }
+
+  &__field-title {
+    text-transform: uppercase;
+    font-size: rem(13px);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  &__field {
+    margin-bottom: 40px;
+  }
+
+  .button {
+    margin-bottom: 19px;
+  }
+}
