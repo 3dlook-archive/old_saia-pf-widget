@@ -16,7 +16,7 @@ export const Tips = () => (
 
       <Slider images={[slideImage1, slideImage2, slideImage3]} />
       
-      <Link class="button" href="/upload">I understand</Link>
+      <Link class="button" href="/data">I understand</Link>
     </div>
   </div>
 );
