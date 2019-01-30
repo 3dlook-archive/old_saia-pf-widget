@@ -25,7 +25,7 @@
     }
 
     &:after {
-      display: block;
+      display: none;
       content: '';
       background: url('../images/checkbox.svg') no-repeat;
       width: 11px;
@@ -40,7 +40,16 @@
     background: #9B9B9B;
   }
 
+  input:checked + label:after {
+    display: block;
+  }
+
   input:focus + label:before {
     outline: -webkit-focus-ring-color auto 5px;
+  }
+
+  &--invalid label:before {
+    border-color: $error-border-color;
+    background-color: $error-background-color;
   }
 }
