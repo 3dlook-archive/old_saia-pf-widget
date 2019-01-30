@@ -87,6 +87,7 @@ module.exports = {
             options: {
               presets: [
                 ['@babel/preset-env', {
+                  useBuiltIns: 'usage',
                   targets: {
                     browsers: ['last 2 versions', 'safari >= 7'],
                   },
@@ -94,6 +95,7 @@ module.exports = {
               ],
               plugins: [
                 ['@babel/plugin-proposal-class-properties', { loose: false }],
+                ['@babel/plugin-transform-async-to-generator'],
                 ['@babel/plugin-transform-react-jsx', {
                   pragma: 'h',
                 }],
@@ -168,6 +170,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       API_HOST: JSON.stringify(config.API_HOST),
+      API_KEY: JSON.stringify(config.API_KEY),
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
