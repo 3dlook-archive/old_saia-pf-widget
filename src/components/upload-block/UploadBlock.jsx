@@ -9,26 +9,22 @@ import { UploadFile } from '../upload-file/UploadFile';
 export class UploadBlock extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      validation: {
-        pose: false,
-        body: false,
-      },
-      valid: false,
-    };
   }
 
-  render({ type }) {
+  fileChange = (params) => {
+    this.props.change(params);
+  }
+
+  render({ type, validation }) {
     const fileText = (type === 'front') ? 'Front' : 'Side';
 
     return (
       <div class="upload__file-block">
         <h3 class="upload__file-title">{fileText}</h3>
 
-        <UploadFile type={type} />
+        <UploadFile type={type} change={this.fileChange} />
 
-        <UploadValidation validation={this.state.validation} />
+        <UploadValidation validation={validation} />
       </div>
     );
   }
