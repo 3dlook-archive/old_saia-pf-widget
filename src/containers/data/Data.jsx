@@ -66,8 +66,8 @@ export class Data extends Component {
             </div>
           </div>
 
-          <Link class="button" href="/results">
-            get your size
+          <Link class="button" href="/upload">
+            Next step
             <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
           </Link>
 

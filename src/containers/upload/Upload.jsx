@@ -2,6 +2,12 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router';
 
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
+import API from 'saia-sdk/lib/api';
+
+const api = new API({
+  host: API_HOST,
+  key: API_KEY,
+});
 
 // assets
 const nextArrowIcon = require('../../images/arrow.svg');
@@ -26,7 +32,7 @@ export class Upload extends Component {
    */
   saveFrontFile = (params) => {
     this.setState({
-      frontImage: params.fileBlob,
+      frontImage: params.file,
     });
   }
 
@@ -35,8 +41,20 @@ export class Upload extends Component {
    */
   saveSideFile = (params) => {
     this.setState({
-      sideImage: params.fileBlob,
+      sideImage: params.file,
     });
+  }
+
+  onNextButtonClick = async (e) => {
+    e.preventDefault();
+
+    const c = await api.person.create({
+      frontImage: this.state.frontImage,
+      sideImage: this.state.sideImage,
+    });
+    console.log(c);
+
+    console.log(e);
   }
 
   render() {
@@ -51,8 +69,8 @@ export class Upload extends Component {
             <UploadBlock type="side" validation={this.state.validation} change={this.saveSideFile} />
           </div>
 
-          <Link class="button" href="/data" disabled={!this.state.frontImage || !this.state.sideImage}>
-            Next step
+          <Link class="button" href="/results" disabled={!this.state.frontImage || !this.state.sideImage} onClick={this.onNextButtonClick}>
+            get your size
             <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
           </Link>
         </div>

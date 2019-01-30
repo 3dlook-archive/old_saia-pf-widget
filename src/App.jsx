@@ -25,8 +25,8 @@ const Main = () => (
     <Router>
       <Welcome path="/" />
       <Tips path="/tips" />
-      <Upload path="/upload" />
       <Data path="/data" />
+      <Upload path="/upload" />
       <Results path="/results" />
     </Router>
   </div>
