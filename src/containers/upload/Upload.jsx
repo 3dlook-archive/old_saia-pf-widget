@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { route } from 'preact-router';
 
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
@@ -48,13 +48,17 @@ export class Upload extends Component {
   onNextButtonClick = async (e) => {
     e.preventDefault();
 
-    const c = await api.person.create({
+    const taskSetId = await api.person.create({
+      gender: 'female',
+      height: 170,
       frontImage: this.state.frontImage,
       sideImage: this.state.sideImage,
     });
-    console.log(c);
 
-    console.log(e);
+    const r = await api.queue.getResults(taskSetId);
+    console.log(r);
+
+    route('/results', true);
   }
 
   render() {
@@ -69,10 +73,10 @@ export class Upload extends Component {
             <UploadBlock type="side" validation={this.state.validation} change={this.saveSideFile} />
           </div>
 
-          <Link class="button" href="/results" disabled={!this.state.frontImage || !this.state.sideImage} onClick={this.onNextButtonClick}>
+          <button class="button" disabled={!this.state.frontImage || !this.state.sideImage} onClick={this.onNextButtonClick}>
             get your size
             <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
-          </Link>
+          </button>
         </div>
       </div>
     );
