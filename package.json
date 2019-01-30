@@ -19,6 +19,7 @@
   "homepage": "https://bitbucket.org/Skiminojek/saia-pf-widget#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "autoprefixer": "^9.4.6",
