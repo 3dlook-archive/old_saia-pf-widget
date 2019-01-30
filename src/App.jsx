@@ -1,4 +1,4 @@
-import { h, render } from 'preact';
+import { h, render, Component } from 'preact';
 import Router from 'preact-router';
 import { Link } from 'preact-router/match';
 
@@ -18,18 +18,33 @@ import { Results } from './containers/results/Results';
 
 require('./scss/widget.scss');
 
-const Main = () => (
-  <div className="widget-container">
-    <Header />
+class Main extends Component {
+  constructor(props) {
+    super(props);
 
-    <Router>
-      <Welcome path="/" />
-      <Tips path="/tips" />
-      <Data path="/data" />
-      <Upload path="/upload" />
-      <Results path="/results" />
-    </Router>
-  </div>
-);
+    this.state = {
+      frontImage: null,
+      sideImage: null,
+      height: null,
+      gender: null,
+    };
+  }
+
+  render() {
+    return (
+      <div className="widget-container">
+        <Header />
+
+        <Router>
+          <Welcome path="/" />
+          <Tips path="/tips" />
+          <Data path="/data" />
+          <Upload path="/upload" />
+          <Results path="/results" />
+        </Router>
+      </div>
+    );
+  }
+}
 
 render(<Main />, document.body);
