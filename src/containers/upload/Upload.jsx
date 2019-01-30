@@ -65,7 +65,7 @@ export class Upload extends Component {
     return (
       <div class="screen screen--upload active">
         <div class="screen__content upload">
-          <h2 class="screen__title">upload photos</h2>
+          <h2 class="screen__title">YOU’RE ALMOST THERE</h2>
           <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
 
           <div class="upload__files">
