@@ -1,44 +1,70 @@
 import { h, Component } from 'preact';
 
-const slideImage1 = require('../../images/slide1.png');
-const slideImage2 = require('../../images/slide2.png');
-const slideImage3 = require('../../images/slide3.png');
 const sliderButtonIcon = require('../../images/slider-next-icon.svg');
 
+/**
+ * Slider component
+ */
 export class Slider extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      index: 0,
+    };
   }
 
-  onNextClick() {
-    console.log('next');
+  /**
+   * Slider next slide button click
+   */
+  onNextClick = () => {
+    let i = this.state.index + 1;
+
+    if (i >= this.props.images.length) {
+      i = 0;
+    }
+
+    this.setState({
+      index: i,
+    });
   }
 
-  onPrevClick() {
-    console.log('prev');
+  /**
+   * Slider prev slide button click
+   */
+  onPrevClick = () => {
+    let i = this.state.index - 1;
+
+    if (i < 0) {
+      i = this.props.images.length - 1;
+    }
+
+    this.setState({
+      index: i,
+    });
   }
 
   render() {
+    // slides
+    const slides = this.props.images.map((image, i) => (
+      <div class={'slider__slide ' + ((this.state.index === i) ? 'active' : '')}>
+        <img src={image} alt="" />
+      </div>
+    ));
+
+    // bullets
+    const bullets = this.props.images.map((image, i) => (
+      <div class={'slider__bullet ' + ((this.state.index === i) ? 'active' : '')}></div>
+    ));
+
     return (
       <div class="tips__slider slider">
         <div class="slider__slides">
-          <div class="slider__slide active">
-            <img src={slideImage1} alt="" />
-          </div>
-
-          <div class="slider__slide">
-            <img src={slideImage2} alt="" />
-          </div>
-
-          <div class="slider__slide">
-            <img src={slideImage3} alt="" />
-          </div>
+          {slides}
         </div>
 
         <div class="slider__bullets">
-          <div class="slider__bullet active"></div>
-          <div class="slider__bullet"></div>
-          <div class="slider__bullet"></div>
+          {bullets}
         </div>
 
         <div class="slider__nav">
