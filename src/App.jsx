@@ -1,6 +1,5 @@
 import { h, render, Component } from 'preact';
 import Router from 'preact-router';
-import { Link } from 'preact-router/match';
 
 /**
  * Components
@@ -21,31 +20,6 @@ require('./scss/widget.scss');
 class Main extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      frontImage: null,
-      sideImage: null,
-      height: null,
-      gender: null,
-    };
-  }
-
-  /**
-   * Save data from Data component to the state
-   *
-   * @param {Object} data - data from Data component
-   * @param {string} data.gender - gender
-   * @param {string} data.height - height
-   */
-  onData = (data) => {
-    this.setState({
-      ...this.state,
-      ...data,
-    })
-  }
-
-  onGetImages = () => {
-
   }
 
   render() {
@@ -56,8 +30,8 @@ class Main extends Component {
         <Router>
           <Welcome path="/" />
           <Tips path="/tips" />
-          <Data path="/data" getData={this.onData} />
-          <Upload path="/upload" getImages={this.onGetImages} />
+          <Data path="/data" />
+          <Upload path="/upload" />
           <Results path="/results" />
         </Router>
       </div>
