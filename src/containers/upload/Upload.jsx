@@ -27,6 +27,10 @@ export class Upload extends Component {
       isFrontImageValid: true,
       isSideImageValid: true,
 
+      // image errors
+      frontImagePose: null,
+      sideImagePose: null,
+
       valid: false,
 
       isPending: false,
@@ -56,42 +60,72 @@ export class Upload extends Component {
   onNextButtonClick = async (e) => {
     e.preventDefault();
 
-    if (!this.state.frontImage) {
+    try {
+      if (!this.state.frontImage) {
+        this.setState({
+          ...this.state,
+          isFrontImageValid: false,
+        });
+      }
+  
+      if (!this.state.sideImage) {
+        this.setState({
+          ...this.state,
+          isSideImageValid: false,
+        });
+      }
+  
+      if (!this.state.frontImage && !this.state.sideImage) {
+        return;
+      }
+  
       this.setState({
         ...this.state,
-        isFrontImageValid: false,
+        isFrontImageValid: !!this.state.frontImage,
+        isSideImageValid: !!this.state.sideImage,
+        isPending: true,
       });
-    }
-
-    if (!this.state.sideImage) {
-      this.setState({
-        ...this.state,
-        isSideImageValid: false,
+  
+      const taskSetId = await api.person.create({
+        gender: this.state.gender,
+        height: this.state.height,
+        frontImage: this.state.frontImage,
+        sideImage: this.state.sideImage,
       });
+  
+      const r = await api.queue.getResults(taskSetId);
+  
+      const recommendations = await api.sizechart.getSize({
+        gender: this.state.gender,
+        hips: r.volume_params.hips,
+        chest: r.volume_params.chest,
+        waist: r.volume_params.waist,
+        brand: this.props.matches.brand,
+        body_part: this.props.matches.body_part,
+      });
+  
+      route(`/results?normal=${recommendations.normal.size}`, true);
+    } catch (error) {
+      if (error && error.response && error.response.data) {
+        const subTasks = error.response.data.sub_tasks;
+
+        const front = subTasks.filter(function (item) { return item.name.indexOf('front_') !== -1; })[0];
+        const side = subTasks.filter(function (item) { return item.name.indexOf('side_') !== -1; })[0];
+
+        this.setState({
+          ...this.state,
+          isFrontImageValid: false,
+          isSideImageValid: false,
+          isPending: false,
+
+          frontImagePose: front.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
+          sideImagePose: side.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
+        });
+      } else {
+        alert('error');
+        console.log(error.response);
+      }
     }
-
-    if (!this.state.frontImage && !this.state.sideImage) {
-      return;
-    }
-
-    this.setState({
-      ...this.state,
-      isFrontImageValid: !!this.state.frontImage,
-      isSideImageValid: !!this.state.sideImage,
-      isPending: true,
-    });
-
-    const taskSetId = await api.person.create({
-      gender: this.state.gender,
-      height: this.state.height,
-      frontImage: this.state.frontImage,
-      sideImage: this.state.sideImage,
-    });
-
-    const r = await api.queue.getResults(taskSetId);
-    console.log(r);
-
-    // route('/results', true);
   }
 
   render() {
@@ -102,8 +136,8 @@ export class Upload extends Component {
           <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
 
           <div class="upload__files">
-            <UploadBlock type="front" validation={{ pose: true, body: false }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
-            <UploadBlock type="side" validation={{ pose: true, body: false }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
+            <UploadBlock type="front" validation={{ pose: this.state.frontImagePose, body: null }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
+            <UploadBlock type="side" validation={{ pose: this.state.sideImagePose, body: null }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
           </div>
 
           <button class="button" onClick={this.onNextButtonClick}>
