@@ -17,7 +17,7 @@ import { Results } from './containers/results/Results';
 
 require('./scss/widget.scss');
 
-class Main extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -39,4 +39,4 @@ class Main extends Component {
   }
 }
 
-render(<Main />, document.body);
+render(<App />, document.body);
