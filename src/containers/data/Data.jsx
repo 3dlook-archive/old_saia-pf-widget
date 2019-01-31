@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+
+import { objectToUrlParams } from '../../utils';
 import { Gender } from '../../components/gender/Gender';
 import { Height } from '../../components/height/Height';
 
@@ -88,7 +90,13 @@ export class Data extends Component {
     // if all data is valid
     // go to the next step
     if (isHeightValid && isGenderValid && isAgreeValid) {
-      route(`/upload?gender=${this.state.gender}&height=${this.state.height}`, false);
+      const params = {
+        ...this.props.matches,
+        gender: this.state.gender,
+        height: this.state.height,
+      };
+      
+      route(`/upload?${objectToUrlParams(params)}`, false);
     }
   }
 
