@@ -2,6 +2,10 @@
   text-align: center;
   padding-top: 6px;
 
+  &__title {
+    margin-bottom: 24px;
+  }
+
   &__text {
     width: 100%;
     border-top: 1px solid #D8D8D8;
@@ -18,7 +22,6 @@
     display: flex;
     text-align: left;
     margin: 0 auto;
-    margin-top: 24px;
     max-width: 285px;
     margin-bottom: 44px;
   }
