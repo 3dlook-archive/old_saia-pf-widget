@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { route } from 'preact-router';
 import { Gender } from '../../components/gender/Gender';
 import { Height } from '../../components/height/Height';
 
@@ -84,6 +84,18 @@ export class Data extends Component {
       isGenderValid,
       isAgreeValid,
     });
+
+    // if all data is valid
+    // go to then ext step and send
+    // data to App component
+    if (isHeightValid && isGenderValid && isAgreeValid) {
+      this.props.getData({
+        height: this.state.height,
+        gender: this.state.gender,
+      });
+
+      route('/upload', true);
+    }
   }
 
   render() {

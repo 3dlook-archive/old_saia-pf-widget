@@ -30,6 +30,24 @@ class Main extends Component {
     };
   }
 
+  /**
+   * Save data from Data component to the state
+   *
+   * @param {Object} data - data from Data component
+   * @param {string} data.gender - gender
+   * @param {string} data.height - height
+   */
+  onData = (data) => {
+    this.setState({
+      ...this.state,
+      ...data,
+    })
+  }
+
+  onGetImages = () => {
+
+  }
+
   render() {
     return (
       <div className="widget-container">
@@ -38,8 +56,8 @@ class Main extends Component {
         <Router>
           <Welcome path="/" />
           <Tips path="/tips" />
-          <Data path="/data" />
-          <Upload path="/upload" />
+          <Data path="/data" getData={this.onData} />
+          <Upload path="/upload" getImages={this.onGetImages} />
           <Results path="/results" />
         </Router>
       </div>
