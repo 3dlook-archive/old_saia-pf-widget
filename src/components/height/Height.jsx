@@ -93,7 +93,8 @@ export class Height extends Component {
 
   validateCm = (e) => {
     let { value } = e.target;
-    value = value.replace(/[^0-9]/g, '');
+    // TODO: create regexp to validate numbers
+    // value = value.replace(/^(?![1-2]|[1-2][0-9]|1[5-9][0-9]|2[0-1][0-9]|2[1-2]0)$/g, '');
 
     e.target.value = value;
   }
@@ -149,7 +150,7 @@ export class Height extends Component {
 
         <p class={`height__desc ${this.state.units === 'cm' ? 'height__desc--hidden' : ''}`}>
           Your height should be between<br />
-          4’11” and 6’11”
+          4’11” and 7’2”
         </p>
       </div>
     );
