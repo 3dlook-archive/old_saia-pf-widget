@@ -12,21 +12,18 @@ export class Data extends Component {
     this.state = {
       gender: null,
       height: null,
-      validation: {
-        gender: true,
-        height: true,
-        agree: true,
-      },
+      agree: false,
+      isHeightValid: true,
+      isGenderValid: true,
+      isAgreeValid: true,
     };
   }
 
   changeGender = (gender) => {
     this.setState({
+      ...this.state,
       gender,
-      validation: {
-        height: this.state.validation.height,
-        gender: (gender === 'male' || gender === 'female'),
-      }
+      isGenderValid: (gender === 'male' || gender === 'female'),
     });
   }
 
@@ -39,17 +36,54 @@ export class Data extends Component {
     }
 
     this.setState({
+      ...this.state,
       height: numHeight,
-      validation: {
-        height: isValueValid,
-        gender: this.state.validation.gender,
-        agree: false,
-      }
+      isHeightValid: isValueValid,
+    });
+  }
+
+  changeAgree = (e) => {
+    this.setState({
+      ...this.state,
+      agree: e.target.checked,
     });
   }
 
   onNextScreen = () => {
     console.log(this.state);
+
+    // validate values
+    let isHeightValid = false;
+    let isGenderValid = false;
+    let isAgreeValid = false;
+
+    // validate height
+    const { height } = this.state;
+
+    if (height >= 150 && height <= 220) {
+      isHeightValid = true;
+    }
+
+    // validate gender
+    const { gender } = this.state;
+
+    if (gender && (gender === 'male' || gender === 'female')) {
+      isGenderValid = true;
+    }
+
+    // validate agree checkbox
+    const { agree } = this.state;
+
+    if (agree) {
+      isAgreeValid = true;
+    }
+
+    this.setState({
+      ...this.state,
+      isHeightValid,
+      isGenderValid,
+      isAgreeValid,
+    });
   }
 
   render() {
@@ -64,13 +98,13 @@ export class Data extends Component {
             <div class="data__field">
               <h3 class="data__field-title">Gender:</h3>
               
-              <Gender change={this.changeGender} isValid={this.state.validation.gender} />
+              <Gender change={this.changeGender} isValid={this.state.isGenderValid} />
             </div>
 
             <div class="data__field">
               <h3 class="data__field-title">Height:</h3>
 
-              <Height change={this.changeHeight} isValid={this.state.validation.height} />
+              <Height change={this.changeHeight} isValid={this.state.isHeightValid} />
             </div>
           </div>
 
@@ -79,8 +113,8 @@ export class Data extends Component {
             <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
           </button>
 
-          <div class={`data__check checkbox ${!this.state.validation.agree ? 'checkbox--invalid' : ''}`}>
-            <input type="checkbox" name="agree" id="agree" />
+          <div class={`data__check checkbox ${!this.state.isAgreeValid ? 'checkbox--invalid' : ''}`}>
+            <input type="checkbox" name="agree" id="agree" onChange={this.changeAgree} checked={this.state.agree} />
             <label for="agree">I accept <a href="#">Terms and Conditions</a></label>
           </div>
         </div>
