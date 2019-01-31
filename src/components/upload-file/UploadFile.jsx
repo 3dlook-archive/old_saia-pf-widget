@@ -211,7 +211,7 @@ export class UploadFile extends Component {
     const fileText = (type === 'front') ? 'Front' : 'Side';
 
     return (
-      <label class="upload__file" for={type} tabindex="0">
+      <label class={`upload__file ${!this.props.isValid ? 'upload__file--invalid' : ''}`} for={type} tabindex="0">
         <input type="file" name={type} id={type} hidden onChange={this.onChange} />
         <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
           <img src={(type === 'front' ? frontImage : sideImage)} alt={`${fileText} image icon`} />

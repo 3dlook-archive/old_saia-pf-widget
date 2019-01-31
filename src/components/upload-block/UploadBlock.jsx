@@ -22,7 +22,7 @@ export class UploadBlock extends Component {
       <div class="upload__file-block">
         <h3 class="upload__file-title">{fileText}</h3>
 
-        <UploadFile type={type} change={this.fileChange} />
+        <UploadFile type={type} change={this.fileChange} isValid={this.props.isValid} />
 
         <UploadValidation validation={validation} />
       </div>

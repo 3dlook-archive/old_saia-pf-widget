@@ -28,8 +28,9 @@
     border-radius: 3px;
     cursor: pointer;
 
-    &--error {
-      border-color: red;
+    &--invalid {
+      border-color: $error-border-color;
+      background: $error-background-color;
     }
   }
 

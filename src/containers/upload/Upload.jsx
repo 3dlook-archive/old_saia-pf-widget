@@ -3,6 +3,7 @@ import { route } from 'preact-router';
 
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
+import { Preloader } from '../../components/preloader/Preloader';
 
 const api = new API({
   host: API_HOST,
@@ -17,13 +18,18 @@ export class Upload extends Component {
     super(props);
 
     this.state = {
+      gender: this.props.matches.gender,
+      height: this.props.matches.height,
+
       frontImage: null,
       sideImage: null,
-      validation: {
-        pose: false,
-        body: false,
-      },
+
+      isFrontImageValid: true,
+      isSideImageValid: true,
+
       valid: false,
+
+      isPending: false,
     };
   }
 
@@ -32,6 +38,7 @@ export class Upload extends Component {
    */
   saveFrontFile = (params) => {
     this.setState({
+      ...this.state,
       frontImage: params.file,
     });
   }
@@ -41,6 +48,7 @@ export class Upload extends Component {
    */
   saveSideFile = (params) => {
     this.setState({
+      ...this.state,
       sideImage: params.file,
     });
   }
@@ -48,9 +56,34 @@ export class Upload extends Component {
   onNextButtonClick = async (e) => {
     e.preventDefault();
 
+    if (!this.state.frontImage) {
+      this.setState({
+        ...this.state,
+        isFrontImageValid: false,
+      });
+    }
+
+    if (!this.state.sideImage) {
+      this.setState({
+        ...this.state,
+        isSideImageValid: false,
+      });
+    }
+
+    if (!this.state.frontImage && !this.state.sideImage) {
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      isFrontImageValid: !!this.state.frontImage,
+      isSideImageValid: !!this.state.sideImage,
+      isPending: true,
+    });
+
     const taskSetId = await api.person.create({
-      gender: 'female',
-      height: 170,
+      gender: this.state.gender,
+      height: this.state.height,
       frontImage: this.state.frontImage,
       sideImage: this.state.sideImage,
     });
@@ -58,7 +91,7 @@ export class Upload extends Component {
     const r = await api.queue.getResults(taskSetId);
     console.log(r);
 
-    route('/results', true);
+    // route('/results', true);
   }
 
   render() {
@@ -69,16 +102,19 @@ export class Upload extends Component {
           <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
 
           <div class="upload__files">
-            <UploadBlock type="front" validation={this.state.validation} change={this.saveFrontFile} />
-            <UploadBlock type="side" validation={this.state.validation} change={this.saveSideFile} />
+            <UploadBlock type="front" validation={{ pose: true, body: false }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
+            <UploadBlock type="side" validation={{ pose: true, body: false }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
           </div>
 
-          <button class="button" disabled={!this.state.frontImage || !this.state.sideImage} onClick={this.onNextButtonClick}>
+          <button class="button" onClick={this.onNextButtonClick}>
             get your size
             <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
           </button>
         </div>
+
+        <Preloader isActive={this.state.isPending} />
       </div>
+
     );
   }
 }
