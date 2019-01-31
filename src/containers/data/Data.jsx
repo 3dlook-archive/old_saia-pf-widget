@@ -86,15 +86,9 @@ export class Data extends Component {
     });
 
     // if all data is valid
-    // go to then ext step and send
-    // data to App component
+    // go to the next step
     if (isHeightValid && isGenderValid && isAgreeValid) {
-      this.props.getData({
-        height: this.state.height,
-        gender: this.state.gender,
-      });
-
-      route('/upload', true);
+      route(`/upload?gender=${this.state.gender}&height=${this.state.height}`, false);
     }
   }
 
