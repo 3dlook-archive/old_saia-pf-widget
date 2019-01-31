@@ -2,7 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
@@ -12,6 +12,8 @@ const mode = (NODE_ENV && NODE_ENV.trim() === 'production') ? 'production' : 'de
 
 const configFileName = `./saia-config.${mode}`;
 const config = require(configFileName);
+
+const shouldGenSourceMap = mode !== 'production';
 
 /**
  * SCSS configs
@@ -94,8 +96,8 @@ module.exports = {
                 }],
               ],
               plugins: [
-                ['@babel/plugin-proposal-class-properties', { loose: false }],
                 ['@babel/plugin-transform-async-to-generator'],
+                ['@babel/plugin-proposal-class-properties', { loose: false }],
                 ['@babel/plugin-transform-react-jsx', {
                   pragma: 'h',
                 }],
@@ -155,15 +157,29 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-        uglifyOptions: {
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma: 8,
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
           output: {
+            ecma: 5,
             comments: false,
+            ascii_only: true,
           },
         },
+        parallel: true,
+        cache: true,
+        sourceMap: shouldGenSourceMap,
       }),
     ],
   },
