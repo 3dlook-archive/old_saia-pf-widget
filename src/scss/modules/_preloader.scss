@@ -1,6 +1,19 @@
 .preloader {
+  display: none;
   text-align: center;
-  padding-bottom: 50px;
+  position: absolute;
+  top: 55px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  padding-bottom: 42px;
+
+  &.active {
+    display: flex;
+  }
 
   &__title {
     margin-bottom: 50px;
