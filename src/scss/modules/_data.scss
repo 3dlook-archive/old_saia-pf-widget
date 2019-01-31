@@ -19,6 +19,33 @@
 
   &__field {
     margin-bottom: 40px;
+    position: relative;
+
+    &--invalid &-error {
+      display: block;
+    }
+
+    &-error {
+      position: absolute;
+      top: 78px;
+      left: 0;
+      color: $error-text-color;
+      font-size: rem(9px);
+      display: none;
+
+      span {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+        height: 12px;
+        width: 12px;
+        border: 1px solid #D0021B;
+        border-radius: 1px;
+        background-color: #FFFFFF;
+        font-weight: 600;
+      }
+    }
   }
 
   .button {

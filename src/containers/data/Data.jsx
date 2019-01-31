@@ -95,16 +95,20 @@ export class Data extends Component {
           We need this information to create your Perfect Fit Profile</p>
 
           <div class="data__block">
-            <div class="data__field">
+            <div class={`data__field ${!this.state.isGenderValid ? 'data__field--invalid' : ''}`}>
               <h3 class="data__field-title">Gender:</h3>
               
               <Gender change={this.changeGender} isValid={this.state.isGenderValid} />
+
+              <p className="data__field-error"><span>!</span> Please select your gender</p>
             </div>
 
-            <div class="data__field">
+            <div class={`data__field ${!this.state.isHeightValid ? 'data__field--invalid' : ''}`}>
               <h3 class="data__field-title">Height:</h3>
 
               <Height change={this.changeHeight} isValid={this.state.isHeightValid} />
+
+              <p className="data__field-error"><span>!</span> Please enter a valid height</p>
             </div>
           </div>
 
