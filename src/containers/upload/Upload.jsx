@@ -4,6 +4,7 @@ import { route } from 'preact-router';
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
 import { Preloader } from '../../components/preloader/Preloader';
+import { objectToUrlParams } from '../../utils';
 
 const api = new API({
   host: API_HOST,
@@ -57,6 +58,11 @@ export class Upload extends Component {
     });
   }
 
+  /**
+   * On next button click handler
+   *
+   * @async
+   */
   onNextButtonClick = async (e) => {
     e.preventDefault();
 
@@ -103,10 +109,20 @@ export class Upload extends Component {
         brand: this.props.matches.brand,
         body_part: this.props.matches.body_part,
       });
+
+      const params = {
+        ...this.props.matches,
+        normal: recommendations.normal.size
+      };
   
-      route(`/results?normal=${recommendations.normal.size}`, true);
+      route(`/results?${objectToUrlParams(params)}`, true);
     } catch (error) {
-      if (error && error.response && error.response.data) {
+      this.setState({
+        ...this.state,
+        isPending: false,
+      });
+
+      if (error && error.response && error.response.data && error.response.data.sub_tasks) {
         const subTasks = error.response.data.sub_tasks;
 
         const front = subTasks.filter(function (item) { return item.name.indexOf('front_') !== -1; })[0];
@@ -121,9 +137,11 @@ export class Upload extends Component {
           frontImagePose: front.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
           sideImagePose: side.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
         });
+      } else if (error && error.response && error.response.data) {
+        const { detail, brand, body_part } = error.response.data;
+        alert(detail || brand || body_part);
       } else {
-        alert('error');
-        console.log(error.response);
+        alert(error);
       }
     }
   }
