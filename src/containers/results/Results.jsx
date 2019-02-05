@@ -1,47 +1,55 @@
 import { h } from 'preact';
+import classNames from 'classnames';
 
 const nextArrowIcon = require('../../images/arrow.svg');
 const productImagePlaceholder = require('../../images/product-img.png');
 
-export const Results = () => (
-  <div class="screen screen--result active">
-    <div class="screen__content result">
-      <h2 class="screen__title">your recomended size</h2>
+const Results = ({ matches }) => (
+  <div className="screen screen--result active">
+    <div className="screen__content result">
+      <h2 className="screen__title result__title">your recomended size</h2>
 
-      <div class="result__product">
-        <div class="result__product-img">
+      {/* <div className="result__product">
+        <div className="result__product-img">
           <img src={productImagePlaceholder} alt="" />
         </div>
-        <div class="result__product-info">
-          <h3 class="result__product-title">For this product:</h3>
-          <p class="result__product-desc">The Nike Air Rally Women's Crew</p>
+        <div className="result__product-info">
+          <h3 className="result__product-title">For this product:</h3>
+          <p className="result__product-desc">The Nike Air Rally Women's Crew</p>
+        </div>
+      </div> */}
+
+      <div className="result__sizes">
+        <div className={classNames('result__size', 'result__size--tight', { active: matches.tight })}>
+          <h3 className="result__size-num">{matches.tight}</h3>
+          <p className="result__size-desc">Tight fit</p>
+        </div>
+
+        <div className={classNames('result__size', 'result__size--normal', { active: matches.normal })}>
+          <h3 className="result__size-num">{matches.normal}</h3>
+          <p className="result__size-desc">Normal fit</p>
+        </div>
+
+        <div className={classNames('result__size', 'result__size--loose', { active: matches.loose })}>
+          <h3 className="result__size-num">{matches.loose}</h3>
+          <p className="result__size-desc">Loose fit</p>
         </div>
       </div>
 
-      <div class="result__sizes">
-        <div class="result__size">
-          <h3 class="result__size-num">XS</h3>
-          <p class="result__size-desc">Tight fit</p>
-        </div>
+      <p className="result__text">
+        {'Your '}
+        <b>Perfect Fit Profile</b>
+        {' is completed.'}
+        <br />
+        Size recommendations for other products are now available.
+      </p>
 
-        <div class="result__size result__size--big">
-          <h3 class="result__size-num">S</h3>
-          <p class="result__size-desc">Normal fit</p>
-        </div>
-
-        <div class="result__size">
-          <h3 class="result__size-num">M</h3>
-          <p class="result__size-desc">Loose fit</p>
-        </div>
-      </div>
-
-      <p class="result__text">Your <b>Perfect Fit Profile</b> is completed. <br />
-          Size recommendations for other products are now available.</p>
-
-      <button class="button">
+      <button className="button" type="button">
         back to store
-        <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
+        <img className="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
       </button>
     </div>
   </div>
 );
+
+export default Results;
