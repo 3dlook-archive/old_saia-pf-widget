@@ -9,7 +9,7 @@ import { Header } from './components/header/Header';
 /**
  * Containers
  */
-import { Welcome } from './containers/welcome/Welcome';
+import Welcome from './containers/welcome/Welcome';
 import Tips from './containers/tips/Tips';
 import { Upload } from './containers/upload/Upload';
 import { Data } from './containers/data/Data';
