@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { UploadValidation } from '../upload-validation/UploadValidation';
+import UploadValidation from '../upload-validation/UploadValidation';
 import { UploadFile } from '../upload-file/UploadFile';
 
 /**
