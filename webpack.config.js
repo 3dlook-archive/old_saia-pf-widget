@@ -89,7 +89,7 @@ module.exports = {
             options: {
               presets: [
                 ['@babel/preset-env', {
-                  useBuiltIns: 'usage',
+                  useBuiltIns: 'usage', // test turn it off for reduce bundle size
                   targets: {
                     browsers: ['last 2 versions', 'safari >= 7'],
                   },
@@ -100,6 +100,12 @@ module.exports = {
                 ['@babel/plugin-proposal-class-properties', { loose: false }],
                 ['@babel/plugin-transform-react-jsx', {
                   pragma: 'h',
+                }],
+                ['@babel/plugin-transform-runtime', {
+                  corejs: false,
+                  helpers: true,
+                  regenerator: true,
+                  useESModules: false,
                 }],
               ],
             },
@@ -187,6 +193,7 @@ module.exports = {
     new webpack.DefinePlugin({
       API_HOST: JSON.stringify(config.API_HOST),
       API_KEY: JSON.stringify(config.API_KEY),
+      SHOPIFY_HOST: JSON.stringify(config.SHOPIFY_HOST),
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

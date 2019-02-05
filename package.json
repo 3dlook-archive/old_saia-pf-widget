@@ -4,7 +4,7 @@
   "description": "SAIA Perfect Fit Widget",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "export NODE_ENV=development && export CONFIG=development && webpack-dev-server",
     "build": "export NODE_ENV=development && export CONFIG=development && webpack --progress",
     "build:prod": "export NODE_ENV=production && export CONFIG=production && webpack --progress",
     "build:shopify": "export NODE_ENV=production && export CONFIG=shopify && webpack --progress",
@@ -23,6 +23,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-transform-async-to-generator": "^7.2.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "autoprefixer": "^9.4.6",
     "babel-loader": "^8.0.5",
@@ -52,6 +53,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "@babel/runtime": "^7.3.1",
     "axios": "^0.18.0",
     "normalize.css": "^8.0.1",
     "preact": "^8.4.2",
