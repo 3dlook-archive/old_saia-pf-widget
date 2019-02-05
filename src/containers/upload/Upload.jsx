@@ -101,7 +101,7 @@ export class Upload extends Component {
   
       const r = await api.queue.getResults(taskSetId);
   
-      const recommendations = await api.sizechart.getSize({
+      let recommendations = await api.sizechart.getSize({
         gender: this.state.gender,
         hips: r.volume_params.hips,
         chest: r.volume_params.chest,
@@ -110,11 +110,18 @@ export class Upload extends Component {
         body_part: this.props.matches.body_part,
       });
 
+      for (const rec in recommendations) {
+        if (recommendations.hasOwnProperty(rec)) {
+          const element = recommendations[rec];
+          recommendations[rec] = element.size;
+        }
+      }
+      
       const params = {
         ...this.props.matches,
-        normal: recommendations.normal.size
+        ...recommendations,
       };
-  
+
       route(`/results?${objectToUrlParams(params)}`, true);
     } catch (error) {
       this.setState({
@@ -125,8 +132,8 @@ export class Upload extends Component {
       if (error && error.response && error.response.data && error.response.data.sub_tasks) {
         const subTasks = error.response.data.sub_tasks;
 
-        const front = subTasks.filter(function (item) { return item.name.indexOf('front_') !== -1; })[0];
-        const side = subTasks.filter(function (item) { return item.name.indexOf('side_') !== -1; })[0];
+        const front = subTasks.filter(item => item.name.indexOf('front_') !== -1)[0];
+        const side = subTasks.filter(item => item.name.indexOf('side_') !== -1)[0];
 
         this.setState({
           ...this.state,
