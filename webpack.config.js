@@ -7,10 +7,10 @@ const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
-const { NODE_ENV } = process.env;
+const { NODE_ENV, CONFIG } = process.env;
 const mode = (NODE_ENV && NODE_ENV.trim() === 'production') ? 'production' : 'development';
 
-const configFileName = `./saia-config.${mode}`;
+const configFileName = `./saia-config.${CONFIG}`;
 const config = require(configFileName);
 
 const shouldGenSourceMap = mode !== 'production';
