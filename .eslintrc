@@ -1,7 +1,11 @@
 {
-  "extends": ["standard", "standard-preact"],
+  "extends": ["eslint-config-airbnb"],
   "env": {
     "browser": true,
     "node": true
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   }
 }
