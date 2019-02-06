@@ -22,6 +22,12 @@ npm start
 npm run build:prod
 ```
 
+Build for shopify:
+
+```sh
+npm run build:shopify
+```
+
 ## Build configuration file
 
 Config file should be named like this:

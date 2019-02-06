@@ -6,8 +6,18 @@ const TerserPlugin = require('terser-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const RenameOutputPlugin = require('rename-output-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WebpackCleanPlugin = require('webpack-clean');
 
+// get required env vars
 const { NODE_ENV, CONFIG } = process.env;
+// throw error if they don't exist
+if (!NODE_ENV || !CONFIG) {
+  throw new Error('Please set NODE_ENV and CONFIG environment variables');
+}
+
+// get right mode
 const mode = (NODE_ENV && NODE_ENV.trim() === 'production') ? 'production' : 'development';
 
 const configFileName = `./saia-config.${CONFIG}`;
@@ -39,6 +49,46 @@ const postcss = {
     ],
   },
 };
+
+/**
+ * Plugins
+ */
+const plugins = [
+  new webpack.DefinePlugin({
+    API_HOST: JSON.stringify(config.API_HOST),
+    API_KEY: JSON.stringify(config.API_KEY),
+    SHOPIFY_HOST: JSON.stringify(config.SHOPIFY_HOST),
+  }),
+  new HtmlWebpackPlugin({
+    filename: (CONFIG === 'shopify') ? 'modal.tpl' : 'index.html',
+    template: path.resolve('src/index.html'),
+    inject: true,
+    inlineSource: 'widget.(js|css)$',
+    excludeChunks: ['saia-pf-button'],
+    minify: {
+      removeComments: mode === 'production',
+      collapseWhitespace: mode === 'production',
+      removeAttributeQuotes: mode === 'production',
+    },
+  }),
+  new HtmlWebpackInlineSourcePlugin(),
+  new CleanWebpackPlugin([
+    'dist',
+  ]),
+];
+
+// set plugins for shopify build
+if (CONFIG === 'shopify') {
+  // need to rename for shopify
+  plugins.push(new RenameOutputPlugin({
+    'saia-pf-button': 'saia-widget-loader.tpl',
+  }));
+
+  // need to remove saia-pf-widget.js
+  plugins.push(new WebpackCleanPlugin([
+    'dist/saia-pf-widget.js',
+  ]));
+}
 
 /**
  * Webpack config
@@ -124,7 +174,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[hash].[ext]',
+              name: 'assets/[name].[hash].[ext]',
             },
           },
           {
@@ -189,26 +239,7 @@ module.exports = {
       }),
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      API_HOST: JSON.stringify(config.API_HOST),
-      API_KEY: JSON.stringify(config.API_KEY),
-      SHOPIFY_HOST: JSON.stringify(config.SHOPIFY_HOST),
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.resolve('src/index.html'),
-      inject: true,
-      inlineSource: 'widget.(js|css)$',
-      excludeChunks: ['saia-pf-button'],
-      minify: {
-        removeComments: mode === 'production',
-        collapseWhitespace: mode === 'production',
-        removeAttributeQuotes: mode === 'production',
-      },
-    }),
-    new HtmlWebpackInlineSourcePlugin(),
-  ],
+  plugins,
   devtool: (mode === 'production') ? false : 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
