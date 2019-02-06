@@ -1,5 +1,6 @@
 import { h, render } from 'preact';
 import Router from 'preact-router';
+import createHashHistory from 'history/createHashHistory';
 
 /**
  * Components
@@ -21,7 +22,7 @@ const App = () => (
   <div className="widget-container">
     <Header />
 
-    <Router>
+    <Router history={createHashHistory()}>
       <Welcome path="/" />
       <Tips path="/tips" />
       <Data path="/data" />
