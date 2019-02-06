@@ -12,7 +12,13 @@ export class Header extends Component {
    * Close button click
    */
   onCloseButtonClick = () => {
-    console.log('click');
+    // KOSTIL detected
+    //
+    // we cannot read router query params here
+    // and origin is not a part of hash router history
+    // so we need to read origin param from page get params
+    const origin = new URLSearchParams(location.search).get('origin');
+    window.parent.postMessage('saia-pf-widget.close', origin);
   }
 
   /**
