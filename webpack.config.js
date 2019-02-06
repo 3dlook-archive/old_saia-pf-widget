@@ -106,6 +106,7 @@ module.exports = {
     'saia-pf-widget': path.resolve(`${__dirname}/src/App.jsx`),
   },
   output: {
+    publicPath: '/',
     path: `${__dirname}/dist`,
     filename: '[name].js',
   },
@@ -174,7 +175,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'assets/[name].[hash].[ext]',
+              name: 'widget-assets/[name].[hash].[ext]',
             },
           },
           {
