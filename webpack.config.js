@@ -65,7 +65,7 @@ const plugins = [
     template: path.resolve('src/index.html'),
     inject: true,
     inlineSource: 'widget.(js|css)$',
-    excludeChunks: ['saia-pf-button'],
+    excludeChunks: ['saia-pf-button', 'saia-pf-shopify'],
     minify: {
       removeComments: mode === 'production',
       collapseWhitespace: mode === 'production',
@@ -82,7 +82,7 @@ const plugins = [
 if (CONFIG === 'shopify') {
   // need to rename for shopify
   plugins.push(new RenameOutputPlugin({
-    'saia-pf-button': 'saia-widget-loader.tpl',
+    'saia-pf-shopify': 'saia-widget-loader.tpl',
   }));
 
   // need to remove saia-pf-widget.js
@@ -118,6 +118,7 @@ module.exports = {
   },
   entry: {
     'saia-pf-button': path.resolve(`${__dirname}/src/js/button.js`),
+    'saia-pf-shopify': path.resolve(`${__dirname}/src/js/shopify-initializer.js`),
     'saia-pf-widget': path.resolve(`${__dirname}/src/App.jsx`),
   },
   output: {
