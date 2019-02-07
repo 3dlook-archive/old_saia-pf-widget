@@ -6,11 +6,6 @@ import API from 'saia-sdk/lib/api';
 import { Preloader } from '../../components/preloader/Preloader';
 import { objectToUrlParams } from '../../utils';
 
-const api = new API({
-  host: `${API_HOST}/api/v2/`,
-  key: API_KEY,
-});
-
 // assets
 const nextArrowIcon = require('../../images/arrow.svg');
 
@@ -36,6 +31,11 @@ export class Upload extends Component {
 
       isPending: false,
     };
+
+    this.api = new API({
+      host: `${API_HOST}/api/v2/`,
+      key: this.props.matches.key || API_KEY,
+    });
   }
 
   /**
@@ -92,16 +92,16 @@ export class Upload extends Component {
         isPending: true,
       });
   
-      const taskSetId = await api.person.create({
+      const taskSetId = await this.api.person.create({
         gender: this.state.gender,
         height: this.state.height,
         frontImage: this.state.frontImage,
         sideImage: this.state.sideImage,
       });
   
-      const r = await api.queue.getResults(taskSetId);
+      const r = await this.api.queue.getResults(taskSetId);
   
-      let recommendations = await api.sizechart.getSize({
+      let recommendations = await this.api.sizechart.getSize({
         gender: this.state.gender,
         hips: r.volume_params.hips,
         chest: r.volume_params.chest,
