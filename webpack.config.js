@@ -91,6 +91,20 @@ if (CONFIG === 'shopify') {
   ]));
 }
 
+// add demo page for dev environment
+if (CONFIG === 'development') {
+  plugins.push(new HtmlWebpackPlugin({
+    filename: 'demo.html',
+    template: path.resolve('src/demo.html'),
+    inject: false,
+    minify: {
+      removeComments: mode === 'production',
+      collapseWhitespace: mode === 'production',
+      removeAttributeQuotes: mode === 'production',
+    },
+  }));
+}
+
 /**
  * Webpack config
  */
