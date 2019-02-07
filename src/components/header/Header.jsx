@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import Match from 'preact-router/match';
+import { send } from '../../utils';
 
 const saiaPfLogo = require('../../images/logo.svg');
 const modalCloseIcon = require('../../images/close-icon.svg');
@@ -11,15 +12,7 @@ export class Header extends Component {
   /**
    * Close button click
    */
-  onCloseButtonClick = () => {
-    // KOSTIL detected
-    //
-    // we cannot read router query params here
-    // and origin is not a part of hash router history
-    // so we need to read origin param from page get params
-    const origin = new URLSearchParams(location.search).get('origin');
-    window.parent.postMessage('saia-pf-widget.close', origin);
-  }
+  onCloseButtonClick = () => send('close');
 
   /**
    * Help button click
