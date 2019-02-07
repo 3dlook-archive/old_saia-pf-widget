@@ -58,6 +58,7 @@ const plugins = [
     API_HOST: JSON.stringify(config.API_HOST),
     API_KEY: JSON.stringify(config.API_KEY),
     SHOPIFY_HOST: JSON.stringify(config.SHOPIFY_HOST),
+    WIDGET_HOST: JSON.stringify(config.WIDGET_HOST),
   }),
   new HtmlWebpackPlugin({
     filename: (CONFIG === 'shopify') ? 'modal.tpl' : 'index.html',
