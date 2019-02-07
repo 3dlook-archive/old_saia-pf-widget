@@ -19,11 +19,15 @@
   }
 
   &__product {
-    display: flex;
     text-align: left;
     margin: 0 auto;
     max-width: 285px;
     margin-bottom: 44px;
+    display: none;
+
+    &.active {
+      display: flex;
+    }
   }
 
   &__product-img {
