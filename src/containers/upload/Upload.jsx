@@ -7,7 +7,7 @@ import { Preloader } from '../../components/preloader/Preloader';
 import { objectToUrlParams } from '../../utils';
 
 const api = new API({
-  host: API_HOST,
+  host: `${API_HOST}/api/v2/`,
   key: API_KEY,
 });
 
