@@ -4,7 +4,7 @@ import { route } from 'preact-router';
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
 import { Preloader } from '../../components/preloader/Preloader';
-import { objectToUrlParams, send } from '../../utils';
+import { objectToUrlParams, send, transformRecomendations } from '../../utils';
 
 // assets
 const nextArrowIcon = require('../../images/arrow.svg');
@@ -105,6 +105,8 @@ export class Upload extends Component {
         hips: r.volume_params.hips,
         chest: r.volume_params.chest,
         waist: r.volume_params.waist,
+        gender: this.state.gender,
+        height: this.state.height,
       });
   
       let recommendations = await this.api.sizechart.getSize({
@@ -116,12 +118,7 @@ export class Upload extends Component {
         body_part: this.props.matches.body_part,
       });
 
-      for (const rec in recommendations) {
-        if (recommendations.hasOwnProperty(rec)) {
-          const element = recommendations[rec];
-          recommendations[rec] = element.size;
-        }
-      }
+      recommendations = transformRecomendations(recommendations);
       
       const params = {
         ...this.props.matches,
