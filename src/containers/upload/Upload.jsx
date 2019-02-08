@@ -119,7 +119,9 @@ export class Upload extends Component {
         body_part: this.props.matches.body_part,
       });
 
-      recommendations = transformRecomendations(recommendations);
+      if (recommendations) {
+        recommendations = transformRecomendations(recommendations);
+      }
       
       const params = {
         ...this.props.matches,
