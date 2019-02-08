@@ -88,6 +88,7 @@ if (CONFIG === 'shopify') {
   // need to remove saia-pf-widget.js
   plugins.push(new WebpackCleanPlugin([
     'dist/saia-pf-widget.js',
+    'dist/saia-pf-button.js',
   ]));
 }
 
