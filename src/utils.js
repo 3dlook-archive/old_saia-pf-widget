@@ -30,3 +30,24 @@ export const send = (command, data = {}) => {
     data,
   }, origin);
 };
+
+/**
+ * Transforms response object from size recomendation API to object like this
+ * {
+ *    normal: 'M',
+ *    loose: 'L'
+ * }
+ *
+ * @param {Object} recomendations - response from size recomendation API
+ */
+export const transformRecomendations = (recomendations) => {
+  const entries = Object.entries(recomendations);
+  const transformed = {};
+
+  for (let i = 0; i < entries.length; i += 1) {
+    const entry = entries[i];
+    transformed[entry[0]] = entry[1].size;
+  }
+
+  return transformed;
+};
