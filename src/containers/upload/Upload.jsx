@@ -82,7 +82,7 @@ export class Upload extends Component {
         });
       }
   
-      if (!this.state.frontImage && !this.state.sideImage) {
+      if (!this.state.frontImage || !this.state.sideImage) {
         return;
       }
   
@@ -161,10 +161,8 @@ export class Upload extends Component {
 
   render() {
     const filesErrorClasses = classNames('upload__files-error', {
-      active: !this.state.isFrontImageValid &&
-              !this.state.isSideImageValid &&
-              !this.state.frontImage &&
-              !this.state.sideImage,
+      active: (!this.state.isFrontImageValid || !this.state.isSideImageValid) &&
+              (!this.state.frontImage || !this.state.sideImage),
     });
   
     return (
