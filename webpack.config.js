@@ -142,6 +142,16 @@ module.exports = {
                   },
                 }],
               ],
+              plugins: [
+                ['@babel/plugin-transform-async-to-generator'],
+                ['@babel/plugin-proposal-class-properties', { loose: false }],
+                ['@babel/plugin-transform-runtime', {
+                  corejs: false,
+                  helpers: true,
+                  regenerator: true,
+                  useESModules: false,
+                }],
+              ],
             },
           },
         ],
@@ -261,6 +271,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    host: '0.0.0.0',
     port: 9000,
     historyApiFallback: true,
   },
