@@ -52,8 +52,6 @@ export class Data extends Component {
   }
 
   onNextScreen = () => {
-    console.log(this.state);
-
     // validate values
     let isHeightValid = false;
     let isGenderValid = false;
