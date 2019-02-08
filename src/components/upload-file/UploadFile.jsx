@@ -1,7 +1,9 @@
 import { h, Component } from 'preact';
 
-const frontImage = require('../../images/front.svg');
-const sideImage = require('../../images/side.svg');
+const frontMaleImage = require('../../images/front-male.svg');
+const sideMaleImage = require('../../images/side-male.svg');
+const frontFemaleImage = require('../../images/front-female.svg');
+const sideFemaleImage = require('../../images/side-female.svg');
 
 /**
  * Upload file component
@@ -209,12 +211,21 @@ export class UploadFile extends Component {
 
   render({ type }) {
     const fileText = (type === 'front') ? 'Front' : 'Side';
+    let image = null;
+
+    if (this.props.gender === 'male') {
+      image = (type === 'front') ? frontMaleImage : sideMaleImage;
+    }
+
+    if (this.props.gender === 'female') {
+      image = (type === 'front') ? frontFemaleImage : sideFemaleImage;
+    }
 
     return (
       <label class={`upload__file ${!this.props.isValid ? 'upload__file--invalid' : ''}`} for={type} tabindex="0">
         <input type="file" name={type} id={type} hidden onChange={this.onChange} />
         <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
-          <img src={(type === 'front' ? frontImage : sideImage)} alt={`${fileText} image icon`} />
+          <img src={image} alt={`${fileText} image icon`} />
           <p class="upload__file-select-text">select file</p>
         </div>
         <div class={`upload__file-image upload__file-image--preview ${this.state.mode === 'preview' ? 'active' : ''}`}>
