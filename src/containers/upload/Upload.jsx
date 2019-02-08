@@ -174,8 +174,8 @@ export class Upload extends Component {
           <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
 
           <div class="upload__files">
-            <UploadBlock gender={this.state.gender} type="front" validation={{ pose: this.state.frontImagePose, body: null }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
-            <UploadBlock gender={this.state.gender} type="side" validation={{ pose: this.state.sideImagePose, body: null }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
+            <UploadBlock gender={this.state.gender} type="front" validation={{ pose: this.state.frontImagePose, body: this.state.frontImagePose }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
+            <UploadBlock gender={this.state.gender} type="side" validation={{ pose: this.state.sideImagePose, body: this.state.sideImagePose }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
             <p className={filesErrorClasses}><span>!</span> Please upload your photos first</p>
           </div>
 
