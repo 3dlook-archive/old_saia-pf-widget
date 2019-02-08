@@ -7,9 +7,9 @@ const nextArrowIcon = require('../../images/arrow.svg');
 const Results = ({ matches }) => (
   <div className="screen screen--result active">
     <div className="screen__content result">
-      <h2 className="screen__title result__title">your recomended size</h2>
+      <h2 className={classNames('screen__title', 'result__title', { active: matches.tight || matches.normal || matches.loose })}>your recomended size</h2>
 
-      <div className={classNames('result__product', { active: matches.product_description && matches.image })}>
+      <div className={classNames('result__product', { active: matches.product_description && matches.image && (matches.tight || matches.normal || matches.loose) })}>
         <div className="result__product-img">
           <img src={matches.image} alt="" />
         </div>
@@ -18,6 +18,10 @@ const Results = ({ matches }) => (
           <p className="result__product-desc">{matches.product_description}</p>
         </div>
       </div>
+
+      <h2 className={classNames('result__size-not-found', { active: !matches.tight && !matches.normal && !matches.loose })}>
+        Sorry, we didn’t find a Perfect Fit for this item.
+      </h2>
 
       <div className="result__sizes">
         <div className={classNames('result__size', 'result__size--tight', { active: matches.tight })}>
