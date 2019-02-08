@@ -19,9 +19,14 @@ const Results = ({ matches }) => (
         </div>
       </div>
 
-      <h2 className={classNames('result__size-not-found', { active: !matches.tight && !matches.normal && !matches.loose })}>
-        Sorry, we didn’t find a Perfect Fit for this item.
-      </h2>
+      <div className={classNames('result__size-not-found', { active: !matches.tight && !matches.normal && !matches.loose })}>
+        <h2>OOPS, SOMETHING WENT WRONG…</h2>
+        <p>
+          We can’t find your Perfect Fit for this item.
+          <br />
+          Please try out other items.
+        </p>
+      </div>
 
       <div className="result__sizes">
         <div className={classNames('result__size', 'result__size--tight', { active: matches.tight })}>

@@ -124,5 +124,10 @@
     &.active {
       display: block;
     }
+
+    h2 {
+      font-size: rem(16px);
+      margin-bottom: 30px;
+    }
   }
 }
