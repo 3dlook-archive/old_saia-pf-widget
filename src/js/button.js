@@ -14,6 +14,7 @@ class SaiaButton {
    * @param {string} options.container - selector for button container
    * @param {string} options.key - SAIA PF API key
    * @param {string} options.widgetUrl - url to the widget host to open it in the iframe
+   * @param {string} [options.buttonStyle] - button style. Could be 'default', 'black', 'outline'
    * @param {Object} [options.product] - object with product parameters (optional)
    * @param {string} [options.product.description] - product description.
    * Will be displayed on final results page
@@ -28,6 +29,7 @@ class SaiaButton {
    */
   constructor(options) {
     this.defaults = {
+      buttonStyle: 'default', // default, black, outline
       container: '.saia-widget-container',
       key: '',
       widgetUrl: '',
@@ -69,8 +71,9 @@ class SaiaButton {
    * Init widget
    */
   init() {
+    const buttonTemplateClasses = buttonTemplate.replace('{{classes}}', ` saia-pf-button--${this.defaults.buttonStyle}`);
     const container = document.querySelector(this.defaults.container);
-    container.insertAdjacentHTML('beforeend', buttonTemplate);
+    container.insertAdjacentHTML('beforeend', buttonTemplateClasses);
 
     // append modal drop to body
     document.body.insertAdjacentHTML('beforeend', modalTemplate);
@@ -148,7 +151,9 @@ class SaiaButton {
         body_part: this.defaults.bodyPart,
       });
 
-      recomendations = transformRecomendations(recomendations);
+      if (recomendations) {
+        recomendations = transformRecomendations(recomendations);
+      }
 
       return recomendations;
     }
@@ -162,7 +167,9 @@ class SaiaButton {
    * @param {Object} recomendations - size recomendations transformed object
    */
   displaySize(recomendations) {
-    this.buttonEl.innerHTML = `Your size: ${recomendations.normal}`;
+    if (recomendations) {
+      this.buttonEl.innerHTML = `YOUR PERFECT FIT: ${recomendations.normal}`;
+    }
   }
 }
 
