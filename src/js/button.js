@@ -1,4 +1,8 @@
+import API from 'saia-sdk/lib/api';
+import { transformRecomendations } from '../utils';
+
 require('../scss/button.scss');
+
 const buttonTemplate = require('../views/button.html');
 const modalTemplate = require('../views/modal-drop.html');
 
@@ -52,6 +56,13 @@ class SaiaButton {
     if (!this.defaults.widgetUrl) {
       throw new Error('Please provide a widget url');
     }
+
+    this.buttonEl = null;
+
+    this.api = new API({
+      host: `${API_HOST}/api/v2/`,
+      key: this.defaults.key || API_KEY,
+    });
   }
 
   /**
@@ -66,9 +77,9 @@ class SaiaButton {
 
     // get modal and button elements by their selectors
     const modal = document.querySelector('.saia-pf-drop');
-    const btn = document.querySelector('.saia-pf-button');
+    this.buttonEl = document.querySelector('.saia-pf-button');
 
-    btn.addEventListener('click', () => {
+    this.buttonEl.addEventListener('click', () => {
       modal.classList.toggle('active');
 
       let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}&origin=${window.location.origin}`;
@@ -104,13 +115,54 @@ class SaiaButton {
           localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
           break;
         case 'saia-pf-widget.recommendations':
-          btn.innerHTML = `Your size is: ${data.normal}`;
+          this.displaySize(data);
           break;
 
         default:
           break;
       }
     }, false);
+  }
+
+  /**
+   * Check should we display button for current product page or not
+   */
+  checkButtonVisibility() {
+    /* TODO: need to be implemented */
+    return true;
+  }
+
+  /**
+   * Get size for current product if measurements presaved in localstorage
+   *
+   * @async
+   * @returns {Object|null} recomendations
+   */
+  async getSize() {
+    const measurements = JSON.parse(localStorage.getItem('saia-pf-widget-data'));
+
+    if (measurements) {
+      let recomendations = await this.api.sizechart.getSize({
+        ...measurements,
+        brand: this.defaults.brand,
+        body_part: this.defaults.bodyPart,
+      });
+
+      recomendations = transformRecomendations(recomendations);
+
+      return recomendations;
+    }
+
+    return null;
+  }
+
+  /**
+   * Display sizes on the button
+   *
+   * @param {Object} recomendations - size recomendations transformed object
+   */
+  displaySize(recomendations) {
+    this.buttonEl.innerHTML = `Your size: ${recomendations.normal}`;
   }
 }
 
