@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 38px;
+    position: relative;
   }
 
   &__file-block {
@@ -135,5 +136,16 @@
 
   .button {
     margin-top: 44px;
+  }
+
+  &__files-error {
+    @extend .data__field-error;
+
+    &.active {
+      display: block;
+      left: 50%;
+      transform: translateX(-50%);
+      top: calc(100% + 10px);
+    }
   }
 }

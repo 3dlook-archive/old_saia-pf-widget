@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import classNames from 'classnames';
 
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
@@ -159,6 +160,13 @@ export class Upload extends Component {
   }
 
   render() {
+    const filesErrorClasses = classNames('upload__files-error', {
+      active: !this.state.isFrontImageValid &&
+              !this.state.isSideImageValid &&
+              !this.state.frontImage &&
+              !this.state.sideImage,
+    });
+  
     return (
       <div class="screen screen--upload active">
         <div class="screen__content upload">
@@ -168,6 +176,7 @@ export class Upload extends Component {
           <div class="upload__files">
             <UploadBlock type="front" validation={{ pose: this.state.frontImagePose, body: null }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
             <UploadBlock type="side" validation={{ pose: this.state.sideImagePose, body: null }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
+            <p className={filesErrorClasses}><span>!</span> Please upload your photos first</p>
           </div>
 
           <button class="button" onClick={this.onNextButtonClick}>
