@@ -17,9 +17,7 @@ export class Header extends Component {
   /**
    * Help button click
    */
-  onHelpButtonClick = () => {
-    console.log('click');
-  }
+  onHelpButtonClick = () => this.props.help();
 
   render() {
     return (
@@ -34,7 +32,7 @@ export class Header extends Component {
           ) }
         </Match>
 
-        <button class="header__close" onClick={this.onCloseButtonClick}>
+        <button class="header__close" onClick={this.onCloseButtonClick} type="button">
           <img src={modalCloseIcon} alt="Close button icon" />
         </button>
       </div>
