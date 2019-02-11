@@ -106,7 +106,7 @@ export class Height extends Component {
           <div class="height__input-block" data-measure="cm">
             <input
               class="height__input"
-              type="text"
+              type="number"
               value={this.state.cm}
               onChange={this.onCmInputChange}
               onKeyDown={this.validateCm}
@@ -119,7 +119,7 @@ export class Height extends Component {
         <div class="height__measure height__measure--in">
           <div class="height__input-block" data-measure="ft">
             <input class="height__input"
-            type="text"
+            type="number"
             value={this.state.ft}
             onChange={this.onFtInputChange}
             />
@@ -127,7 +127,7 @@ export class Height extends Component {
           <div class="height__input-block" data-measure="in">
             <input
               class="height__input"
-              type="text"
+              type="number"
               value={this.state.in}
               onChange={this.onInInputChange} />
           </div>
