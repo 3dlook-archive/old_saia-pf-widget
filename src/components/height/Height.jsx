@@ -1,28 +1,9 @@
 import { h, Component } from 'preact';
+import { cmToFtIn, getHeightCm } from '../../utils';
 
-// helper functions
-function cmToFtIn(cm) {
-  var inches = cm / 2.54;
-  var ft = inches / 12;
-
-  return {
-    ft: Math.floor(ft),
-    in: Math.ceil(inches.toFixed(0) % 12),
-  };
-}
-
-function in2cm(inches) {
-  return inches * 2.54;
-}
-
-function ft2in(ft) {
-  return ft * 12;
-}
-
-function getHeightCm(ft = 0, inches = 0) {
-  return in2cm(ft2in(ft) + parseInt(inches));
-}
-
+/**
+ * Height component
+ */
 export class Height extends Component {
   constructor(props) {
     super(props);
@@ -35,12 +16,18 @@ export class Height extends Component {
     }
   }
 
+  /**
+   * Units change handler
+   */
   onUnitsChange = (e) => {
     this.setState({
       units: e.target.value,
     });
   }
 
+  /**
+   * Cm change handler
+   */
   onCmInputChange = (e) => {
     // get height in cm
     const { value } = e.target;
@@ -57,6 +44,9 @@ export class Height extends Component {
     this.props.change(this.state.cm);
   }
 
+  /**
+   * Ft change handler
+   */
   onFtInputChange = (e) => {
     // get ft
     const { value } = e.target;
@@ -74,6 +64,9 @@ export class Height extends Component {
     this.props.change(this.state.cm);
   }
 
+  /**
+   * In change handler
+   */
   onInInputChange = (e) => {
     // get in
     const { value } = e.target;
@@ -91,6 +84,9 @@ export class Height extends Component {
     this.props.change(this.state.cm);
   }
 
+  /**
+   * Validate cm value
+   */
   validateCm = (e) => {
     let { value } = e.target;
     // TODO: create regexp to validate numbers
