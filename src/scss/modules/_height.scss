@@ -48,6 +48,8 @@
     padding: 0 15px;
     appearance: none;
 
+    @include disable-number();
+
     @include breakpoint(max-width 500px) {
       height: 40px;
     }
