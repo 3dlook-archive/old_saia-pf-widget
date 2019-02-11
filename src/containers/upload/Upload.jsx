@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from 'saia-sdk/lib/api';
-import { Preloader } from '../../components/preloader/Preloader';
+import Preloader from '../../components/preloader/Preloader';
 import { objectToUrlParams, send, transformRecomendations } from '../../utils';
 
 // assets
