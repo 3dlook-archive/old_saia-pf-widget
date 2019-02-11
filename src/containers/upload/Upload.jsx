@@ -10,6 +10,9 @@ import { objectToUrlParams, send, transformRecomendations } from '../../utils';
 // assets
 const nextArrowIcon = require('../../images/arrow.svg');
 
+/**
+ * Upload page component.
+ */
 export class Upload extends Component {
   constructor(props) {
     super(props);

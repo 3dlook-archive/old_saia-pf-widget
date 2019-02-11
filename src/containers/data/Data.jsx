@@ -7,6 +7,9 @@ import { Height } from '../../components/height/Height';
 
 const nextArrowIcon = require('../../images/arrow.svg');
 
+/**
+ * Data page component
+ */
 export class Data extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +24,9 @@ export class Data extends Component {
     };
   }
 
+  /**
+   * Change gender handler
+   */
   changeGender = (gender) => {
     this.setState({
       ...this.state,
@@ -29,6 +35,9 @@ export class Data extends Component {
     });
   }
 
+  /**
+   * Change height handler
+   */
   changeHeight = (height) => {
     let isValueValid = false;
     const numHeight = parseInt(height);
@@ -44,6 +53,9 @@ export class Data extends Component {
     });
   }
 
+  /**
+   * Change argee checkbox state handler
+   */
   changeAgree = (e) => {
     this.setState({
       ...this.state,
@@ -51,6 +63,9 @@ export class Data extends Component {
     });
   }
 
+  /**
+   * On next screen event handler
+   */
   onNextScreen = () => {
     // validate values
     let isHeightValid = false;

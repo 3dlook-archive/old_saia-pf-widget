@@ -9,6 +9,10 @@ const slideImage1 = require('../../images/slide1.png');
 const slideImage2 = require('../../images/slide2.png');
 const slideImage3 = require('../../images/slide3.png');
 
+/**
+ * Tips page component.
+ * Displays slider with tips on how to take proper photos
+ */
 const Tips = ({ matches }) => (
   <div className="screen screen--tips active">
     <div className="screen__content tips">

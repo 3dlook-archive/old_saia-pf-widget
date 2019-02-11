@@ -4,6 +4,10 @@ import { send } from '../../utils';
 
 const nextArrowIcon = require('../../images/arrow.svg');
 
+/**
+ * Results page component.
+ * Displays results of the flow.
+ */
 const Results = ({ matches }) => (
   <div className="screen screen--result active">
     <div className="screen__content result">

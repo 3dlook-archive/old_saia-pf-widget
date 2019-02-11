@@ -6,6 +6,9 @@ import { objectToUrlParams } from '../../utils';
 const saiaPfLogo = require('../../images/logo.svg');
 const nextArrowIcon = require('../../images/arrow.svg');
 
+/**
+ * Welcome page component
+ */
 const Welcome = ({ matches }) => (
   <div className="screen screen--welcome active">
     <div className="screen__content welcome">
