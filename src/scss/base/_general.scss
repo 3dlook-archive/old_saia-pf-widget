@@ -1,5 +1,14 @@
+html {
+  height: 100%;
+}
+
 body {
   background: #eee;
+  min-height: 100%;
+
+  @include breakpoint(max-width 768px) {
+    display: flex;
+  }
 }
 
 button {

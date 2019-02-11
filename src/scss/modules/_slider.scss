@@ -1,10 +1,18 @@
 .slider {
+  @include breakpoint(max-width 500px) {
+    position: relative;
+  }
 
   &__slide {
     display: none;
 
+    @include breakpoint(max-width 500px) {
+      padding: 0 20px;
+    }
+
     img {
       margin: 0 auto;
+      max-width: 100%;
     }
 
     &.active {
@@ -16,6 +24,10 @@
     display: flex;
     justify-content: center;
     margin: 30px 0 27px;
+
+    @include breakpoint(max-width 500px) {
+      margin: 15px 0;
+    }
   }
 
   &__bullet {
@@ -48,10 +60,18 @@
 
   &__next-btn {
     right: 47px;
+
+    @include breakpoint(max-width 500px) {
+      right: -12px;
+    }
   }
 
   &__back-btn {
     left: 47px;
     transform: scaleX(-1) translateY(-50%);
+
+    @include breakpoint(max-width 500px) {
+      left: -12px;
+    }
   }
 }

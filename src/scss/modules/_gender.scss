@@ -25,6 +25,10 @@
     &:first-of-type {
       margin-right: 28px;
     }
+
+    @include breakpoint(max-width 500px) {
+      height: 40px;
+    }
   }
 
   input:checked + label {

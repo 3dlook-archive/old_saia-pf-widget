@@ -2,6 +2,14 @@
   text-align: center;
   padding-top: 42px;
 
+  @include breakpoint(max-width 500px) {
+    padding-top: 0;
+
+    .screen__text {
+      margin-bottom: 0;
+    }
+  }
+
   &__block {
     margin: 0 auto;
     max-width: 240px;
@@ -21,6 +29,16 @@
     margin-bottom: 40px;
     position: relative;
 
+    @include breakpoint(max-width 500px) {
+      margin-bottom: 30px;
+    }
+
+    &:last-child {
+      @include breakpoint(max-width 500px) {
+        margin-bottom: 15px;
+      }
+    }
+
     &--invalid &-error {
       display: block;
     }
@@ -32,6 +50,10 @@
       color: $error-text-color;
       font-size: rem(9px);
       display: none;
+
+      @include breakpoint(max-width 500px) {
+        top: 65px;
+      }
 
       span {
         display: inline-flex;
