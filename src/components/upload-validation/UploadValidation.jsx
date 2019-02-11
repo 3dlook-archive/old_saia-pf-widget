@@ -5,6 +5,9 @@ import classNames from 'classnames';
 const crossIcon = require('../../images/cross.svg');
 const checkIcon = require('../../images/check.svg');
 
+/**
+ * Displays image processing errors
+ */
 const UploadValidation = ({ validation }) => (
   <ul className={classNames('upload__file-validation', { active: validation.pose || validation.body })}>
     <li className={`upload__file-validation-status upload__file-validation-status--${validation.pose}`}>

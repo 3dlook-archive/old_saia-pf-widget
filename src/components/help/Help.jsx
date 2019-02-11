@@ -3,6 +3,10 @@ import classNames from 'classnames';
 
 const modalCloseIcon = require('../../images/close-icon.svg');
 
+/**
+ * Help component.
+ * Displays help information
+ */
 const Help = ({ close, show }) => (
   <div className={classNames('help', { active: show })}>
     <header className="help__header">

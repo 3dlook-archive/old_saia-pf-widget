@@ -1,10 +1,16 @@
 import { h, Component } from 'preact';
 
+/**
+ * Gender component
+ */
 export class Gender extends Component {
   constructor(props) {
     super(props);
   }
 
+  /**
+   * Gender change event handler
+   */
   onGenderChange = (e) => {
     this.props.change(e.target.value);
   }
