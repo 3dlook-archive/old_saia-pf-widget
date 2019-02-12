@@ -23,13 +23,15 @@ import SaiaButton from './button';
   });
   const isButtonVisible = button.checkButtonVisibility();
 
-  if (isButtonVisible) {
-    button.init();
+  if (!isButtonVisible) {
+    return;
+  }
 
-    const recomendations = await button.getSize();
+  button.init();
 
-    if (recomendations) {
-      button.displaySize(recomendations);
-    }
+  const recomendations = await button.getSize();
+
+  if (recomendations) {
+    button.displaySize(recomendations);
   }
 })();
