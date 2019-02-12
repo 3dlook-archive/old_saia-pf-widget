@@ -8,7 +8,9 @@
     "build": "export NODE_ENV=development && export CONFIG=development && webpack --progress",
     "build:prod": "export NODE_ENV=production && export CONFIG=production && webpack --progress",
     "build:shopify": "export NODE_ENV=production && export CONFIG=shopify && webpack --progress",
-    "test": "jest --config ./jest.config.js --coverage"
+    "test": "jest --config ./jest.config.js --coverage",
+    "docs": "jsdoc -r ./src/js/button.js -c .jsdoc.json -d docs",
+    "readme": "jsdoc2md --template ./.jsdoc2md/readme.hbs --files src/js/button.js -c .jsdoc.json > README.md"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,9 @@
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.6.0",
     "jest": "^24.1.0",
+    "jsdoc": "^3.5.5",
+    "jsdoc-to-markdown": "^4.0.1",
+    "minami": "^1.2.3",
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
     "preact-compat-enzyme": "^0.2.5",
