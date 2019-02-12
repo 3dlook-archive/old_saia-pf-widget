@@ -60,6 +60,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@3dlook/saia-sdk": "^2.1.0",
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.1",
     "axios": "^0.18.0",
@@ -68,7 +69,6 @@
     "normalize.css": "^8.0.1",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
-    "preact-router": "^2.6.1",
-    "saia-sdk": "git+https://git@bitbucket.org/Hachapury/saia-sdk.git"
+    "preact-router": "^2.6.1"
   }
 }

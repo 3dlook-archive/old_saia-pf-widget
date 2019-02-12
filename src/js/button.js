@@ -1,4 +1,4 @@
-import API from 'saia-sdk/lib/api';
+import API from '@3dlook/saia-sdk/lib/api';
 import { transformRecomendations } from '../utils';
 
 require('../scss/button.scss');
