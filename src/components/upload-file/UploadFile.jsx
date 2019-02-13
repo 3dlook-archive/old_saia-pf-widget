@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames';
 
 const frontMaleImage = require('../../images/front-male.svg');
 const sideMaleImage = require('../../images/side-male.svg');
@@ -209,6 +210,13 @@ export class UploadFile extends Component {
     });
   }
 
+  keyboardAccess = (e) => {
+    if(e.which === 32 || e.which === 13){
+      e.preventDefault();
+      e.target.click();
+    }
+  }
+
   render({ type }) {
     const fileText = (type === 'front') ? 'Front' : 'Side';
     let image = null;
@@ -221,9 +229,14 @@ export class UploadFile extends Component {
       image = (type === 'front') ? frontFemaleImage : sideFemaleImage;
     }
 
+    const classes = classNames('upload__file',
+      {
+        'upload__file--invalid': !this.props.isValid,
+      });
+
     return (
-      <label class={`upload__file ${!this.props.isValid ? 'upload__file--invalid' : ''}`} for={type} tabindex="0">
-        <input type="file" name={type} id={type} hidden onChange={this.onChange} />
+      <label class={classes} for={type} tabIndex="0" onKeyPress={this.keyboardAccess} onKeyUp={this.keyboardAccess}>
+        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" />
         <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
           <img src={image} alt={`${fileText} image icon`} />
           <p class="upload__file-select-text">select file</p>

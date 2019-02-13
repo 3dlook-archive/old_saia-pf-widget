@@ -183,4 +183,8 @@
       top: calc(100% + 10px);
     }
   }
+
+  input {
+    @include visually-hidden;
+  }
 }
