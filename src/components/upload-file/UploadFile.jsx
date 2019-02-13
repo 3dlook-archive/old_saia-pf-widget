@@ -21,29 +21,57 @@ export class UploadFile extends Component {
   }
 
   /**
+   * Save file blob to the state
+   *
+   * @param {Blob} file - image file
+   */
+  async saveFile(file) {
+    if (!file) {
+      return;
+    }
+
+    const orientation = await this.getOrientation(file);
+    const fileBase64 = await this.loadPhoto(file, orientation);
+
+    this.setState({
+      file: fileBase64,
+      fileBlob: file,
+      mode: 'preview',
+    });
+
+    this.props.change({
+      file: fileBase64,
+      fileBlob: file,
+      mode: 'preview',
+    });
+  }
+
+  /**
    * Change file input handler
    *
    * @async
    */
   onChange = async (e) => {
     const file = e.target.files[0];
+    await this.saveFile(file);
+  }
 
-    if (file) {
-      const orientation = await this.getOrientation(file);
-      const fileBase64 = await this.loadPhoto(file, orientation);
-  
-      this.setState({
-        file: fileBase64,
-        fileBlob: file,
-        mode: 'preview',
-      });
+  /**
+   * Disable dragOver and dragLeave events
+   */
+  disableDragEvents = (e) => {
+    e.preventDefault();  
+    e.stopPropagation();
+  }
 
-      this.props.change({
-        file: fileBase64,
-        fileBlob: file,
-        mode: 'preview',
-      });
-    }
+  /**
+   * Handle drop image file event
+   */
+  dropImage = async (e) => {
+    e.preventDefault();
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    await this.saveFile(files[0]);
   }
 
   /**
@@ -235,7 +263,7 @@ export class UploadFile extends Component {
       });
 
     return (
-      <label class={classes} for={type} tabIndex="0" onKeyPress={this.keyboardAccess} onKeyUp={this.keyboardAccess}>
+      <label onDragOver={this.disableDragEvents} onDragLeave={this.disableDragEvents} onDrop={this.dropImage} class={classes} for={type} tabIndex="0" onKeyPress={this.keyboardAccess} onKeyUp={this.keyboardAccess}>
         <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" />
         <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
           <img src={image} alt={`${fileText} image icon`} />
