@@ -146,7 +146,7 @@ export class Height extends Component {
         <div class="height__switcher">
           <input type="radio" name="measure" id="measure-cm" value="cm" onChange={this.onUnitsChange} checked={this.state.units === 'cm'} />
           <label class="height__switcher-item height__switcher-item--cm" for="measure-cm">cm</label>
-          
+
           <input type="radio" name="measure" id="measure-in" value="in" onChange={this.onUnitsChange} checked={this.state.units === 'in'} />
           <label class="height__switcher-item height__switcher-item--in" for="measure-in">in</label>
 
@@ -155,7 +155,7 @@ export class Height extends Component {
 
         <p class={`height__desc ${this.state.units === 'in' ? 'height__desc--hidden' : ''}`}>
           Your height should be between<br />
-          150-210 cm
+          150-220 cm
         </p>
 
         <p class={`height__desc ${this.state.units === 'cm' ? 'height__desc--hidden' : ''}`}>
