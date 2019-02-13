@@ -21,7 +21,18 @@ export class Height extends Component {
    */
   onUnitsChange = (e) => {
     this.setState({
+      ...this.state,
       units: e.target.value,
+    });
+  }
+
+  /**
+   * Switch element click handler
+   */
+  onSwitchClick = () => {
+    this.setState({
+      ...this.state,
+      units: (this.state.units === 'cm') ? 'in' : 'cm',
     });
   }
 
@@ -36,6 +47,7 @@ export class Height extends Component {
     const ftIn = cmToFtIn(value);
 
     this.setState({
+      ...this.state,
       cm: value,
       ft: ftIn.ft,
       in: ftIn.in,
@@ -56,6 +68,7 @@ export class Height extends Component {
     cm = cm.toFixed(0);
 
     this.setState({
+      ...this.state,
       cm,
       ft: value,
       in: this.state.in || 0,
@@ -76,6 +89,7 @@ export class Height extends Component {
     cm = cm.toFixed(0);
 
     this.setState({
+      ...this.state,
       cm,
       ft: this.state.ft || 0,
       in: value,
@@ -136,7 +150,7 @@ export class Height extends Component {
           <input type="radio" name="measure" id="measure-in" value="in" onChange={this.onUnitsChange} checked={this.state.units === 'in'} />
           <label class="height__switcher-item height__switcher-item--in" for="measure-in">in</label>
 
-          <div class="height__switcher-switch"></div>
+          <div class="height__switcher-switch" onClick={this.onSwitchClick}></div>
         </div>
 
         <p class={`height__desc ${this.state.units === 'in' ? 'height__desc--hidden' : ''}`}>

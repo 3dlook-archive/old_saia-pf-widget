@@ -90,6 +90,7 @@
     font-size: rem(14px);
     width: 40px;
     text-align: center;
+    cursor: pointer;
 
     &--cm {
       order: 1;
@@ -107,6 +108,7 @@
     border-radius: 5px;
     order: 2;
     position: relative;
+    cursor: pointer;
 
     &:before {
       content: '';
