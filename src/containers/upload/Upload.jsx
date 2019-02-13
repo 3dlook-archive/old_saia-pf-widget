@@ -77,32 +77,32 @@ export class Upload extends Component {
           isFrontImageValid: false,
         });
       }
-  
+
       if (!this.state.sideImage) {
         this.setState({
           ...this.state,
           isSideImageValid: false,
         });
       }
-  
+
       if (!this.state.frontImage || !this.state.sideImage) {
         return;
       }
-  
+
       this.setState({
         ...this.state,
         isFrontImageValid: !!this.state.frontImage,
         isSideImageValid: !!this.state.sideImage,
         isPending: true,
       });
-  
+
       const taskSetId = await this.api.person.create({
         gender: this.state.gender,
         height: this.state.height,
         frontImage: this.state.frontImage,
         sideImage: this.state.sideImage,
       });
-  
+
       const r = await this.api.queue.getResults(taskSetId);
 
       send('data', {
@@ -112,7 +112,7 @@ export class Upload extends Component {
         gender: this.state.gender,
         height: this.state.height,
       });
-  
+
       let recommendations = await this.api.sizechart.getSize({
         gender: this.state.gender,
         hips: r.volume_params.hips,
@@ -125,7 +125,7 @@ export class Upload extends Component {
       if (recommendations) {
         recommendations = transformRecomendations(recommendations);
       }
-      
+
       const params = {
         ...this.props.matches,
         ...recommendations,
@@ -169,7 +169,7 @@ export class Upload extends Component {
       active: (!this.state.isFrontImageValid || !this.state.isSideImageValid) &&
               (!this.state.frontImage || !this.state.sideImage),
     });
-  
+
     return (
       <div class="screen screen--upload active">
         <div class="screen__content upload">

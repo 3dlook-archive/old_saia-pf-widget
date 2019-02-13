@@ -23,6 +23,7 @@ export class UploadFile extends Component {
   /**
    * Save file blob to the state
    *
+   * @async
    * @param {Blob} file - image file
    */
   async saveFile(file) {
@@ -60,7 +61,7 @@ export class UploadFile extends Component {
    * Disable dragOver and dragLeave events
    */
   disableDragEvents = (e) => {
-    e.preventDefault();  
+    e.preventDefault();
     e.stopPropagation();
   }
 
@@ -82,53 +83,44 @@ export class UploadFile extends Component {
    */
   getOrientation(blob) {
     return new Promise((resolve, reject) => {
-      var reader = new FileReader();
+      const reader = new FileReader();
 
-      reader.addEventListener('load', function () {
-
-        var view = new DataView(reader.result);
+      reader.addEventListener('load', () => {
+        const view = new DataView(reader.result);
 
         if (view.getUint16(0, false) !== 0xFFD8) {
-
           return resolve(-2);
         }
 
-        var length = view.byteLength;
-        var offset = 2;
+        const length = view.byteLength;
+        let offset = 2;
 
         while (offset < length) {
-
-          var marker = view.getUint16(offset, false);
+          const marker = view.getUint16(offset, false);
           offset += 2;
 
           if (marker === 0xFFE1) {
 
             if (view.getUint32(offset += 2, false) !== 0x45786966) {
-
               return resolve(-1);
             }
 
-            var little = view.getUint16(offset += 6, false) === 0x4949;
+            const little = view.getUint16(offset += 6, false) === 0x4949;
             offset += view.getUint32(offset + 4, little);
 
-            var tags = view.getUint16(offset, little);
+            const tags = view.getUint16(offset, little);
             offset += 2;
 
-            for (var i = 0; i < tags; i++) {
-
+            for (let i = 0; i < tags; i++) {
               if (view.getUint16(offset + (i * 12), little) === 0x0112) {
 
                 return resolve(view.getUint16(offset + (i * 12) + 8, little));
               }
             }
-          }
-          else {
-
+          } else {
             if ((marker & 0xFF00) !== 0xFF00) {
-
               break;
             } else {
-
               offset += view.getUint16(offset, false);
             }
           }
@@ -137,97 +129,83 @@ export class UploadFile extends Component {
         return resolve(-1);
       });
 
-      reader.addEventListener('error', function (e) {
-
-        return reject(e);
-      });
+      reader.addEventListener('error', e => reject(e));
 
       reader.readAsArrayBuffer(blob);
     });
   }
 
   /**
-   * 
-   * @param {*} blob 
-   * @param {*} fixOrientation 
+   *
+   * @param {*} blob
+   * @param {*} orientation
    */
-  loadPhoto(blob, fixOrientation) {
+  loadPhoto(blob, orientation) {
     return new Promise((resolve, reject) => {
-      var fileReader = new FileReader();
+      const fileReader = new FileReader();
 
       fileReader.addEventListener('load', () => {
 
-        if (fixOrientation) {
-
-          // TODO: remove getOrientation call
-          this.getOrientation(blob).then(function (orientation) {
-
-            if (orientation > 1) {
-
-              var image = new Image();
-              image.addEventListener('load', function () {
-
-                var canvas = document.createElement('canvas');
-                var ctx = canvas.getContext('2d');
-                var width = canvas.width = image.width;
-                var height = canvas.height = image.height;
-
-                switch (orientation) {
-                  case 2:
-                    ctx.translate(width, 0);
-                    ctx.scale(-1, 1);
-                    break;
-                  case 3:
-                    ctx.translate(width, height);
-                    ctx.rotate(180 / 180 * Math.PI);
-                    break;
-                  case 4:
-                    ctx.translate(0, height);
-                    ctx.scale(1, -1);
-                    break;
-                  case 5:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(90 / 180 * Math.PI);
-                    ctx.scale(1, -1);
-                    break;
-                  case 6:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(90 / 180 * Math.PI);
-                    ctx.translate(0, -height);
-                    break;
-                  case 7:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(270 / 180 * Math.PI);
-                    ctx.translate(-width, height);
-                    ctx.scale(1, -1);
-                    break;
-                  case 8:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.translate(0, width);
-                    ctx.rotate(270 / 180 * Math.PI);
-                    break;
-                }
-
-                ctx.drawImage(image, 0, 0, width, height);
-                resolve(
-                  canvas.toDataURL('image/jpeg', 0.95)
-                );
-              });
-
-              image.src = fileReader.result;
-              return;
-            }
-            resolve(fileReader.result);
-          }, function (e) {
-            reject(e);
-          });
-        } else {
-          resolve(fileReader.result);
+        if (!orientation || orientation <= 1) {
+          return resolve(fileReader.result);
         }
+
+        const image = new Image();
+        image.addEventListener('load', function () {
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const width = canvas.width = image.width;
+          const height = canvas.height = image.height;
+
+          switch (orientation) {
+            case 2:
+              ctx.translate(width, 0);
+              ctx.scale(-1, 1);
+              break;
+            case 3:
+              ctx.translate(width, height);
+              ctx.rotate(180 / 180 * Math.PI);
+              break;
+            case 4:
+              ctx.translate(0, height);
+              ctx.scale(1, -1);
+              break;
+            case 5:
+              canvas.width = height;
+              canvas.height = width;
+              ctx.rotate(90 / 180 * Math.PI);
+              ctx.scale(1, -1);
+              break;
+            case 6:
+              canvas.width = height;
+              canvas.height = width;
+              ctx.rotate(90 / 180 * Math.PI);
+              ctx.translate(0, -height);
+              break;
+            case 7:
+              canvas.width = height;
+              canvas.height = width;
+              ctx.rotate(270 / 180 * Math.PI);
+              ctx.translate(-width, height);
+              ctx.scale(1, -1);
+              break;
+            case 8:
+              canvas.width = height;
+              canvas.height = width;
+              ctx.translate(0, width);
+              ctx.rotate(270 / 180 * Math.PI);
+              break;
+          }
+
+          ctx.drawImage(image, 0, 0, width, height);
+          resolve(
+            canvas.toDataURL('image/jpeg', 0.95)
+          );
+        });
+
+        image.src = fileReader.result;
+        return;
       });
 
       fileReader.addEventListener('error', function (e) {
