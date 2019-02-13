@@ -4,9 +4,9 @@
   flex-direction: column;
   text-align: center;
 
-  @include breakpoint(max-width 768px) {
-    padding-bottom: 55px;
-  }
+  // @include breakpoint(max-width 600px) {
+  //   padding-bottom: 55px;
+  // }
 
   &__logo {
     margin-bottom: 36px;
