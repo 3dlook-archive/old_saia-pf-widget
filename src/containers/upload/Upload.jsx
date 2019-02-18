@@ -155,6 +155,11 @@ export class Upload extends Component {
           frontImagePose: front.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
           sideImagePose: side.message.indexOf('pose is wrong') !== -1 ? 'invalid' : 'valid',
         });
+      } else if (error && error.response && error.response.status === 400) {
+        const params = {
+          ...this.props.matches,
+        };
+        route(`/results?${objectToUrlParams(params)}`, true);
       } else if (error && error.response && error.response.data) {
         const { detail, brand, body_part } = error.response.data;
         alert(detail || brand || body_part);
