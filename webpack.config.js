@@ -61,7 +61,7 @@ const plugins = [
     WIDGET_HOST: JSON.stringify(config.WIDGET_HOST),
   }),
   new HtmlWebpackPlugin({
-    filename: (CONFIG === 'shopify') ? 'modal.tpl' : 'index.html',
+    filename: (CONFIG === 'shopify') ? 'modal.hbs' : 'index.html',
     template: path.resolve('src/index.html'),
     inject: true,
     inlineSource: 'widget.(js|css)$',
@@ -82,7 +82,7 @@ const plugins = [
 if (CONFIG === 'shopify') {
   // need to rename for shopify
   plugins.push(new RenameOutputPlugin({
-    'saia-pf-shopify': 'saia-widget-loader.tpl',
+    'saia-pf-shopify': 'saia-widget-loader.hbs',
   }));
 
   // need to remove saia-pf-widget.js
