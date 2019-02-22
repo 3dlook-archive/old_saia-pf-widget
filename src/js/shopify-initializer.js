@@ -10,18 +10,22 @@ import SaiaButton from './button';
  * 4. display button
  */
 (async () => {
+  const saiaCont = document.querySelector('.saia-widget-container');
+
+  if (!saiaCont) {
+    const cartAdd = document.querySelector("form[action='/cart/add']");
+    const cont = document.createElement('div');
+    cont.className = 'saia-widget-container';
+    const parentDiv = cartAdd.parentNode;
+    parentDiv.insertBefore(cont, cartAdd);
+  }
+
   const button = new SaiaButton({
-    container: '.product-single__meta',
     key: API_KEY,
     widgetUrl: WIDGET_HOST,
-    brand: '123123123',
-    bodyPart: 'top',
-    product: {
-      imageUrl: 'https://gamemag.ru/images/views/no_avatar.jpg',
-      description: 'The Nike Air Rally Women\'s Crew',
-    },
   });
-  const isButtonVisible = button.checkButtonVisibility();
+
+  const isButtonVisible = await button.checkButtonVisibility();
 
   if (!isButtonVisible) {
     return;
