@@ -71,7 +71,7 @@ class SaiaButton {
    * Init widget
    */
   init() {
-    const buttonTemplateClasses = buttonTemplate.replace('{{classes}}', ` saia-pf-button--${this.defaults.buttonStyle}`);
+    const buttonTemplateClasses = buttonTemplate.replace('classes', ` saia-pf-button--${this.defaults.buttonStyle}`);
     const container = document.querySelector(this.defaults.container);
     container.insertAdjacentHTML('beforeend', buttonTemplateClasses);
 
@@ -131,8 +131,18 @@ class SaiaButton {
    * Check should we display button for current product page or not
    */
   checkButtonVisibility() {
-    /* TODO: need to be implemented */
-    return true;
+    if (this.defaults.brand && this.defaults.bodyPart) {
+      return Promise.resolve();
+    }
+
+    return this.api.product.get(this.defaults.product.url)
+      .then((product) => {
+        if (product.length) {
+          return product[0].widget_is_visible;
+        }
+
+        return product.widget_is_visible;
+      });
   }
 
   /**
@@ -145,11 +155,20 @@ class SaiaButton {
     const measurements = JSON.parse(localStorage.getItem('saia-pf-widget-data'));
 
     if (measurements) {
-      let recomendations = await this.api.sizechart.getSize({
-        ...measurements,
-        brand: this.defaults.brand,
-        body_part: this.defaults.bodyPart,
-      });
+      let recomendations;
+
+      if (this.defaults.brand && this.defaults.bodyPart) {
+        recomendations = await this.api.sizechart.getSize({
+          ...measurements,
+          brand: this.defaults.brand,
+          body_part: this.defaults.bodyPart,
+        });
+      } else {
+        recomendations = await this.api.product.getRecommendations({
+          ...measurements,
+          url: this.defaults.product.url,
+        });
+      }
 
       if (recomendations) {
         recomendations = transformRecomendations(recomendations);
