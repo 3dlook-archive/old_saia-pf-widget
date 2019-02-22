@@ -2,7 +2,7 @@
   "name": "saia-pf-widget",
   "version": "1.0.0",
   "description": "SAIA Perfect Fit Widget",
-  "main": "index.js",
+  "main": "src/js/button.js",
   "scripts": {
     "start": "export NODE_ENV=development && export CONFIG=development && webpack-dev-server",
     "build": "export NODE_ENV=development && export CONFIG=development && webpack --progress",
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/Skiminojek/saia-pf-widget.git"
+    "url": "https://github.com/3dlook-me/saia-pf-widget.git"
   },
-  "keywords": [],
+  "keywords": ["saia", "3dlook", "widget", "perfect", "fit"],
   "author": "3DLOOK",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/Skiminojek/saia-pf-widget#readme",
+  "homepage": "https://github.com/3dlook-me/saia-pf-widget#readme",
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
