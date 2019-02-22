@@ -106,21 +106,33 @@ export class Upload extends Component {
       const r = await this.api.queue.getResults(taskSetId);
 
       send('data', {
-        hips: r.volume_params.hips,
+        hips: r.volume_params.high_hips,
         chest: r.volume_params.chest,
         waist: r.volume_params.waist,
         gender: this.state.gender,
         height: this.state.height,
       });
 
-      let recommendations = await this.api.sizechart.getSize({
-        gender: this.state.gender,
-        hips: r.volume_params.hips,
-        chest: r.volume_params.chest,
-        waist: r.volume_params.waist,
-        brand: this.props.matches.brand,
-        body_part: this.props.matches.body_part,
-      });
+      let recommendations;
+
+      if (this.props.matches.brand && this.props.matches.body_part) {
+        recommendations = await this.api.sizechart.getSize({
+          gender: this.state.gender,
+          hips: r.volume_params.high_hips,
+          chest: r.volume_params.chest,
+          waist: r.volume_params.waist,
+          brand: this.props.matches.brand,
+          body_part: this.props.matches.body_part,
+        });
+      } else {
+        recommendations = await this.api.product.getRecommendations({
+          gender: this.state.gender,
+          hips: r.volume_params.high_hips,
+          chest: r.volume_params.chest,
+          waist: r.volume_params.waist,
+          url: this.props.matches.product,
+        });
+      }
 
       if (recommendations) {
         recommendations = transformRecomendations(recommendations);
