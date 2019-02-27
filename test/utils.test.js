@@ -1,3 +1,5 @@
+/* eslint-disable */
+import 'preact-jsx-chai';
 import { expect } from 'chai';
 
 import {
@@ -6,6 +8,7 @@ import {
   in2cm,
   ft2in,
   cmToFtIn,
+  getHeightCm,
 } from '../src/utils';
 
 describe('utils', () => {
@@ -58,6 +61,13 @@ describe('utils', () => {
     it('should convert centimeters to feets and inches', () => {
       expect(cmToFtIn(150)).to.eqls({ ft: 4, in: 11 });
       expect(cmToFtIn(220)).to.eqls({ ft: 7, in: 3 });
+    });
+  });
+
+  describe('getHeightCm', () => {
+    it('should convert feets and inches to centimeters', () => {
+      expect(getHeightCm(4, 11).toFixed()).to.equal('150');
+      expect(getHeightCm(7, 0).toFixed()).to.equal('213');
     });
   });
 });
