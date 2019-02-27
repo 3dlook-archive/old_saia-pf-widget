@@ -16,7 +16,13 @@
     "type": "git",
     "url": "https://github.com/3dlook-me/saia-pf-widget.git"
   },
-  "keywords": ["saia", "3dlook", "widget", "perfect", "fit"],
+  "keywords": [
+    "saia",
+    "3dlook",
+    "widget",
+    "perfect",
+    "fit"
+  ],
   "author": "3DLOOK",
   "license": "ISC",
   "homepage": "https://github.com/3dlook-me/saia-pf-widget#readme",
@@ -28,6 +34,7 @@
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "autoprefixer": "^9.4.8",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "breakpoint-sass": "^2.7.1",
     "chai": "^4.2.0",
@@ -66,6 +73,7 @@
     "regenerator-runtime": "^0.13.1",
     "rename-output-webpack-plugin": "^1.0.1",
     "sass-loader": "^7.1.0",
+    "sinon": "^7.2.4",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.2.2",
     "webpack": "^4.29.5",
