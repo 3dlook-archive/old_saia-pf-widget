@@ -46,7 +46,7 @@ module.exports = function(config) {
     exclude: [
     ],
     preprocessors: {
-      'test-context.js': ['webpack'],
+      'test-context.js': ['webpack', 'sourcemap'],
       'src/**/*.js': ['coverage'],
     },
     webpack: {
