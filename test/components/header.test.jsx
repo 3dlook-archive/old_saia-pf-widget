@@ -46,7 +46,7 @@ describe('Header', () => {
     expect(spy.called).to.be.ok;
   });
 
-  it('should ыend message to parent window on close', (done) => {
+  it('should send message to parent window on close', (done) => {
     let component = null;
 
     window.parent = window;
