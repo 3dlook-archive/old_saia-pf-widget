@@ -108,7 +108,7 @@ export class Data extends Component {
         gender: this.state.gender,
         height: this.state.height,
       };
-      
+
       route(`/upload?${objectToUrlParams(params)}`, false);
     }
   }
@@ -124,7 +124,7 @@ export class Data extends Component {
           <div class="data__block">
             <div class={`data__field ${!this.state.isGenderValid ? 'data__field--invalid' : ''}`}>
               <h3 class="data__field-title">Gender:</h3>
-              
+
               <Gender change={this.changeGender} isValid={this.state.isGenderValid} />
 
               <p className="data__field-error"><span>!</span> Please select your gender</p>
@@ -146,7 +146,7 @@ export class Data extends Component {
 
           <div class={`data__check checkbox ${!this.state.isAgreeValid ? 'checkbox--invalid' : ''}`}>
             <input type="checkbox" name="agree" id="agree" onChange={this.changeAgree} checked={this.state.agree} />
-            <label for="agree">I accept <a href="#">Terms and Conditions</a></label>
+            <label for="agree">I accept <a href="https://3dlook.me/terms-of-service/" target="_blank">Terms and Conditions</a></label>
           </div>
         </div>
       </div>
