@@ -46,16 +46,23 @@ describe('Header', () => {
     expect(spy.called).to.be.ok;
   });
 
-  it('should call close prop', () => {
+  it('should ыend message to parent window on close', (done) => {
     let component = null;
-    const spy = sinon.spy();
+
+    window.parent = window;
+
+    const handler = (e) => {
+      const c = e.data;
+      expect(c.command).to.equal('saia-pf-widget.close');
+      window.removeEventListener('message', handler);
+      return done();
+    };
+
+    window.addEventListener('message', handler);
 
     render(<Header ref={ref => component = ref} />, scratch);
 
-    component.onCloseButtonClick = spy;
     component.onCloseButtonClick();
-
-    expect(spy.called).to.be.ok;
   });
 
 });

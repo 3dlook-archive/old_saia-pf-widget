@@ -9,6 +9,7 @@ import {
   ft2in,
   cmToFtIn,
   getHeightCm,
+  send,
 } from '../src/utils';
 
 describe('utils', () => {
@@ -69,5 +70,25 @@ describe('utils', () => {
       expect(getHeightCm(4, 11).toFixed()).to.equal('150');
       expect(getHeightCm(7, 0).toFixed()).to.equal('213');
     });
+  });
+
+  describe('send', () => {
+
+    it('should send message to parent window', (done) => {
+      window.parent = window;
+
+      const handler = (e) => {
+        const c = e.data;
+        expect(c.command).to.equal('saia-pf-widget.test');
+        expect(c.data).to.equal('test data');
+        window.removeEventListener('message', handler);
+        return done();
+      };
+
+      window.addEventListener('message', handler);
+
+      send('test', 'test data');
+    });
+
   });
 });
