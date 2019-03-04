@@ -14,3 +14,6 @@ export const keyboardEvent = (el, event, options) => {
 
   el.dispatchEvent(e);
 };
+
+export const getBlob = url => fetch(url)
+  .then(r => r.blob());
