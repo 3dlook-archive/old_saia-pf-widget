@@ -79,8 +79,6 @@ describe('SaiaButton', () => {
     expect(iframe.getAttribute('src').indexOf(`brand=${button.defaults.brand}`) === -1).to.be.true;
     expect(iframe.getAttribute('src').indexOf(`body_part=${button.defaults.bodyPart}`) === -1).to.be.true;
 
-    console.log(iframe.getAttribute('src'));
-
     expect(iframe.getAttribute('src').indexOf(`product=${button.defaults.product.url}`) !== -1).to.be.true;
     expect(iframe.getAttribute('src').indexOf(`description=${button.defaults.product.description}`) !== -1).to.be.true;
     expect(iframe.getAttribute('src').indexOf(`image=${button.defaults.product.imageUrl}`) !== -1).to.be.true;
