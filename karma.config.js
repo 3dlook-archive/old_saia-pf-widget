@@ -154,7 +154,16 @@ module.exports = function(config) {
       },
     },
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-gpu',
+        ],
+      }
+    },
     browserNoActivityTimeout: 60000,
     singleRun: false,
     concurrency: Infinity
