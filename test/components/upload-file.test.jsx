@@ -7,7 +7,6 @@ import { UploadFile } from '../../src/components/upload-file/UploadFile';
 import { sleep, keyboardEvent, getBlob } from '../test-utils';
 
 const photo1 = require('../__images__/photo 1.png');
-const photo2 = require('../__images__/photo 2.png');
 const exif1 = require('../__images__/exif_1.jpg');
 const exif2 = require('../__images__/exif_2.jpg');
 const exif3 = require('../__images__/exif_3.jpg');
