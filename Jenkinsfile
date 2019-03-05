@@ -33,15 +33,15 @@ pipeline {
         def summary = "${subject} (${env.BUILD_URL})"
       // only triggered when blue or green sign
         success {
-            slackSend (color: '#439FE0', message: summary)
+            slackSend (channel: "#test", color: '#439FE0', message: summary)
         }
         // triggered when red sign
         failure {
-            slackSend (color: '#439FE0', message: summary)
+            slackSend (channel: "#test", color: '#439FE0', message: summary)
         }
         // trigger every-works
         always {
-            slackSend (color: '#439FE0', message: summary)
+            slackSend (channel: "#test", color: '#439FE0', message: summary)
         }
     }
 }
