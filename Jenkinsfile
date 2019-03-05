@@ -26,17 +26,22 @@ pipeline {
         }
     }
     post {
+      // Default values
+        def colorName = 'RED'
+        def colorCode = '#FF0000'
+        def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+        def summary = "${subject} (${env.BUILD_URL})"
       // only triggered when blue or green sign
         success {
-            slackSend (color: '#439FE0', message: 'summary')
+            slackSend (color: '#439FE0', message: summary)
         }
         // triggered when red sign
         failure {
-            slackSend (color: '#439FE0', message: 'summary')
+            slackSend (color: '#439FE0', message: summary)
         }
         // trigger every-works
         always {
-            slackSend (color: '#439FE0', message: 'summary')
+            slackSend (color: '#439FE0', message: summary)
         }
     }
 }
