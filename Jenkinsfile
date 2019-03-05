@@ -25,12 +25,12 @@ pipeline {
                 }
         }
     }
+    // Default values
+    def colorName = 'RED'
+    def colorCode = '#FF0000'
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
     post {
-      // Default values
-        def colorName = 'RED'
-        def colorCode = '#FF0000'
-        def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-        def summary = "${subject} (${env.BUILD_URL})"
       // only triggered when blue or green sign
         success {
             slackSend (channel: "#test", color: '#439FE0', message: summary)
