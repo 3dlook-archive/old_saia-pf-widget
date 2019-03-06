@@ -20,8 +20,8 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'gcp-shopify-plugin-test', transfers: [sshTransfer(excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/opt/shopify_plugin/code/views/widget/', remoteDirectorySDF: false, removePrefix: 'dist/', sourceFiles: 'dist/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'gcp-shopify-plugin-test', transfers: [sshTransfer(excludes: '', execCommand: 'cd /opt/shopify_plugin/code/app/widget-assets && ls -la && sudo supervisorctl restart all', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/opt/shopify_plugin/code/app/widget-assets', remoteDirectorySDF: false, removePrefix: 'dist/widget-assets/', sourceFiles: 'dist/widget-assets/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'gcp-shopify-plugin-test', transfers: [sshTransfer(excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/opt/shopify_plugin/views/widget/', remoteDirectorySDF: false, removePrefix: 'dist/', sourceFiles: 'dist/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'gcp-shopify-plugin-test', transfers: [sshTransfer(excludes: '', execCommand: 'cd /opt/shopify_plugin/app/widget-assets && ls -la && sudo supervisorctl restart all', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/opt/shopify_plugin/app/widget-assets', remoteDirectorySDF: false, removePrefix: 'dist/widget-assets/', sourceFiles: 'dist/widget-assets/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                 }
         }
     }
@@ -40,4 +40,3 @@ pipeline {
         }
     }
 }
-
