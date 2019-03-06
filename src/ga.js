@@ -1,3 +1,6 @@
+// to prevent tests from failing
+const ga = window.ga || (() => {});
+
 export const gaWelcomeOnContinue = () => ga('send', {
   hitType: 'event',
   eventCategory: 'start',
