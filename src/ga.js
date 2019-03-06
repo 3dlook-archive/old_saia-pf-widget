@@ -57,4 +57,5 @@ export const gaCloseOnClick = () => ga('send', {
 export const gaSizeNotFound = () => ga('send', {
   hitType: 'event',
   eventCategory: 'size_error',
+  eventAction: 'error',
 });
