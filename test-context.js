@@ -1,5 +1,8 @@
 import 'regenerator-runtime';
 
+// to prevent tests from failing
+window.ga = () => {};
+
 const context = require.context('./test', true, /\.test\.(js|jsx)$/);
 context.keys().forEach(context);
 
