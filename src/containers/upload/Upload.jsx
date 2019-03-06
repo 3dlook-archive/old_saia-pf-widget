@@ -6,6 +6,7 @@ import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from '@3dlook/saia-sdk/lib/api';
 import Preloader from '../../components/preloader/Preloader';
 import { objectToUrlParams, send, transformRecomendations } from '../../utils';
+import { gaUploadOnContinue } from '../../ga';
 
 // assets
 const nextArrowIcon = require('../../images/arrow.svg');
@@ -144,6 +145,8 @@ export class Upload extends Component {
       };
 
       send('recommendations', recommendations);
+
+      gaUploadOnContinue();
 
       route(`/results?${objectToUrlParams(params)}`, true);
     } catch (error) {

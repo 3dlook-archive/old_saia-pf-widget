@@ -13,6 +13,7 @@
   },
   "globals": {
     "API_HOST": true,
-    "API_KEY": true
+    "API_KEY": true,
+    "ga": true
   }
 }

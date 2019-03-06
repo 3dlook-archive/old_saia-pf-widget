@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { Link } from 'preact-router';
 
 import { objectToUrlParams } from '../../utils';
+import { gaWelcomeOnContinue } from '../../ga';
 
 const saiaPfLogo = require('../../images/logo.svg');
 const nextArrowIcon = require('../../images/arrow.svg');
@@ -19,7 +20,7 @@ const Welcome = ({ matches }) => (
 
       <p className="welcome__text">After uploading only two photos we will determine your body measurements and select the size that will fit you best</p>
 
-      <Link className="button" href={`/tips?${objectToUrlParams(matches)}`}>
+      <Link className="button" href={`/tips?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
         Start
         <img className="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
       </Link>

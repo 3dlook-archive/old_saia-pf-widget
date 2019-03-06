@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import Match from 'preact-router/match';
 import { send } from '../../utils';
+import { gaHelpOnClick, gaCloseOnClick } from '../../ga';
 
 const saiaPfLogo = require('../../images/logo.svg');
 const modalCloseIcon = require('../../images/close-icon.svg');
@@ -12,12 +13,18 @@ export class Header extends Component {
   /**
    * Close button click
    */
-  onCloseButtonClick = () => send('close');
+  onCloseButtonClick = () => {
+    gaCloseOnClick();
+    send('close');
+  };
 
   /**
    * Help button click
    */
-  onHelpButtonClick = () => this.props.help();
+  onHelpButtonClick = () => {
+    gaHelpOnClick();
+    this.props.help();
+  };
 
   render() {
     return (

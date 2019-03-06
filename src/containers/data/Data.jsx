@@ -4,6 +4,7 @@ import { route } from 'preact-router';
 import { objectToUrlParams } from '../../utils';
 import { Gender } from '../../components/gender/Gender';
 import { Height } from '../../components/height/Height';
+import { gaDataOnContinue, gaDataMale, gaDataFemale } from '../../ga';
 
 const nextArrowIcon = require('../../images/arrow.svg');
 
@@ -28,6 +29,12 @@ export class Data extends Component {
    * Change gender handler
    */
   changeGender = (gender) => {
+    if (gender === 'male') {
+      gaDataMale();
+    } else {
+      gaDataFemale();
+    }
+
     this.setState({
       ...this.state,
       gender,
@@ -108,7 +115,7 @@ export class Data extends Component {
         gender: this.state.gender,
         height: this.state.height,
       };
-
+      gaDataOnContinue();
       route(`/upload?${objectToUrlParams(params)}`, false);
     }
   }

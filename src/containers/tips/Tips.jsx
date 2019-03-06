@@ -3,6 +3,7 @@ import { Link } from 'preact-router';
 
 import { objectToUrlParams } from '../../utils';
 import { Slider } from '../../components/slider/Slider';
+import { gaTipsOnContinue } from '../../ga';
 
 // slider images
 const slideImage1 = require('../../images/slide1.png');
@@ -25,7 +26,7 @@ const Tips = ({ matches }) => (
 
       <Slider images={[slideImage1, slideImage2, slideImage3]} />
 
-      <Link className="button" href={`/data?${objectToUrlParams(matches)}`}>I understand</Link>
+      <Link className="button" href={`/data?${objectToUrlParams(matches)}`} onClick={gaTipsOnContinue}>I understand</Link>
     </div>
   </div>
 );
