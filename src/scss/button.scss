@@ -1,27 +1,29 @@
 @import '~breakpoint-sass';
 
+.saia-widget-container{
+  margin: 20px 0;
+}
+
 .saia-pf {
 
   &-button {
     font-family: sans-serif;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 900;
     line-height: 20px;
     color: #fff;
-    padding: 10px 15px;
+    padding: 0;
     border: none;
-    height: 60px;
-    width: 240px;
+    height: 40px;
+    width: 160px;
     border-radius: 30px;
     box-sizing: border-box;
     cursor: pointer;
-    margin: 20px 0;
 
     &--default {
       background: linear-gradient(270deg, #2ABCFA 0%, #A535B6 100%);
-      box-shadow: 0 4px 13px 0 rgba(0,0,0,0.34);
 
       svg {
         fill: #fff;
@@ -30,7 +32,6 @@
 
     &--black {
       background: #000;
-      box-shadow: 0 4px 13px 0 rgba(0,0,0,0.34);
     }
 
     &--outline {
@@ -45,7 +46,6 @@
 
     svg {
       display: inline-block;
-      margin-right: 5px;
       vertical-align: middle;
     }
   }
