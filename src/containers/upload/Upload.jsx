@@ -165,8 +165,8 @@ export class Upload extends Component {
 
         this.setState({
           ...this.state,
-          isFrontImageValid: false,
-          isSideImageValid: false,
+          isFrontImageValid: frontStatus === 'valid',
+          isSideImageValid: sideStatus === 'valid',
           isPending: false,
 
           frontImagePose: frontStatus,
