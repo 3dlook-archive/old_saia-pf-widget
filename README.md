@@ -174,7 +174,7 @@ SaiaButton constructor
 | options.container | <code>string</code> | selector for button container |
 | options.key | <code>string</code> | SAIA PF API key |
 | options.widgetUrl | <code>string</code> | url to the widget host to open it in the iframe |
-| [options.buttonStyle] | <code>string</code> | button style. Could be 'default', 'black', 'outline' |
+| [options.buttonStyle] | <code>string</code> | button style. Could be 'gradient', 'gradient-reversed', 'black', 'white' |
 | [options.product] | <code>Object</code> | object with product parameters (optional) |
 | [options.product.description] | <code>string</code> | product description. Will be displayed on final results page |
 | [options.product.imageUrl] | <code>string</code> | url to product image Will be displayed on final results page |
@@ -211,6 +211,7 @@ Display sizes on the button
 | Param | Type | Description |
 | --- | --- | --- |
 | recomendations | <code>Object</code> | size recomendations transformed object |
+
 
 # TODO:
 
