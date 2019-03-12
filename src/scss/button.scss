@@ -22,21 +22,26 @@
     box-sizing: border-box;
     cursor: pointer;
 
-    &--default {
-      background: linear-gradient(270deg, #2ABCFA 0%, #A535B6 100%);
+    svg {
+      fill: #fff;
+    }
 
-      svg {
-        fill: #fff;
-      }
+    &--gradient {
+      background: linear-gradient(270deg, #2ABCFA 0%, #A535B6 100%);
+    }
+
+    &--gradient-reversed {
+      background: linear-gradient(270deg, #A535B6 0%, #2ABCFA 100%);
     }
 
     &--black {
       background: #000;
     }
 
-    &--outline {
-      border: 2px solid #000;
-      background: transparent;
+    &--white {
+      border: 1px solid #000;
+      border-radius: 5px;
+      background: #fff;
       color: #000;
 
       svg {

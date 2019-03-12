@@ -14,7 +14,7 @@ class SaiaButton {
    * @param {string} options.container - selector for button container
    * @param {string} options.key - SAIA PF API key
    * @param {string} options.widgetUrl - url to the widget host to open it in the iframe
-   * @param {string} [options.buttonStyle] - button style. Could be 'default', 'black', 'outline'
+   * @param {string} [options.buttonStyle] - button style. Could be 'gradient', 'gradient-reversed', 'black', 'white'
    * @param {Object} [options.product] - object with product parameters (optional)
    * @param {string} [options.product.description] - product description.
    * Will be displayed on final results page
@@ -29,7 +29,7 @@ class SaiaButton {
    */
   constructor(options) {
     this.defaults = {
-      buttonStyle: 'default', // default, black, outline
+      buttonStyle: 'gradient', // gradient, gradient-reversed, black, white
       container: '.saia-widget-container',
       key: '',
       widgetUrl: '',
