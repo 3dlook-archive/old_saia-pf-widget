@@ -2,8 +2,6 @@ s3_reduced_redundancy: true
 s3_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
 s3_secret: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
 s3_bucket: <%= ENV['AWS_BUCKET'] %>
-cloudfront_distribution_id: E3RWJN257EGZMU
-cloudfront_distribution_id: E1H8AO0IPZY20S
 s3_endpoint: <%= ENV['AWS_BUCKET_ZONE'] %>
 cloudfront_distribution_id: <%= ENV['AWS_CF_DISTRIBUTION_ID'] %>
 cloudfront_invalidate_root: true
