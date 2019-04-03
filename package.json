@@ -1,6 +1,6 @@
 {
   "name": "saia-pf-widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SAIA Perfect Fit Widget",
   "main": "src/js/button.js",
   "scripts": {
