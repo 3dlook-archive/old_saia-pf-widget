@@ -26,6 +26,7 @@ class SaiaButton {
    * then product.url is ignored
    * @param {string} [options.bodyPart] - body part name. If brand and bodyPart are set,
    * then product.url is ignored
+   * @param {number|string} [options.id] - unique id of the button
    */
   constructor(options) {
     this.defaults = {
@@ -45,6 +46,7 @@ class SaiaButton {
 
         ...options.product,
       },
+      id: Date.now(),
     };
 
     if (!this.defaults.container) {
@@ -71,16 +73,21 @@ class SaiaButton {
    * Init widget
    */
   init() {
-    const buttonTemplateClasses = buttonTemplate.replace('classes', ` saia-pf-button--${this.defaults.buttonStyle}`);
+    const buttonClasses = ` saia-pf-button--${this.defaults.buttonStyle} saia-pf-button--${this.defaults.id}`;
+    const buttonTemplateClasses = buttonTemplate.replace('classes', buttonClasses);
     const container = document.querySelector(this.defaults.container);
     container.insertAdjacentHTML('beforeend', buttonTemplateClasses);
 
-    // append modal drop to body
-    document.body.insertAdjacentHTML('beforeend', modalTemplate);
+    // check if modal container is exists
+    let modal = document.querySelector('.saia-pf-drop');
+    if (!modal) {
+      // append modal drop to body
+      document.body.insertAdjacentHTML('beforeend', modalTemplate);
+    }
 
     // get modal and button elements by their selectors
-    const modal = document.querySelector('.saia-pf-drop');
-    this.buttonEl = document.querySelector('.saia-pf-button');
+    modal = document.querySelector('.saia-pf-drop');
+    this.buttonEl = document.querySelector(`.saia-pf-button--${this.defaults.id}`);
 
     this.buttonEl.addEventListener('click', () => {
       modal.classList.toggle('active');
@@ -112,7 +119,7 @@ class SaiaButton {
 
       switch (command) {
         case 'saia-pf-widget.close':
-          modal.classList.toggle('active');
+          modal.classList.remove('active');
           break;
         case 'saia-pf-widget.data':
           localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
@@ -191,5 +198,7 @@ class SaiaButton {
     }
   }
 }
+
+window.SaiaButton = SaiaButton;
 
 export default SaiaButton;
