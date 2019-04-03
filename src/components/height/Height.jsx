@@ -118,11 +118,7 @@ export class Height extends Component {
               class="height__input"
               type="number"
               value={this.state.cm}
-              onChange={this.onCmInputChange}
-              onKeyDown={this.validateCm}
-              onInput={this.validateCm}
-              onPropertyChange={this.validateCm}
-            />
+              onChange={this.onCmInputChange} />
           </div>
         </div>
 
