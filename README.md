@@ -181,6 +181,7 @@ SaiaButton constructor
 | [options.product.url] | <code>string</code> | url to product. For shopify usage only. Instead use brand and bodyPart options to determine right sizecharts |
 | [options.brand] | <code>string</code> | brand name. If brand and bodyPart are set, then product.url is ignored |
 | [options.bodyPart] | <code>string</code> | body part name. If brand and bodyPart are set, then product.url is ignored |
+| [options.id] | <code>number</code> \| <code>string</code> | unique id of the button |
 
 <a name="SaiaButton+init"></a>
 
