@@ -56,6 +56,11 @@
     background: transparent;
     padding: 5px;
     border: none;
+
+    img {
+      width: 10px;
+      height: 16px;
+    }
   }
 
   &__next-btn {
