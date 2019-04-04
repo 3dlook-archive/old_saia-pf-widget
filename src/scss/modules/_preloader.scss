@@ -21,10 +21,13 @@
 
   &__image {
     margin: 0 auto;
+    width: 117px;
+    height: 117px;
     animation: spin 3s linear infinite;
 
     @include breakpoint((max-width 500px, max-height 650px)) {
-      max-width: 65px;
+      width: 65px;
+      height: 65px;
     }
   }
 }
