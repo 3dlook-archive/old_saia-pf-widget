@@ -26,7 +26,7 @@
       margin-right: 28px;
     }
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       height: 40px;
     }
   }

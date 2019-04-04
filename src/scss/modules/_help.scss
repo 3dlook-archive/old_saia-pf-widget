@@ -37,7 +37,7 @@
     overflow: auto;
     flex-grow: 1;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       padding: 20px;
     }
 

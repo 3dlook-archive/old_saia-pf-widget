@@ -2,7 +2,7 @@
   text-align: center;
   padding-top: 42px;
 
-  @include breakpoint(max-width 500px) {
+  @include breakpoint((max-width 500px, max-height 650px)) {
     padding-top: 0;
 
     .screen__text {
@@ -29,12 +29,12 @@
     margin-bottom: 40px;
     position: relative;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       margin-bottom: 30px;
     }
 
     &:last-child {
-      @include breakpoint(max-width 500px) {
+      @include breakpoint((max-width 500px, max-height 650px)) {
         margin-bottom: 15px;
       }
     }
@@ -51,7 +51,7 @@
       font-size: rem(9px);
       display: none;
 
-      @include breakpoint(max-width 500px) {
+      @include breakpoint((max-width 500px, max-height 650px)) {
         top: 65px;
       }
 

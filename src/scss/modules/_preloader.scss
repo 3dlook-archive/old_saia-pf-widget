@@ -23,7 +23,7 @@
     margin: 0 auto;
     animation: spin 3s linear infinite;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       max-width: 65px;
     }
   }

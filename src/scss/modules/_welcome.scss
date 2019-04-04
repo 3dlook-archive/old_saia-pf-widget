@@ -4,17 +4,13 @@
   flex-direction: column;
   text-align: center;
 
-  // @include breakpoint(max-width 600px) {
-  //   padding-bottom: 55px;
-  // }
-
   &__logo {
     margin-bottom: 36px;
 
     img {
       width: 240px;
 
-      @include breakpoint(max-width 500px) {
+      @include breakpoint((max-width 500px, max-height 650px)) {
         width: 140px;
         margin-bottom: 20px;
       }
@@ -27,7 +23,7 @@
     margin-top: 20px;
     letter-spacing: 1.6px;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       font-size: rem(8px);
       margin-top: 10px;
     }
@@ -37,7 +33,7 @@
     margin-bottom: 67px;
     line-height: rem(21px);
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       margin-bottom: 30px;
     }
   }

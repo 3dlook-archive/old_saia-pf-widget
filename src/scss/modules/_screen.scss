@@ -4,7 +4,7 @@
   width: 100%;
   margin: 0 auto;
 
-  @include breakpoint(max-width 500px) {
+  @include breakpoint((max-width 500px, max-height 650px)) {
     padding: 20px !important;
   }
 

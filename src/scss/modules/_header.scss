@@ -28,7 +28,7 @@
     left: 20px;
     font-weight: 300;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       font-size: rem(12px);
     }
   }

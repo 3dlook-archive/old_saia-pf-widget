@@ -50,7 +50,7 @@
 
     @include disable-number();
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       height: 40px;
     }
   }
@@ -68,7 +68,7 @@
     input:checked + label {
       color: #000;
     }
-  
+
     input:focus + label {
       outline: -webkit-focus-ring-color auto 5px;
     }
@@ -128,7 +128,7 @@
     color: #9B9B9B;
     margin-top: 29px;
 
-    @include breakpoint(max-width 500px) {
+    @include breakpoint((max-width 500px, max-height 650px)) {
       margin-top: 15px;
     }
 
