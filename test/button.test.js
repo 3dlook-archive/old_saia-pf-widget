@@ -53,7 +53,7 @@ describe('SaiaButton', () => {
   it('should open modal for pf users', () => {
     button.init();
 
-    const buttonEl = document.querySelector('.saia-pf-button');
+    const buttonEl = document.querySelector(`.saia-pf-button--${button.defaults.id}`);
     const iframe = document.querySelector('.saia-pf-drop iframe');
     button.defaults.brand = 'Nike';
     button.defaults.bodyPart = 'top';
@@ -67,7 +67,7 @@ describe('SaiaButton', () => {
   it('should open modal for shopify users', () => {
     button.init();
 
-    const buttonEl = document.querySelector('.saia-pf-button');
+    const buttonEl = document.querySelector(`.saia-pf-button--${button.defaults.id}`);
     const iframe = document.querySelector('.saia-pf-drop iframe');
 
     button.defaults.product.url = 'fake-product-url';
@@ -89,6 +89,11 @@ describe('SaiaButton', () => {
 
     const modal = document.querySelector('.saia-pf-drop');
 
+    const buttonEl = document.querySelector(`.saia-pf-button--${button.defaults.id}`);
+    buttonEl.click();
+
+    expect(modal.classList.contains('active')).to.be.true;
+
     const event = new MessageEvent('message', {
       data: {
         data: '',
@@ -98,7 +103,7 @@ describe('SaiaButton', () => {
 
     window.dispatchEvent(event);
 
-    expect(modal.classList.contains('active')).to.be.true;
+    expect(modal.classList.contains('active')).to.be.false;
   });
 
   it('should save to localStorage data on saia-pf-widget.data message', () => {
