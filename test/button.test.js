@@ -2,7 +2,6 @@
 import { expect } from 'chai';
 import SaiaButton from '../src/js/button';
 import sinon from 'sinon';
-import { sleep } from './test-utils';
 
 window.API_HOST = 'https://saia-test.3dlook.me/api/v2/';
 
@@ -88,10 +87,7 @@ describe('SaiaButton', () => {
     button.init();
 
     const modal = document.querySelector('.saia-pf-drop');
-
-    const buttonEl = document.querySelector(`.saia-pf-button--${button.defaults.id}`);
-    buttonEl.click();
-
+    modal.classList.toggle('active')
     expect(modal.classList.contains('active')).to.be.true;
 
     const event = new MessageEvent('message', {
