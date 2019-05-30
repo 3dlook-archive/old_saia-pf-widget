@@ -42,7 +42,7 @@ class App extends Component {
    * Show or hide logo in header
    */
   showHideLogo = (e) => {
-    if (e.url === '/' || e.url === '/?') {
+    if (e.url === '/' || e.url.indexOf('/?') === 0) {
       return this.setState({
         ...this.state,
         isLogoActive: false,
