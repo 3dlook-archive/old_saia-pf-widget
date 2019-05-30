@@ -1,6 +1,6 @@
 import { h, render, Component } from 'preact';
 import Router from 'preact-router';
-import createHashHistory from 'history/createHashHistory';
+import { createHashHistory } from 'history';
 
 /**
  * Components
@@ -25,6 +25,7 @@ class App extends Component {
 
     this.state = {
       isHelpActive: false,
+      isLogoActive: false,
     };
   }
 
@@ -37,13 +38,30 @@ class App extends Component {
     });
   }
 
+  /**
+   * Show or hide logo in header
+   */
+  showHideLogo = (e) => {
+    if (e.url === '/' || e.url === '/?') {
+      return this.setState({
+        ...this.state,
+        isLogoActive: false,
+      });
+    }
+
+    return this.setState({
+      ...this.state,
+      isLogoActive: true,
+    });
+  }
+
   render() {
     return (
       <div className="widget-container">
-        <Header help={this.toggleHelp} />
+        <Header help={this.toggleHelp} isLogoActive={this.state.isLogoActive} />
         <Help show={this.state.isHelpActive} close={this.toggleHelp} />
 
-        <Router history={createHashHistory()}>
+        <Router history={createHashHistory()} onChange={this.showHideLogo}>
           <Welcome path="/" />
           <Tips path="/tips" />
           <Data path="/data" />

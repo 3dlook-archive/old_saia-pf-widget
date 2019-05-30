@@ -31,13 +31,10 @@ export class Header extends Component {
       <div class="header">
         <button class="header__help" onClick={this.onHelpButtonClick}>Help</button>
 
-        <Match path="/">
-          { ({ matches }) => !matches && (
-            <div class="header__logo">
-              <img src={saiaPfLogo} alt="SAIA Perfect Fit Logo" />
-            </div>
-          ) }
-        </Match>
+        {(this.props.isLogoActive) ?
+          <div class="header__logo">
+            <img src={saiaPfLogo} alt="SAIA Perfect Fit Logo" />
+          </div> : null }
 
         <button class="header__close" onClick={this.onCloseButtonClick} type="button">
           <img src={modalCloseIcon} alt="Close button icon" />
