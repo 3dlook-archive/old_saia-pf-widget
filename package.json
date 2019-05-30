@@ -7,6 +7,7 @@
     "start": "export NODE_ENV=development && export CONFIG=development && webpack-dev-server",
     "build": "export NODE_ENV=development && export CONFIG=development && webpack --progress",
     "build:prod": "export NODE_ENV=production && export CONFIG=production && webpack --progress",
+    "build:3dlook": "export NODE_ENV=production && export CONFIG=3dlook && webpack --progress",
     "build:shopify": "export NODE_ENV=production && export CONFIG=shopify && webpack --progress",
     "test": "karma start karma.config.js --log-level debug --single-run",
     "docs": "jsdoc -r ./src/js/button.js -c .jsdoc.json -d docs",
