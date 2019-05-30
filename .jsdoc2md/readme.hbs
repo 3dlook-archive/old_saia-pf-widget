@@ -42,10 +42,12 @@ module.exports = {
   API_HOST: '{{apiUrl}}',
   // client api key
   API_KEY: '{{key}}',
-  // shopify host url
-  SHOPIFY_HOST: '{{domain}}',
   // widget host url
   WIDGET_HOST: '{{widget}}',
+  // path to widget assets for url configuration
+  // this folder needs to contain widget-assets folder
+  // should end with /
+  WIDGET_ASSETS_URL: '/wp-content/widget/',
 };
 ```
 
@@ -57,13 +59,13 @@ To properly host widget for your website, you need to host index.html file of su
 
 ## Example of usage
 
-Let's configure widget for your store, that is located on this domain https://test-store.com/. Before building the widget, we already prepared a subdomain for it, let's call it https://pf-widget.test-store.com/. Now you should clone this repository on your computer. After that enter the widget directory and run the following command:
+Let's configure widget for your store, that is located on this domain https://test-store.com/. Clone this repository to your computer. After that go to the widget directory in the terminal and run the following command:
 
 ```sh
 npm install
 ```
 
-Then create a configuration file for your shop with name like this:
+This command will install all the dependencies. Then create a configuration file for your shop with name like this:
 
 ```
 saia-config.test-store.js
@@ -78,17 +80,19 @@ module.exports = {
   API_HOST: 'https://saia.3dlook.me',
   // client api key
   API_KEY: 'h2f98h13fh934hv91b3h51345b245yqeg255y',
-  // shopify host url
-  SHOPIFY_HOST: '', // ignore this field
   // widget host url
-  WIDGET_HOST: 'https://pf-widget.test-store.com',
+  WIDGET_HOST: 'https://test-store.com/wp-content/my-widget-build/index.html',
+  // path to widget assets for url configuration
+  // this folder needs to contain widget-assets folder
+  // should end with /
+  WIDGET_ASSETS_URL: '/wp-content/my-widget-build/',
 };
 ```
 
 After that, run in the terminal the following command:
 
 ```sh
-export NODE_ENV=production && export CONFIG=sport-clothing-store && webpack --progress
+export NODE_ENV=production && export CONFIG=test-store && webpack --progress
 ```
 
 You will get dist folder, that has this structure:
@@ -102,10 +106,10 @@ dist/
 ..ignore other files
 ```
 
-On domain https://pf-widget.test-store.com/ you should host widget-assets folder and index.html file - widget files. saia-pf-button.js should be included on the pages, on which you want to display a button and widget modal. This file could be included with this code:
+Then you should upload the content of dist folder to your hosting in the folder, that you have already specified in the configuration file (```WIDGET_ASSETS_URL```). saia-pf-button.js should be included on the pages, on which you want to display a button and widget modal. This file could be included with this code:
 
 ```html
-<script src="saia-pf-button.js"></script>
+<script src="/wp-content/my-widget-build/saia-pf-button.js"></script>
 ```
 
 After this tag you can initialize the button. Example code:
@@ -118,7 +122,8 @@ After this tag you can initialize the button. Example code:
     // your SAIA API key
     key: 'fnqiwhf9v9y9ty13bt783yugyiurygb3v78gvt',
     // widget domain
-    widgetUrl: 'https://pf-widget.test-store.com/',
+    // if you set this url in the configuration file (saia-config.test-store.js), then you may not use this parameter
+    widgetUrl: 'https://test-store.com/wp-content/my-widget-build/index.html',
     // brand name
     brand: 'Nike',
     // body part
