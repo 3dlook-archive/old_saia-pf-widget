@@ -123,7 +123,7 @@ module.exports = {
     'saia-pf-widget': path.resolve(`${__dirname}/src/App.jsx`),
   },
   output: {
-    publicPath: '/',
+    publicPath: config.WIDGET_ASSETS_URL || '/',
     path: `${__dirname}/dist`,
     filename: '[name].js',
   },

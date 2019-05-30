@@ -13,7 +13,7 @@ class SaiaButton {
    * @param {Object} options - parameters
    * @param {string} options.container - selector for button container
    * @param {string} options.key - SAIA PF API key
-   * @param {string} options.widgetUrl - url to the widget host to open it in the iframe
+   * @param {string} [options.widgetUrl] - url to the widget host to open it in the iframe
    * @param {string} [options.buttonStyle] - button style. Could be 'gradient', 'gradient-reversed', 'black', 'white'
    * @param {Object} [options.product] - object with product parameters (optional)
    * @param {string} [options.product.description] - product description.
@@ -33,7 +33,7 @@ class SaiaButton {
       buttonStyle: 'gradient', // gradient, gradient-reversed, black, white
       container: '.saia-widget-container',
       key: '',
-      widgetUrl: '',
+      widgetUrl: WIDGET_HOST,
       brand: '',
       bodyPart: '',
 
@@ -92,7 +92,7 @@ class SaiaButton {
     this.buttonEl.addEventListener('click', () => {
       modal.classList.toggle('active');
 
-      let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}&origin=${window.location.origin}`;
+      let url = `${this.defaults.widgetUrl}#/?key=${this.defaults.key || ''}&origin=${window.location.origin}`;
 
       if (this.defaults.product.url) {
         url += `&product=${this.defaults.product.url}`;

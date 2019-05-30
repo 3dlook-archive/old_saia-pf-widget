@@ -1,5 +1,6 @@
 import { h, render, Component } from 'preact';
 import Router from 'preact-router';
+import createHashHistory from 'history/createHashHistory';
 
 /**
  * Components
@@ -42,7 +43,7 @@ class App extends Component {
         <Header help={this.toggleHelp} />
         <Help show={this.state.isHelpActive} close={this.toggleHelp} />
 
-        <Router>
+        <Router history={createHashHistory()}>
           <Welcome path="/" />
           <Tips path="/tips" />
           <Data path="/data" />

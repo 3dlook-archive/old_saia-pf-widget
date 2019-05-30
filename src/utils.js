@@ -17,13 +17,29 @@ export const objectToUrlParams = (obj) => {
 };
 
 /**
+ * Parse hash params
+ */
+export const parseHashParams = () => {
+  let hash = window.location.hash.substr(1);
+  hash = decodeURIComponent(hash);
+
+  const result = hash.split('&').reduce((result, item) => {
+    const parts = item.split('=');
+    result[parts[0]] = parts[1];
+    return result;
+  }, {});
+
+  return result;
+};
+
+/**
  * Send command to parent window
  *
  * @param {string} command - command name
  * @param {*} data - object with data that should be sent to parent window
  */
 export const send = (command, data = {}, origin) => {
-  const finalOrigin = origin || new URLSearchParams(window.location.search).get('origin');
+  const finalOrigin = origin || parseHashParams().origin;
 
   window.parent.postMessage({
     command: `saia-pf-widget.${command}`,
