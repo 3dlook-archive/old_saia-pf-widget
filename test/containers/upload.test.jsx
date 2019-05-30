@@ -117,9 +117,9 @@ describe('Upload', () => {
       body_part: 'top',
     })).to.be.true;
 
-    expect(window.location.search.indexOf('body_part=top') !== -1).to.be.true;
-    expect(window.location.search.indexOf('brand=Nike') !== -1).to.be.true;
-    expect(window.location.search.indexOf('normal=M') !== -1).to.be.true;
+    expect(window.location.hash.substr(1).indexOf('body_part=top') !== -1).to.be.true;
+    expect(window.location.hash.substr(1).indexOf('brand=Nike') !== -1).to.be.true;
+    expect(window.location.hash.substr(1).indexOf('normal=M') !== -1).to.be.true;
   });
 
   it('should go to the next page for shopify users', async () => {
@@ -170,8 +170,8 @@ describe('Upload', () => {
       url: 'fake_product_url',
     })).to.be.true;
 
-    expect(window.location.search.indexOf('product=fake_product_url') !== -1).to.be.true;
-    expect(window.location.search.indexOf('normal=M') !== -1).to.be.true;
+    expect(window.location.hash.substr(1).indexOf('product=fake_product_url') !== -1).to.be.true;
+    expect(window.location.hash.substr(1).indexOf('normal=M') !== -1).to.be.true;
   });
 
   it('should handle regular error', async () => {
@@ -303,7 +303,7 @@ describe('Upload', () => {
 
     await component.onNextButtonClick(new Event('click'));
 
-    expect(window.location.pathname).to.equal('/results');
+    expect(window.location.hash.substr(1)).to.equal('/results');
   });
 
   it('should handle image validation errors', async () => {
