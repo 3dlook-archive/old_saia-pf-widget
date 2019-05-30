@@ -5,6 +5,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import assertJsx from 'preact-jsx-chai';
 import { Header } from '../../src/components/header/Header';
+import App from '../../src/App';
 import { dispatchEvent } from '../test-utils';
 
 chai.use(assertJsx);
@@ -27,7 +28,9 @@ describe('Header', () => {
   });
 
   it('should render header component', () => {
-    render(<Header />, scratch);
+    render(<App />, scratch);
+
+    route('/tips');
 
     expect(scratch.innerHTML).to.contain('Help');
     expect(scratch.innerHTML).to.contain('SAIA Perfect Fit Logo');

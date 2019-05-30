@@ -33,7 +33,7 @@ class SaiaButton {
       buttonStyle: 'gradient', // gradient, gradient-reversed, black, white
       container: '.saia-widget-container',
       key: '',
-      widgetUrl: WIDGET_HOST,
+      widgetUrl: (typeof WIDGET_HOST !== 'undefined') ? WIDGET_HOST : '',
       brand: '',
       bodyPart: '',
 

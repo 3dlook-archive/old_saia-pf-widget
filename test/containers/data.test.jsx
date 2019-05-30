@@ -172,9 +172,9 @@ describe('Data', () => {
 
     component.onNextScreen();
 
-    expect(window.location.pathname).to.contain('/upload');
-    expect(window.location.search).to.contain('height=150');
-    expect(window.location.search).to.contain('gender=male');
+    expect(window.location.hash.substr(1)).to.contain('/upload');
+    expect(window.location.hash.substr(1)).to.contain('height=150');
+    expect(window.location.hash.substr(1)).to.contain('gender=male');
   });
 
   it('should not go to the next page if all data is invalid', async () => {
@@ -195,9 +195,9 @@ describe('Data', () => {
 
     component.onNextScreen();
 
-    expect(window.location.pathname).to.equal('/');
-    expect(window.location.search).to.not.contain('height=150');
-    expect(window.location.search).to.not.contain('gender=male');
+    expect(window.location.hash.substr(1)).to.equal('/');
+    expect(window.location.hash.substr(1)).to.not.contain('height=150');
+    expect(window.location.hash.substr(1)).to.not.contain('gender=male');
   });
 
 });
