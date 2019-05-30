@@ -14,6 +14,7 @@
   "globals": {
     "API_HOST": true,
     "API_KEY": true,
+    "WIDGET_HOST": true,
     "ga": true
   }
 }
