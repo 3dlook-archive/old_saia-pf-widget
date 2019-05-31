@@ -92,7 +92,7 @@ class SaiaButton {
     this.buttonEl.addEventListener('click', () => {
       modal.classList.toggle('active');
 
-      let url = `${this.defaults.widgetUrl}#/?key=${this.defaults.key || ''}&origin=${window.location.origin}`;
+      let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}#/?key=${this.defaults.key}&origin=${window.location.origin}`;
 
       if (this.defaults.product.url) {
         url += `&product=${this.defaults.product.url}`;
