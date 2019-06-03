@@ -160,8 +160,8 @@ export class Upload extends Component {
 
         const front = subTasks.filter(item => item.name.indexOf('front_') !== -1)[0];
         const side = subTasks.filter(item => item.name.indexOf('side_') !== -1)[0];
-        const frontStatus = (front.message.indexOf('pose is wrong') !== -1 || front.message.indexOf('detect the human body') !== -1) ? 'invalid' : 'valid';
-        const sideStatus = (side.message.indexOf('pose is wrong') !== -1 || side.message.indexOf('detect the human body') !== -1) ? 'invalid' : 'valid';
+        const frontStatus = (front.status === 'FAILURE') ? 'invalid' : 'valid';
+        const sideStatus = (side.status === 'FAILURE') ? 'invalid' : 'valid';
 
         this.setState({
           ...this.state,
