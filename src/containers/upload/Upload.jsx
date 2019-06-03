@@ -160,17 +160,25 @@ export class Upload extends Component {
 
         const front = subTasks.filter(item => item.name.indexOf('front_') !== -1)[0];
         const side = subTasks.filter(item => item.name.indexOf('side_') !== -1)[0];
-        const frontStatus = (front.status === 'FAILURE') ? 'invalid' : 'valid';
-        const sideStatus = (side.status === 'FAILURE') ? 'invalid' : 'valid';
+
+        const frontStatusPose = (front.status === 'FAILURE') ? 'invalid' : 'valid';
+        const frontStatusBody = (front.status === 'FAILURE' && front.message.indexOf('Side photo in the front') === -1) ? 'invalid' : 'valid';
+
+        const sideStatusPose = (side.status === 'FAILURE') ? 'invalid' : 'valid';
+        const sideStatusBody = (side.status === 'FAILURE') ? 'invalid' : 'valid';
 
         this.setState({
           ...this.state,
-          isFrontImageValid: frontStatus === 'valid' && front.status === 'SUCCESS',
-          isSideImageValid: sideStatus === 'valid' && side.status === 'SUCCESS',
-          isPending: false,
+          isFrontImageValid: frontStatusPose === 'valid' && frontStatusBody === 'valid' && front.status === 'SUCCESS',
+          isSideImageValid: sideStatusPose === 'valid' && sideStatusBody === 'valid' && side.status === 'SUCCESS',
 
-          frontImagePose: frontStatus,
-          sideImagePose: sideStatus,
+          frontImagePose: frontStatusPose,
+          sideImagePose: sideStatusPose,
+
+          frontImageBody: frontStatusBody,
+          sideImageBody: sideStatusBody,
+
+          isPending: false,
         });
       } else if (error && error.response && error.response.status === 400) {
         const params = {
@@ -199,8 +207,8 @@ export class Upload extends Component {
           <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
 
           <div class="upload__files">
-            <UploadBlock gender={this.state.gender} type="front" validation={{ pose: this.state.frontImagePose, body: this.state.frontImagePose }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
-            <UploadBlock gender={this.state.gender} type="side" validation={{ pose: this.state.sideImagePose, body: this.state.sideImagePose }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
+            <UploadBlock gender={this.state.gender} type="front" validation={{ pose: this.state.frontImagePose, body: this.state.frontImageBody }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
+            <UploadBlock gender={this.state.gender} type="side" validation={{ pose: this.state.sideImagePose, body: this.state.sideImageBody }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
             <p className={filesErrorClasses}><span>!</span> Please upload your photos first</p>
           </div>
 
