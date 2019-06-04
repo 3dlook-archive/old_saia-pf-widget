@@ -17,6 +17,7 @@ export class UploadFile extends Component {
       mode: 'placeholder',
       file: null,
       fileBlob: null,
+      value: null,
     };
   }
 
@@ -242,7 +243,7 @@ export class UploadFile extends Component {
 
     return (
       <label onDragOver={this.disableDragEvents} onDragLeave={this.disableDragEvents} onDrop={this.dropImage} class={classes} for={type} tabIndex="0" onKeyPress={this.keyboardAccess} onKeyUp={this.keyboardAccess}>
-        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" />
+        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" value={this.state.value} />
         <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
           <img src={image} alt={`${fileText} image icon`} />
           <p class="upload__file-select-text">select file</p>
