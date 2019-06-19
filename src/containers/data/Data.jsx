@@ -146,15 +146,15 @@ export class Data extends Component {
             </div>
           </div>
 
-          <button class="button" onClick={this.onNextScreen}>
-            Next step
-            <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
-          </button>
-
           <div class={`data__check checkbox ${!this.state.isAgreeValid ? 'checkbox--invalid' : ''}`}>
             <input type="checkbox" name="agree" id="agree" onChange={this.changeAgree} checked={this.state.agree} />
             <label for="agree">I accept <a href="https://3dlook.me/terms-of-service/" target="_blank">Terms and Conditions</a></label>
           </div>
+
+          <button class="button" onClick={this.onNextScreen}>
+            Next step
+            <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
+          </button>
         </div>
       </div>
     );
