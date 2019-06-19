@@ -26,10 +26,19 @@
     font-weight: bold;
     font-size: rem(16px);
     margin-bottom: 10px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(12px);
+    }
   }
 
   &__text {
     margin-bottom: 28px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      line-height: rem(16px);
+      margin-bottom: 20px;
+    }
   }
 
   &.active {

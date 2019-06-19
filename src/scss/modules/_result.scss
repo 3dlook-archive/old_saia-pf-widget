@@ -22,6 +22,12 @@
       padding: 15px 0;
     }
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      padding: 8px 0;
+      margin-bottom: 15px;
+      font-size: 9px;
+    }
+
     b {
       font-weight: bold;
     }
@@ -34,6 +40,11 @@
     margin-bottom: 44px;
     display: none;
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-bottom: 25px;
+      max-width: 215px;
+    }
+
     &.active {
       display: flex;
     }
@@ -42,11 +53,20 @@
   &__product-img {
     margin-right: 23px;
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-right: 10px;
+    }
+
     img {
       width: 66px;
       height: 66px;
       border-radius: 50%;
       object-fit: cover;
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 
@@ -59,10 +79,17 @@
     font-size: rem(13px);
     text-transform: uppercase;
     margin-bottom: 7px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(10px);
+      line-height: 12px;
+    }
   }
 
   &__product-desc {
-
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(9px);
+    }
   }
 
   &__sizes {
@@ -76,6 +103,11 @@
     @include breakpoint((max-width 500px, max-height 650px)) {
       margin-bottom: 30px;
     }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      max-width: 215px;
+      margin-bottom: 10px;
+    }
   }
 
   &__size {
@@ -83,6 +115,10 @@
     position: absolute;
     left: 0;
     display: none;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      top: 8px;
+    }
 
     &.active {
       display: block;
@@ -108,10 +144,20 @@
         width: 90px;
         font-size: rem(36px);
       }
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        height: 50px;
+        width: 70px;
+        font-size: rem(24px);
+      }
     }
 
     &--normal &-desc {
       font-size: rem(12px);
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        font-size: rem(10px);
+      }
     }
 
     &--loose {
@@ -138,15 +184,29 @@
       width: 55px;
       font-size: rem(14px);
     }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      height: 35px;
+      width: 45px;
+      font-size: rem(12px);
+    }
   }
 
   &__size-desc {
     font-size: rem(11px);
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(9px);
+    }
   }
 
   &__size-not-found {
     display: none;
     margin-bottom: 80px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-bottom: 60px;
+    }
 
     &.active {
       display: block;
@@ -155,6 +215,11 @@
     h2 {
       font-size: rem(16px);
       margin-bottom: 30px;
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        font-size: rem(12px);
+        margin-bottom: 15px;
+      }
     }
   }
 }

@@ -7,6 +7,10 @@
   &__logo {
     margin-bottom: 36px;
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-bottom: 20px;
+    }
+
     img {
       width: 240px;
 
@@ -35,6 +39,11 @@
 
     @include breakpoint((max-width 500px, max-height 650px)) {
       margin-bottom: 30px;
+    }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-bottom: 20px;
+      line-height: rem(18px);
     }
   }
 }
