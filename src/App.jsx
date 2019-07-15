@@ -5,13 +5,12 @@ import { createHashHistory } from 'history';
 /**
  * Components
  */
-import { Header } from './components/header/Header';
+import Header from './components/header/Header';
 
 /**
  * Containers
  */
 import Welcome from './containers/welcome/Welcome';
-import Tips from './containers/tips/Tips';
 import { Upload } from './containers/upload/Upload';
 import { Data } from './containers/data/Data';
 import Results from './containers/results/Results';
@@ -63,7 +62,6 @@ class App extends Component {
 
         <Router history={createHashHistory()} onChange={this.showHideLogo}>
           <Welcome path="/" />
-          <Tips path="/tips" />
           <Data path="/data" />
           <Upload path="/upload" />
           <Results path="/results" />
