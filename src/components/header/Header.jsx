@@ -1,15 +1,14 @@
 import { h, Component } from 'preact';
-import Match from 'preact-router/match';
 import { send } from '../../utils';
 import { gaHelpOnClick, gaCloseOnClick } from '../../ga';
 
-const saiaPfLogo = require('../../images/logo.svg');
+const helpIcon = require('../../images/help-icon.svg');
 const modalCloseIcon = require('../../images/close-icon.svg');
 
 /**
  * Widget header component
  */
-export class Header extends Component {
+export default class Header extends Component {
   /**
    * Close button click
    */
@@ -22,24 +21,22 @@ export class Header extends Component {
    * Help button click
    */
   onHelpButtonClick = () => {
+    const { help } = this.props;
     gaHelpOnClick();
-    this.props.help();
+    help();
   };
 
   render() {
     return (
-      <div class="header">
-        <button class="header__help" onClick={this.onHelpButtonClick}>Help</button>
+      <header className="header">
+        <button className="header__help" onClick={this.onHelpButtonClick} type="button">
+          <img src={helpIcon} alt="Help button icon" />
+        </button>
 
-        {(this.props.isLogoActive) ?
-          <div class="header__logo">
-            <img src={saiaPfLogo} alt="SAIA Perfect Fit Logo" />
-          </div> : null }
-
-        <button class="header__close" onClick={this.onCloseButtonClick} type="button">
+        <button className="header__close" onClick={this.onCloseButtonClick} type="button">
           <img src={modalCloseIcon} alt="Close button icon" />
         </button>
-      </div>
+      </header>
     );
   }
-};
+}

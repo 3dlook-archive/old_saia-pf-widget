@@ -1,45 +1,14 @@
 .header {
   height: 55px;
-  position: relative;
+  padding: 0 25px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  &--hidden-logo &__logo {
-    display: none;
-  }
-
-  &__logo {
-
-    img {
-      width: 75px;
-    }
-  }
-
-  &__help {
-    background: transparent;
-    text-decoration: underline;
-    padding: 0;
-    border: none;
-    font-size: rem(15px);
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 20px;
-    font-weight: 300;
-
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      font-size: rem(12px);
-    }
-  }
-
+  &__help,
   &__close {
     background: transparent;
     padding: 5px;
     border: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 12px;
   }
 }
