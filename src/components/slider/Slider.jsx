@@ -1,23 +1,33 @@
 import { h, Component } from 'preact';
-
-const sliderButtonIcon = require('../../images/slider-next-icon.svg');
+import classNames from 'classnames';
 
 /**
  * Slider component
  */
-export class Slider extends Component {
+export default class Slider extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       index: 0,
+      timer: null,
     };
   }
 
+  componentDidMount() {
+    this.state.timer = setInterval(() => {
+      this.nextSlide();
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
   /**
-   * Slider next slide button click
+   * Display next slide
    */
-  onNextClick = () => {
+  nextSlide = () => {
     let i = this.state.index + 1;
 
     if (i >= this.props.images.length) {
@@ -29,51 +39,35 @@ export class Slider extends Component {
     });
   }
 
-  /**
-   * Slider prev slide button click
-   */
-  onPrevClick = () => {
-    let i = this.state.index - 1;
-
-    if (i < 0) {
-      i = this.props.images.length - 1;
-    }
-
-    this.setState({
-      index: i,
-    });
-  }
-
-  render() {
+  render({ children, className }, { index }) {
     // slides
-    const slides = this.props.images.map((image, i) => (
-      <div class={'slider__slide ' + ((this.state.index === i) ? 'active' : '')}>
-        <img src={image} alt="" />
-      </div>
-    ));
+    const slides = children.map((image, i) => {
+      const imageCopy = {
+        ...image,
+      };
+
+      if (!imageCopy.attributes) {
+        imageCopy.attributes = {};
+      }
+
+      imageCopy.attributes.className = classNames('slider__slide', { active: index === i });
+
+      return imageCopy;
+    });
 
     // bullets
-    const bullets = this.props.images.map((image, i) => (
-      <div class={'slider__bullet ' + ((this.state.index === i) ? 'active' : '')}></div>
+    const bullets = children.map((_, i) => (
+      <div className={classNames('slider__bullet', { active: index === i })} />
     ));
 
     return (
-      <div class="tips__slider slider">
-        <div class="slider__slides">
+      <div className={classNames('slider', className)}>
+        <div className="slider__slides">
           {slides}
         </div>
 
-        <div class="slider__bullets">
+        <div className="slider__bullets">
           {bullets}
-        </div>
-
-        <div class="slider__nav">
-          <button class="slider__back-btn" onClick={this.onPrevClick}>
-            <img src={sliderButtonIcon} alt="Prev slide button icon" />
-          </button>
-          <button class="slider__next-btn" onClick={this.onNextClick}>
-            <img src={sliderButtonIcon} alt="Next slide button icon" />
-          </button>
         </div>
       </div>
     );
