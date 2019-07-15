@@ -1,31 +1,42 @@
 import { h } from 'preact';
 import { Link } from 'preact-router';
 
+import Slider from '../../components/slider/Slider';
 import { objectToUrlParams } from '../../utils';
 import { gaWelcomeOnContinue } from '../../ga';
 
-const saiaPfLogo = require('../../images/logo.svg');
-const nextArrowIcon = require('../../images/arrow.svg');
+// slider images
+const slideImage1 = require('../../images/slide1.svg');
+const slideImage2 = require('../../images/slide2.svg');
+const slideImage3 = require('../../images/slide3.svg');
 
 /**
  * Welcome page component
  */
 const Welcome = ({ matches }) => (
-  <div className="screen screen--welcome active">
+  <section className="screen active">
     <div className="screen__content welcome">
-      <div className="welcome__logo">
-        <img src={saiaPfLogo} alt="SAIA Perfect Fit Logo" />
-        <p className="welcome__powered">POWERED BY 3DLOOK</p>
-      </div>
-
-      <p className="welcome__text">After uploading only two photos we will determine your body measurements and select the size that will fit you best</p>
-
-      <Link className="button" href={`/tips?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
-        Start
-        <img className="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
+      <Slider className="welcome__slider" images={[slideImage1, slideImage2, slideImage3]}>
+        <div>
+          <img src={slideImage1} alt="Slide 1" />
+          <p className="welcome__slider-text">take two photos</p>
+        </div>
+        <div>
+          <img src={slideImage2} alt="Slide 2" />
+          <p className="welcome__slider-text">Get personalized size <br /> recommendations</p>
+        </div>
+        <div>
+          <img src={slideImage3} alt="Slide 3" />
+          <p className="welcome__slider-text">Shop for apparel <br /> that fits you</p>
+        </div>
+      </Slider>
+    </div>
+    <div className="screen__footer">
+      <Link className="button" href={`/data?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
+        <span>Start</span>
       </Link>
     </div>
-  </div>
+  </section>
 );
 
 export default Welcome;
