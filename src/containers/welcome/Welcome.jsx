@@ -16,18 +16,26 @@ const slideImage3 = require('../../images/slide3.svg');
 const Welcome = ({ matches }) => (
   <section className="screen active">
     <div className="screen__content welcome">
-      <Slider className="welcome__slider" images={[slideImage1, slideImage2, slideImage3]}>
+      <Slider className="welcome__slider">
         <div>
           <img src={slideImage1} alt="Slide 1" />
           <p className="welcome__slider-text">take two photos</p>
         </div>
         <div>
           <img src={slideImage2} alt="Slide 2" />
-          <p className="welcome__slider-text">Get personalized size <br /> recommendations</p>
+          <p className="welcome__slider-text">
+            { 'Get personalized size ' }
+            <br />
+            { ' recommendations' }
+          </p>
         </div>
         <div>
           <img src={slideImage3} alt="Slide 3" />
-          <p className="welcome__slider-text">Shop for apparel <br /> that fits you</p>
+          <p className="welcome__slider-text">
+            { 'Shop for apparel ' }
+            <br />
+            { ' that fits you' }
+          </p>
         </div>
       </Slider>
     </div>
