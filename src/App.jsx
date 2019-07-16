@@ -12,7 +12,7 @@ import Header from './components/header/Header';
  */
 import Welcome from './containers/welcome/Welcome';
 import { Upload } from './containers/upload/Upload';
-import { Data } from './containers/data/Data';
+import Data from './containers/data/Data';
 import Results from './containers/results/Results';
 import Help from './components/help/Help';
 
@@ -32,35 +32,21 @@ class App extends Component {
    * Toggle Help component visibility
    */
   toggleHelp = () => {
+    const { isHelpActive } = this.state;
+
     this.setState({
-      isHelpActive: !this.state.isHelpActive,
-    });
-  }
-
-  /**
-   * Show or hide logo in header
-   */
-  showHideLogo = (e) => {
-    if (e.url === '/' || e.url.indexOf('/?') === 0) {
-      return this.setState({
-        ...this.state,
-        isLogoActive: false,
-      });
-    }
-
-    return this.setState({
-      ...this.state,
-      isLogoActive: true,
+      isHelpActive: !isHelpActive,
     });
   }
 
   render() {
+    const { isLogoActive, isHelpActive } = this.state;
     return (
       <div className="widget-container">
-        <Header help={this.toggleHelp} isLogoActive={this.state.isLogoActive} />
-        <Help show={this.state.isHelpActive} close={this.toggleHelp} />
+        <Header help={this.toggleHelp} isLogoActive={isLogoActive} />
+        <Help show={isHelpActive} close={this.toggleHelp} />
 
-        <Router history={createHashHistory()} onChange={this.showHideLogo}>
+        <Router history={createHashHistory()}>
           <Welcome path="/" />
           <Data path="/data" />
           <Upload path="/upload" />
