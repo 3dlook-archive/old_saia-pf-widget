@@ -36,6 +36,10 @@
     }
   }
 
+  &:focus-within &__icon {
+    outline: -webkit-focus-ring-color auto 5px;
+  }
+
   &.checked &__icon {
     background: #FFAB55;
     border-color: #FFAB55;

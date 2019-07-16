@@ -67,10 +67,6 @@
       @include visually-hidden();
     }
 
-    input:focus {
-      outline: -webkit-focus-ring-color auto 5px;
-    }
-
     label.checked {
       color: #000;
     }
@@ -93,6 +89,10 @@
     width: 40px;
     text-align: center;
     cursor: pointer;
+
+    &:focus-within {
+      outline: -webkit-focus-ring-color auto 5px;
+    }
 
     &--cm {
       order: 1;
