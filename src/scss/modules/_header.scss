@@ -1,6 +1,7 @@
 .header {
-  height: 55px;
-  padding: 0 25px;
+  height: 45px;
+  padding: 0 28px;
+  padding-top: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,7 +9,7 @@
   &__help,
   &__close {
     background: transparent;
-    padding: 5px;
+    padding: 2px;
     border: none;
   }
 }
