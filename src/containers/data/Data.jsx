@@ -1,17 +1,16 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import classNames from 'classnames';
 
 import { objectToUrlParams } from '../../utils';
-import { Gender } from '../../components/gender/Gender';
-import { Height } from '../../components/height/Height';
+import Gender from '../../components/gender/Gender';
+import Height from '../../components/height/Height';
 import { gaDataOnContinue, gaDataMale, gaDataFemale } from '../../ga';
-
-const nextArrowIcon = require('../../images/arrow.svg');
 
 /**
  * Data page component
  */
-export class Data extends Component {
+export default class Data extends Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +21,7 @@ export class Data extends Component {
       isHeightValid: true,
       isGenderValid: true,
       isAgreeValid: true,
+      buttonDisabled: true,
     };
   }
 
@@ -36,10 +36,9 @@ export class Data extends Component {
     }
 
     this.setState({
-      ...this.state,
       gender,
       isGenderValid: (gender === 'male' || gender === 'female'),
-    });
+    }, () => this.checkButtonState());
   }
 
   /**
@@ -47,17 +46,16 @@ export class Data extends Component {
    */
   changeHeight = (height) => {
     let isValueValid = false;
-    const numHeight = parseInt(height);
+    const numHeight = parseInt(height, 10);
 
     if (numHeight >= 150 && numHeight <= 220) {
       isValueValid = true;
     }
 
     this.setState({
-      ...this.state,
       height: numHeight,
       isHeightValid: isValueValid,
-    });
+    }, () => this.checkButtonState());
   }
 
   /**
@@ -65,96 +63,74 @@ export class Data extends Component {
    */
   changeAgree = (e) => {
     this.setState({
-      ...this.state,
       agree: e.target.checked,
-    });
+      isAgreeValid: e.target.checked,
+    }, () => this.checkButtonState());
   }
 
   /**
    * On next screen event handler
    */
   onNextScreen = () => {
-    // validate values
-    let isHeightValid = false;
-    let isGenderValid = false;
-    let isAgreeValid = false;
+    const { matches } = this.props;
+    const { gender, height } = this.state;
 
-    // validate height
-    const { height } = this.state;
+    const params = {
+      ...matches,
+      gender,
+      height,
+    };
 
-    if (height >= 150 && height <= 220) {
-      isHeightValid = true;
-    }
+    gaDataOnContinue();
+    route(`/upload?${objectToUrlParams(params)}`, false);
+  }
 
-    // validate gender
-    const { gender } = this.state;
-
-    if (gender && (gender === 'male' || gender === 'female')) {
-      isGenderValid = true;
-    }
-
-    // validate agree checkbox
-    const { agree } = this.state;
-
-    if (agree) {
-      isAgreeValid = true;
-    }
-
-    this.setState({
-      ...this.state,
-      isHeightValid,
-      isGenderValid,
-      isAgreeValid,
-    });
-
-    // if all data is valid
-    // go to the next step
-    if (isHeightValid && isGenderValid && isAgreeValid) {
-      const params = {
-        ...this.props.matches,
-        gender: this.state.gender,
-        height: this.state.height,
-      };
-      gaDataOnContinue();
-      route(`/upload?${objectToUrlParams(params)}`, false);
-    }
+  /**
+   * Set Next button disabled state
+   */
+  checkButtonState() {
+    this.setState(prevState => ({
+      buttonDisabled: !prevState.gender || !prevState.height
+        || !prevState.agree || !prevState.isAgreeValid
+        || !prevState.isGenderValid || !prevState.isHeightValid,
+    }));
   }
 
   render() {
+    const {
+      isGenderValid,
+      isHeightValid,
+      isAgreeValid,
+      agree,
+      buttonDisabled,
+    } = this.state;
+
     return (
-      <div class="screen screen--data active">
-        <div class="screen__content data">
-          <h2 class="screen__title">PLEASE ENTER YOUR DATA</h2>
-          <p class="screen__text">Please select your gender and enter height. <br />
-          We need this information to create your Perfect Fit Profile</p>
+      <div className="screen active">
+        <div className="screen__content data">
+          <h2 className="screen__subtitle">
+            <span className="active">STEP 1</span>
+            <span className="screen__subtitle-separ" />
+            <span>STEP 2</span>
+          </h2>
 
-          <div class="data__block">
-            <div class={`data__field ${!this.state.isGenderValid ? 'data__field--invalid' : ''}`}>
-              <h3 class="data__field-title">Gender:</h3>
+          <h3 className="screen__title data__title">Select your gender</h3>
+          <Gender className="data__gender" change={this.changeGender} isValid={isGenderValid} />
 
-              <Gender change={this.changeGender} isValid={this.state.isGenderValid} />
+          <h3 className="screen__title data__title">How tall are you?</h3>
+          <Height className="data__height" change={this.changeHeight} isValid={isHeightValid} />
 
-              <p className="data__field-error"><span>!</span> Please select your gender</p>
-            </div>
-
-            <div class={`data__field ${!this.state.isHeightValid ? 'data__field--invalid' : ''}`}>
-              <h3 class="data__field-title">Height:</h3>
-
-              <Height change={this.changeHeight} isValid={this.state.isHeightValid} />
-
-              <p className="data__field-error"><span>!</span> Please enter a valid height</p>
-            </div>
+        </div>
+        <div className="screen__footer">
+          <div className={classNames('data__check', 'checkbox', { checked: agree, 'checkbox--invalid': !isAgreeValid })}>
+            <label htmlFor="agree">
+              <input type="checkbox" name="agree" id="agree" onChange={this.changeAgree} checked={agree} />
+              <span className="checkbox__icon" />
+              { 'I accept ' }
+              <a href="https://3dlook.me/terms-of-service/" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>
+            </label>
           </div>
-
-          <button class="button" onClick={this.onNextScreen}>
-            Next step
-            <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
-          </button>
-
-          <div class={`data__check checkbox ${!this.state.isAgreeValid ? 'checkbox--invalid' : ''}`}>
-            <input type="checkbox" name="agree" id="agree" onChange={this.changeAgree} checked={this.state.agree} />
-            <label for="agree">I accept <a href="https://3dlook.me/terms-of-service/" target="_blank">Terms and Conditions</a></label>
-          </div>
+          <button className="button" onClick={this.onNextScreen} type="button" disabled={buttonDisabled}>Next</button>
         </div>
       </div>
     );

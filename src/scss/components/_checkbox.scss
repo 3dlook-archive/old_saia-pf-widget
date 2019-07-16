@@ -1,5 +1,7 @@
 .checkbox {
   font-size: rem(11px);
+  display: flex;
+  justify-content: center;
 
   input {
     @include visually-hidden();
@@ -9,21 +11,17 @@
     color: #9B9B9B;
   }
 
-  label {
+  &__icon {
+    display: inline-block;
+    vertical-align: middle;
+    content: '';
+    height: 17px;
+    width: 17px;
+    border: 1px solid #9B9B9B;
+    border-radius: 1px;
+    margin-right: 7px;
+    cursor: pointer;
     position: relative;
-
-    &:before {
-      display: inline-block;
-      vertical-align: middle;
-      content: '';
-      height: 17px;
-      width: 17px;
-      border: 1px solid #9B9B9B;
-      border-radius: 1px;
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
-      margin-right: 7px;
-      cursor: pointer;
-    }
 
     &:after {
       display: none;
@@ -33,24 +31,21 @@
       height: 8px;
       position: absolute;
       top: 4px;
-      left: 3px;
+      left: 2px;
+      pointer-events: none;
     }
   }
 
-  input:checked + label:before {
-    background: #9B9B9B;
+  &.checked &__icon {
+    background: #FFAB55;
+    border-color: #FFAB55;
+
+    &:after {
+      display: block;
+    }
   }
 
-  input:checked + label:after {
-    display: block;
-  }
-
-  input:focus + label:before {
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-
-  &--invalid label:before {
+  &--invalid &__icon {
     border-color: $error-border-color;
-    background-color: $error-background-color;
   }
 }
