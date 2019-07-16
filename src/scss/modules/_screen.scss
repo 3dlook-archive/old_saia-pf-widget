@@ -1,3 +1,7 @@
+$success: #69BE0C;
+$warning: #FF9F00;
+$failure: $error-border-color;
+
 .screen {
   display: none;
   width: 100%;
@@ -17,7 +21,52 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: rem(16px);
-    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: #CDCDCD;
+    font-size: rem(11px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+
+    span {
+      &.success {
+        color: $success;
+      }
+
+      &.warning {
+        color: $warning;
+      }
+
+      &.failure {
+        color: $failure;
+      }
+    }
+
+    &-separ {
+      display: inline-block;
+      height: 2px;
+      width: 24px;
+      background: #CDCDCD;
+      vertical-align: middle;
+      margin: 0 13px;
+
+      &.success {
+        background: $success;
+      }
+
+      &.warning {
+        background: $warning;
+      }
+
+      &.failure {
+        background: $failure;
+      }
+    }
   }
 
   &__text {

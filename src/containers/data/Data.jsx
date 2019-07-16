@@ -109,7 +109,7 @@ export default class Data extends Component {
       <div className="screen active">
         <div className="screen__content data">
           <h2 className="screen__subtitle">
-            <span className="active">STEP 1</span>
+            <span className="success">STEP 1</span>
             <span className="screen__subtitle-separ" />
             <span>STEP 2</span>
           </h2>
