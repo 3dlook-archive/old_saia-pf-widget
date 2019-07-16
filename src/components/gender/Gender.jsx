@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import className from 'classnames';
+import classNames from 'classnames';
 
 const maleIcon = require('../../images/male-icon.png');
 const maleIconX2 = require('../../images/male-icon@2x.png');
@@ -18,26 +18,29 @@ export default class Gender extends Component {
    * Gender change event handler
    */
   onGenderChange = (e) => {
-    const { value } = e.target;
+    const { change } = this.props;
 
-    this.props.change(value);
+    const { value } = e.target;
 
     this.setState({
       value,
-    });
+    }, () => change(value));
   }
 
   render() {
+    const { className, isValid } = this.props;
+    const { value } = this.state;
+
     return (
-      <div className={className('gender', this.props.className, { 'gender--invalid': !this.props.isValid })}>
-        <input type="radio" name="gender" id="gender-female" value="female" onChange={this.onGenderChange} checked={this.state.value === 'female'} />
-        <label className="gender__item" for="gender-female">
+      <div className={classNames('gender', className, { 'gender--invalid': !isValid })}>
+        <label className={classNames('gender__item', { checked: value === 'female' })} htmlFor="gender-female">
+          <input type="radio" name="gender" id="gender-female" value="female" onChange={this.onGenderChange} checked={value === 'female'} />
           <span>Female</span>
           <img src={femaleIcon} srcSet={`${femaleIcon} 1x, ${femaleIconX2} 2x`} alt="female icon" />
         </label>
 
-        <input type="radio" name="gender" id="gender-male" value="male" onChange={this.onGenderChange} checked={this.state.value === 'male'} />
-        <label className="gender__item" for="gender-male">
+        <label className={classNames('gender__item', { checked: value === 'male' })} htmlFor="gender-male">
+          <input type="radio" name="gender" id="gender-male" value="male" onChange={this.onGenderChange} checked={value === 'male'} />
           <span>Male</span>
           <img src={maleIcon} srcSet={`${maleIcon} 1x, ${maleIconX2} 2x`} alt="male icon" />
         </label>

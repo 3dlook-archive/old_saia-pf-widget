@@ -28,6 +28,18 @@ $border-width: 2px;
     position: relative;
     color: #000;
 
+    &.checked {
+      color: #fff;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    &:focus-within {
+      outline: -webkit-focus-ring-color auto 5px;
+    }
+
     &:after {
       content: '';
       position: absolute;
@@ -55,17 +67,5 @@ $border-width: 2px;
       position: relative;
       z-index: 1;
     }
-  }
-
-  input:checked + label {
-    color: #fff;
-
-    &:after {
-      display: none;
-    }
-  }
-
-  input:focus + label {
-    outline: -webkit-focus-ring-color auto 5px;
   }
 }
