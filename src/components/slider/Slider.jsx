@@ -15,22 +15,31 @@ export default class Slider extends Component {
   }
 
   componentDidMount() {
-    this.state.timer = setInterval(() => {
+    const timer = setInterval(() => {
       this.nextSlide();
     }, 3000);
+
+    this.setState({
+      timer,
+    });
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.timer);
+    const { timer } = this.state;
+
+    clearInterval(timer);
   }
 
   /**
    * Display next slide
    */
   nextSlide = () => {
-    let i = this.state.index + 1;
+    const { index } = this.state;
+    const { children } = this.props;
 
-    if (i >= this.props.images.length) {
+    let i = index + 1;
+
+    if (i >= children.length) {
       i = 0;
     }
 
