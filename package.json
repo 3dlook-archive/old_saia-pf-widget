@@ -92,6 +92,7 @@
     "normalize.css": "^8.0.1",
     "preact": "^8.4.2",
     "preact-compat": "^3.18.4",
-    "preact-router": "^2.6.1"
+    "preact-router": "^2.6.1",
+    "qrcode": "^1.4.0"
   }
 }
