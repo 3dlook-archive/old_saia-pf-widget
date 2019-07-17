@@ -2,21 +2,22 @@
   display: none;
   text-align: center;
   position: absolute;
-  top: 55px;
+  top: 50px;
   left: 0;
   right: 0;
   bottom: 0;
-  flex-direction: column;
-  justify-content: center;
   background: #fff;
-  padding-bottom: 42px;
 
   &.active {
     display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__title {
-    margin-bottom: 50px;
+    @extend .screen__title;
+    margin-top: 48px;
+    margin-bottom: 163px;
   }
 
   &__image {
@@ -24,11 +25,6 @@
     width: 117px;
     height: 117px;
     animation: spin 3s linear infinite;
-
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      width: 65px;
-      height: 65px;
-    }
   }
 }
 

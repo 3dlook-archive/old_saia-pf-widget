@@ -8,9 +8,9 @@ const preloaderImage = require('../../images/preloader.svg');
 const Preloader = ({ isActive }) => (
   <div className={`preloader ${isActive ? 'active' : ''}`}>
     <h2 className="preloader__title screen__title">
-      We’re doing some magic…
+      hold tight, the magic is
       <br />
-      Please stand by
+      happening
     </h2>
     <img className="preloader__image" src={preloaderImage} alt="Preloader animation" />
   </div>
