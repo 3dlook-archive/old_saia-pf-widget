@@ -32,9 +32,7 @@ export default class QRCodeBlock extends Component {
       .catch(err => this.setState({ error: err.message }));
 
     // init clipboard
-    this.clipboard = new Clipboard('.qrcode__btn', {
-      text: 'qwerty',
-    });
+    this.clipboard = new Clipboard('.qrcode__btn');
   }
 
   copy = () => {
