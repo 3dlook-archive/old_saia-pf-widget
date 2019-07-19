@@ -1,9 +1,12 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import { Link } from 'preact-router';
+import { connect } from 'preact-redux';
 
 import Slider from '../../components/slider/Slider';
 import { objectToUrlParams } from '../../utils';
 import { gaWelcomeOnContinue } from '../../ga';
+import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
 // slider images
 const slideImage1 = require('../../images/slide1.svg');
@@ -13,38 +16,70 @@ const slideImage3 = require('../../images/slide3.svg');
 /**
  * Welcome page component
  */
-const Welcome = ({ matches }) => (
-  <section className="screen active">
-    <div className="screen__content welcome">
-      <Slider className="welcome__slider">
-        <div>
-          <img src={slideImage1} alt="Slide 1" />
-          <p className="welcome__slider-text">take two photos</p>
-        </div>
-        <div>
-          <img src={slideImage2} alt="Slide 2" />
-          <p className="welcome__slider-text">
-            { 'Get personalized size ' }
-            <br />
-            { ' recommendations' }
-          </p>
-        </div>
-        <div>
-          <img src={slideImage3} alt="Slide 3" />
-          <p className="welcome__slider-text">
-            { 'Shop for apparel ' }
-            <br />
-            { ' that fits you' }
-          </p>
-        </div>
-      </Slider>
-    </div>
-    <div className="screen__footer">
-      <Link className="button" href={`/data?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
-        <span>Start</span>
-      </Link>
-    </div>
-  </section>
-);
+class Welcome extends Component {
+  constructor(props) {
+    super(props);
+    const { matches } = this.props;
+    this.flow = new FlowService(matches.key || API_KEY);
+  }
 
-export default Welcome;
+  componentDidMount() {
+    const {
+      setFlowId,
+      setBrand,
+      setBodyPart,
+      setProductUrl,
+      matches,
+    } = this.props;
+
+    setBrand(matches.brand);
+    setBodyPart(matches.body_part);
+    setProductUrl(matches.product);
+
+    this.flow.create({
+      status: 'created',
+    })
+      .then((res) => {
+        setFlowId(res);
+      })
+      .catch(err => alert(err.message));
+  }
+
+  render({ matches }) {
+    return (
+      <section className="screen active">
+        <div className="screen__content welcome">
+          <Slider className="welcome__slider">
+            <div>
+              <img src={slideImage1} alt="Slide 1" />
+              <p className="welcome__slider-text">take two photos</p>
+            </div>
+            <div>
+              <img src={slideImage2} alt="Slide 2" />
+              <p className="welcome__slider-text">
+                { 'Get personalized size ' }
+                <br />
+                { ' recommendations' }
+              </p>
+            </div>
+            <div>
+              <img src={slideImage3} alt="Slide 3" />
+              <p className="welcome__slider-text">
+                { 'Shop for apparel ' }
+                <br />
+                { ' that fits you' }
+              </p>
+            </div>
+          </Slider>
+        </div>
+        <div className="screen__footer">
+          <Link className="button" href={`/data?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
+            <span>Start</span>
+          </Link>
+        </div>
+      </section>
+    );
+  }
+}
+
+export default connect(state => state, actions)(Welcome);
