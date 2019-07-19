@@ -1,7 +1,10 @@
 import { h, Component } from 'preact';
 import classNames from 'classnames';
+import { connect } from 'preact-redux';
+
 import { send } from '../../utils';
 import { gaResultsOnContinue } from '../../ga';
+import actions from '../../store/actions';
 
 /**
  * Results page component.
@@ -13,7 +16,11 @@ class Results extends Component {
     gaResultsOnContinue();
   }
 
-  render({ matches }) {
+  render() {
+    const {
+      recommendations,
+    } = this.props;
+
     return (
       <div className="screen screen--result active">
         <div className="screen__content result">
@@ -24,18 +31,18 @@ class Results extends Component {
           <h3 className="screen__title result__title">your recomended size</h3>
 
           <div className="result__sizes">
-            <div className={classNames('result__size', 'result__size--tight', { active: matches.tight })}>
-              <h3 className="result__size-num">{matches.tight}</h3>
+            <div className={classNames('result__size', 'result__size--tight', { active: recommendations.tight })}>
+              <h3 className="result__size-num">{recommendations.tight}</h3>
               <p className="result__size-desc">Tight fit</p>
             </div>
 
-            <div className={classNames('result__size', 'result__size--normal', { active: matches.normal })}>
-              <h3 className="result__size-num">{matches.normal}</h3>
+            <div className={classNames('result__size', 'result__size--normal', { active: recommendations.normal })}>
+              <h3 className="result__size-num">{recommendations.normal}</h3>
               <p className="result__size-desc">Regular fit</p>
             </div>
 
-            <div className={classNames('result__size', 'result__size--loose', { active: matches.loose })}>
-              <h3 className="result__size-num">{matches.loose}</h3>
+            <div className={classNames('result__size', 'result__size--loose', { active: recommendations.loose })}>
+              <h3 className="result__size-num">{recommendations.loose}</h3>
               <p className="result__size-desc">Loose fit</p>
             </div>
           </div>
@@ -58,4 +65,4 @@ class Results extends Component {
   }
 }
 
-export default Results;
+export default connect(state => state, actions)(Results);
