@@ -1,51 +1,36 @@
+/* eslint class-methods-use-this: off */
 import { h, Component } from 'preact';
 import classNames from 'classnames';
 
-const frontMaleImage = require('../../images/front-male.svg');
-const sideMaleImage = require('../../images/side-male.svg');
-const frontFemaleImage = require('../../images/front-female.svg');
-const sideFemaleImage = require('../../images/side-female.svg');
+const frontImage = require('../../images/front-image.svg');
+const sideImage = require('../../images/side-image.svg');
 
 /**
  * Upload file component
  */
-export class UploadFile extends Component {
+export default class UploadFile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       mode: 'placeholder',
       file: null,
-      fileBlob: null,
       value: null,
     };
   }
 
-  /**
-   * Save file blob to the state
-   *
-   * @async
-   * @param {Blob} file - image file
-   */
-  async saveFile(file) {
-    if (!file) {
-      return;
+  componentDidMount() {
+    const { value, change } = this.props;
+
+    if (value) {
+      this.setState({
+        file: value,
+        mode: 'preview',
+      }, () => change({
+        file: value,
+        mode: 'preview',
+      }));
     }
-
-    const orientation = await this.getOrientation(file);
-    const fileBase64 = await this.loadPhoto(file, orientation);
-
-    this.setState({
-      file: fileBase64,
-      fileBlob: file,
-      mode: 'preview',
-    });
-
-    this.props.change({
-      file: fileBase64,
-      fileBlob: file,
-      mode: 'preview',
-    });
   }
 
   /**
@@ -59,21 +44,28 @@ export class UploadFile extends Component {
   }
 
   /**
-   * Disable dragOver and dragLeave events
+   * Save file blob to the state
+   *
+   * @async
+   * @param {Blob} file - image file
    */
-  disableDragEvents = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }
+  async saveFile(file) {
+    const { change } = this.props;
 
-  /**
-   * Handle drop image file event
-   */
-  dropImage = async (e) => {
-    e.preventDefault();
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    await this.saveFile(files[0]);
+    if (!file) {
+      return;
+    }
+
+    const orientation = await this.getOrientation(file);
+    const fileBase64 = await this.loadPhoto(file, orientation);
+
+    this.setState({
+      file: fileBase64,
+      mode: 'preview',
+    }, () => change({
+      file: fileBase64,
+      mode: 'preview',
+    }));
   }
 
   /**
@@ -101,8 +93,9 @@ export class UploadFile extends Component {
           offset += 2;
 
           if (marker === 0xFFE1) {
+            offset += 2;
 
-            if (view.getUint32(offset += 2, false) !== 0x45786966) {
+            if (view.getUint32(offset, false) !== 0x45786966) {
               return resolve(-1);
             }
 
@@ -112,18 +105,18 @@ export class UploadFile extends Component {
             const tags = view.getUint16(offset, little);
             offset += 2;
 
-            for (let i = 0; i < tags; i++) {
+            for (let i = 0; i < tags; i += 1) {
               if (view.getUint16(offset + (i * 12), little) === 0x0112) {
-
                 return resolve(view.getUint16(offset + (i * 12) + 8, little));
               }
             }
           } else {
+            // eslint-disable-next-line no-bitwise
             if ((marker & 0xFF00) !== 0xFF00) {
-              break;
-            } else {
-              offset += view.getUint16(offset, false);
+              return resolve(-1);
             }
+
+            offset += view.getUint16(offset, false);
           }
         }
 
@@ -137,28 +130,48 @@ export class UploadFile extends Component {
   }
 
   /**
+   * Disable dragOver and dragLeave events
+   */
+  disableDragEvents = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+
+  /**
+   * Handle drop image file event
+   */
+  dropImage = async (e) => {
+    e.preventDefault();
+    const dt = e.dataTransfer;
+    const { files } = dt;
+    await this.saveFile(files[0]);
+  }
+
+  /**
+   * Get image base64 and fix its orientation (if needed)
    *
-   * @param {*} blob
-   * @param {*} orientation
+   * @param {*} blob - file blob
+   * @param {*} orientation - image orientation
    */
   loadPhoto(blob, orientation) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
 
       fileReader.addEventListener('load', () => {
-
         if (!orientation || orientation <= 1) {
           return resolve(fileReader.result);
         }
 
         const image = new Image();
-        image.addEventListener('load', function () {
-
+        image.addEventListener('load', () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-          const width = canvas.width = image.width;
-          const height = canvas.height = image.height;
+          const { width, height } = image;
+          canvas.width = width;
+          canvas.height = height;
 
+          // eslint-disable-next-line default-case
           switch (orientation) {
             case 2:
               ctx.translate(width, 0);
@@ -201,15 +214,16 @@ export class UploadFile extends Component {
 
           ctx.drawImage(image, 0, 0, width, height);
           resolve(
-            canvas.toDataURL('image/jpeg', 0.95)
+            canvas.toDataURL('image/jpeg', 0.95),
           );
         });
 
         image.src = fileReader.result;
-        return;
+
+        return null;
       });
 
-      fileReader.addEventListener('error', function (e) {
+      fileReader.addEventListener('error', (e) => {
         reject(e);
       });
 
@@ -217,39 +231,54 @@ export class UploadFile extends Component {
     });
   }
 
+  /**
+   * Enter and space buttons press handler
+   * Triggers file input
+   */
   keyboardAccess = (e) => {
-    if(e.which === 32 || e.which === 13){
+    if (e.which === 32 || e.which === 13) {
       e.preventDefault();
       e.target.click();
     }
   }
 
-  render({ type }) {
+  render() {
+    const {
+      type,
+      isValid,
+    } = this.props;
+
+    const {
+      value,
+      mode,
+      file,
+    } = this.state;
+
     const fileText = (type === 'front') ? 'Front' : 'Side';
-    let image = null;
+    const image = (type === 'front') ? frontImage : sideImage;
 
-    if (this.props.gender === 'male') {
-      image = (type === 'front') ? frontMaleImage : sideMaleImage;
-    }
-
-    if (this.props.gender === 'female') {
-      image = (type === 'front') ? frontFemaleImage : sideFemaleImage;
-    }
-
-    const classes = classNames('upload__file',
+    const classes = classNames('upload-file',
       {
-        'upload__file--invalid': !this.props.isValid,
+        'upload-file--invalid': !isValid,
       });
 
     return (
-      <label onDragOver={this.disableDragEvents} onDragLeave={this.disableDragEvents} onDrop={this.dropImage} class={classes} for={type} tabIndex="0" onKeyPress={this.keyboardAccess} onKeyUp={this.keyboardAccess}>
-        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" value={this.state.value} />
-        <div class={`upload__file-image upload__file-image--placeholder ${this.state.mode === 'placeholder' ? 'active' : ''}`}>
-          <img src={image} alt={`${fileText} image icon`} />
-          <p class="upload__file-select-text">select file</p>
+      <label
+        onDragOver={this.disableDragEvents}
+        onDragLeave={this.disableDragEvents}
+        onDrop={this.dropImage}
+        className={classes}
+        htmlFor={type}
+        tabIndex="0"
+        onKeyPress={this.keyboardAccess}
+        onKeyUp={this.keyboardAccess}
+      >
+        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" value={value} />
+        <div className={`upload-file__image upload-file__image--placeholder ${mode === 'placeholder' ? 'active' : ''}`}>
+          <img src={image} alt={`${fileText} icon`} />
         </div>
-        <div class={`upload__file-image upload__file-image--preview ${this.state.mode === 'preview' ? 'active' : ''}`}>
-          <img src={this.state.file} alt={`${fileText} image preview`} />
+        <div className={`upload-file__image upload-file__image--preview ${mode === 'preview' ? 'active' : ''}`}>
+          <img src={file} alt={`${fileText} preview`} />
         </div>
       </label>
     );
