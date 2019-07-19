@@ -1,0 +1,22 @@
+.hard-validation {
+
+  &__title {
+    @extend .soft-validation__title;
+  }
+
+  &__text {
+    @extend .soft-validation__text;
+  }
+
+  &__image {
+    @extend .soft-validation__image;
+  }
+
+  &__title-2 {
+    @extend .soft-validation__title-2;
+  }
+
+  &__recommendations {
+    @extend .soft-validation__recommendations;
+  }
+}
