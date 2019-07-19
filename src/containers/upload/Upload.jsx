@@ -1,30 +1,30 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import classNames from 'classnames';
-
-import { UploadBlock } from '../../components/upload-block/UploadBlock';
 import API from '@3dlook/saia-sdk/lib/api';
+import { connect } from 'preact-redux';
+
+import UploadBlock from '../../components/upload-block/UploadBlock';
+import QRCodeBlock from '../../components/qrcode/QRCode';
 import Preloader from '../../components/preloader/Preloader';
 import { objectToUrlParams, send, transformRecomendations } from '../../utils';
 import { gaUploadOnContinue } from '../../ga';
+import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
 // assets
-const nextArrowIcon = require('../../images/arrow.svg');
+const playIcon = require('../../images/play.svg');
 
 /**
  * Upload page component.
  */
-export class Upload extends Component {
+class Upload extends Component {
   constructor(props) {
     super(props);
 
+    const { matches, flowId } = this.props;
+
     this.state = {
-      gender: this.props.matches.gender,
-      height: this.props.matches.height,
-
-      frontImage: null,
-      sideImage: null,
-
       isFrontImageValid: true,
       isSideImageValid: true,
 
@@ -32,35 +32,36 @@ export class Upload extends Component {
       frontImagePose: null,
       sideImagePose: null,
 
-      valid: false,
-
       isPending: false,
+
+      qrCodeUrl: `${window.location.origin}/#/upload?flowId=${flowId}`,
     };
 
     this.api = new API({
       host: `${API_HOST}/api/v2/`,
-      key: this.props.matches.key || API_KEY,
+      key: matches.key || API_KEY,
     });
+
+    this.flow = new FlowService(matches.key || API_KEY);
+    this.flow.setFlowId(flowId);
   }
 
   /**
    * Save front image to state
    */
   saveFrontFile = (params) => {
-    this.setState({
-      ...this.state,
-      frontImage: params.file,
-    });
+    const { addFrontImage } = this.props;
+
+    addFrontImage(params.file);
   }
 
   /**
    * Save side image to state
    */
   saveSideFile = (params) => {
-    this.setState({
-      ...this.state,
-      sideImage: params.file,
-    });
+    const { addSideImage } = this.props;
+
+    addSideImage(params.file);
   }
 
   /**
@@ -71,37 +72,47 @@ export class Upload extends Component {
   onNextButtonClick = async (e) => {
     e.preventDefault();
 
+    const {
+      frontImage,
+      sideImage,
+      height,
+      gender,
+      matches,
+      brand,
+      bodyPart,
+      productUrl,
+      setRecommendations,
+      setSoftValidation,
+    } = this.props;
+
     try {
-      if (!this.state.frontImage) {
+      if (!frontImage) {
         this.setState({
-          ...this.state,
           isFrontImageValid: false,
         });
       }
 
-      if (!this.state.sideImage) {
+      if (!sideImage) {
         this.setState({
-          ...this.state,
           isSideImageValid: false,
         });
       }
 
-      if (!this.state.frontImage || !this.state.sideImage) {
+      if (!frontImage || !sideImage) {
         return;
       }
 
       this.setState({
-        ...this.state,
-        isFrontImageValid: !!this.state.frontImage,
-        isSideImageValid: !!this.state.sideImage,
+        isFrontImageValid: !!frontImage,
+        isSideImageValid: !!sideImage,
         isPending: true,
       });
 
       const taskSetId = await this.api.person.create({
-        gender: this.state.gender,
-        height: this.state.height,
-        frontImage: this.state.frontImage,
-        sideImage: this.state.sideImage,
+        gender,
+        height,
+        frontImage,
+        sideImage,
       });
 
       const r = await this.api.queue.getResults(taskSetId);
@@ -110,48 +121,69 @@ export class Upload extends Component {
         hips: r.volume_params.high_hips,
         chest: r.volume_params.chest,
         waist: r.volume_params.waist,
-        gender: this.state.gender,
-        height: this.state.height,
+        gender,
+        height,
       });
+
+      const softValidation = {
+        front: {
+          bodyAreaPercentage: r.front_params.body_area_percentage,
+          legsDistance: r.front_params.legs_distance,
+          messages: [...r.front_params.soft_validation.messages],
+        },
+        side: {
+          bodyAreaPercentage: r.side_params.body_area_percentage,
+          legsDistance: r.side_params.legs_distance,
+          messages: [...r.side_params.soft_validation.messages],
+        },
+      };
+
+      setSoftValidation(softValidation);
 
       let recommendations;
 
-      if (this.props.matches.brand && this.props.matches.body_part) {
+      if (brand && bodyPart) {
         recommendations = await this.api.sizechart.getSize({
-          gender: this.state.gender,
+          gender,
           hips: r.volume_params.high_hips,
           chest: r.volume_params.chest,
           waist: r.volume_params.waist,
-          brand: this.props.matches.brand,
-          body_part: this.props.matches.body_part,
+          brand,
+          body_part: bodyPart,
         });
       } else {
         recommendations = await this.api.product.getRecommendations({
-          gender: this.state.gender,
+          gender,
           hips: r.volume_params.high_hips,
           chest: r.volume_params.chest,
           waist: r.volume_params.waist,
-          url: this.props.matches.product,
+          url: productUrl,
         });
       }
 
       if (recommendations) {
         recommendations = transformRecomendations(recommendations);
+        setRecommendations(recommendations);
       }
-
-      const params = {
-        ...this.props.matches,
-        ...recommendations,
-      };
 
       send('recommendations', recommendations);
 
       gaUploadOnContinue();
 
-      route(`/results?${objectToUrlParams(params)}`, true);
+      // check if there is any soft validation message
+      if (softValidation.front.bodyAreaPercentage < 0.7
+          || softValidation.front.legsDistance < 2
+          || softValidation.front.legsDistance > 15
+          || softValidation.front.messages.length
+
+          || softValidation.side.bodyAreaPercentage < 0.7
+          || softValidation.side.messages.length) {
+        route('/soft-validation', true);
+      } else {
+        route('/results', true);
+      }
     } catch (error) {
       this.setState({
-        ...this.state,
         isPending: false,
       });
 
@@ -168,7 +200,6 @@ export class Upload extends Component {
         const sideStatusBody = (side.status === 'FAILURE') ? 'invalid' : 'valid';
 
         this.setState({
-          ...this.state,
           isFrontImageValid: frontStatusPose === 'valid' && frontStatusBody === 'valid' && front.status === 'SUCCESS',
           isSideImageValid: sideStatusPose === 'valid' && sideStatusBody === 'valid' && side.status === 'SUCCESS',
 
@@ -182,45 +213,103 @@ export class Upload extends Component {
         });
       } else if (error && error.response && error.response.status === 400) {
         const params = {
-          ...this.props.matches,
+          ...matches,
         };
+
         route(`/results?${objectToUrlParams(params)}`, true);
       } else if (error && error.response && error.response.data) {
-        const { detail, brand, body_part } = error.response.data;
-        alert(detail || brand || body_part);
+        const { detail, brand: brandError, body_part: bodyPartError } = error.response.data;
+        alert(detail || brandError || bodyPartError);
       } else {
         alert(error);
       }
     }
   }
 
+  openVideo = () => {
+    route('/tutorial', true);
+  }
+
   render() {
-    const filesErrorClasses = classNames('upload__files-error', {
-      active: (!this.state.isFrontImageValid || !this.state.isSideImageValid) &&
-              (!this.state.frontImage || !this.state.sideImage),
-    });
+    const {
+      qrCodeUrl,
+      isPending,
+      isFrontImageValid,
+      isSideImageValid,
+      frontImagePose,
+      frontImageBody,
+      sideImagePose,
+      sideImageBody,
+    } = this.state;
+
+    const {
+      frontImage,
+      sideImage,
+      gender,
+    } = this.props;
 
     return (
-      <div class="screen screen--upload active">
-        <div class="screen__content upload">
-          <h2 class="screen__title">YOU’RE ALMOST THERE</h2>
-          <p class="screen__text">Please upload two full body <br />photos of yourself:</p>
+      <div className="screen active">
+        <div className="screen__content upload">
+          <h2 className="screen__subtitle">
+            <span className="success">STEP 1</span>
+            <span className="screen__subtitle-separ success" />
+            <span className="success">STEP 2</span>
+          </h2>
 
-          <div class="upload__files">
-            <UploadBlock gender={this.state.gender} type="front" validation={{ pose: this.state.frontImagePose, body: this.state.frontImageBody }} change={this.saveFrontFile} isValid={this.state.isFrontImageValid} />
-            <UploadBlock gender={this.state.gender} type="side" validation={{ pose: this.state.sideImagePose, body: this.state.sideImageBody }} change={this.saveSideFile} isValid={this.state.isSideImageValid} />
-            <p className={filesErrorClasses}><span>!</span> Please upload your photos first</p>
+          <h3 className="screen__title upload__title">SCAN THIS QR CODE</h3>
+          <p>and proceed on your mobile device</p>
+
+          <QRCodeBlock className="upload__qrcode" data={qrCodeUrl} />
+
+
+          <h3 className="screen__title upload__title-2">OR UPLOAD PHOTOS FROM YOUR PC</h3>
+
+          <div className="upload__block">
+            <div className="upload__video">
+              <button className="upload__video-btn" type="button" onClick={this.openVideo}>
+                <img src={playIcon} alt="Play icon" />
+                <span>Play</span>
+              </button>
+              <p>View tutorial</p>
+            </div>
+            <div className="upload__files">
+              <UploadBlock
+                gender={gender}
+                type="front"
+                validation={{ pose: frontImagePose, body: frontImageBody }}
+                change={this.saveFrontFile}
+                isValid={isFrontImageValid}
+                value={frontImage}
+              />
+              <UploadBlock
+                gender={gender}
+                type="side"
+                validation={{ pose: sideImagePose, body: sideImageBody }}
+                change={this.saveSideFile}
+                isValid={isSideImageValid}
+                value={sideImage}
+              />
+            </div>
           </div>
 
-          <button class="button" onClick={this.onNextButtonClick}>
-            get your size
-            <img class="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
+        </div>
+        <div className="screen__footer">
+          <button
+            className="button"
+            onClick={this.onNextButtonClick}
+            type="button"
+            disabled={!frontImage || !sideImage}
+          >
+            next
           </button>
         </div>
 
-        <Preloader isActive={this.state.isPending} />
+        <Preloader isActive={isPending} />
       </div>
 
     );
   }
 }
+
+export default connect(state => state, actions)(Upload);
