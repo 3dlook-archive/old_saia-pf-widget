@@ -47,8 +47,12 @@
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  
+
   & {
     -moz-appearance: textfield;
   }
+}
+
+@mixin focus-highlight {
+  box-shadow: 0 0 0 3px rgba(255,165,80,.45)
 }
