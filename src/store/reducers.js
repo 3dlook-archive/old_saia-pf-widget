@@ -3,8 +3,33 @@ import { CONSTANTS } from './actions';
 export const INITIAL_STATE = {
   gender: null,
   height: null,
+
   frontImage: null,
   sideImage: null,
+
+  flowId: null,
+
+  brand: null,
+  bodyPart: null,
+  productUrl: null,
+
+  recommendations: {
+    tight: null,
+    normal: null,
+    loose: null,
+  },
+
+  softValidation: {
+    front: {
+      bodyAreaPercentage: null,
+      legsDistance: null,
+      messages: [],
+    },
+    side: {
+      bodyAreaPercentage: null,
+      messages: [],
+    },
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,6 +62,48 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         agree: action.payload,
+      };
+
+    case CONSTANTS.SET_FLOW_ID:
+      return {
+        ...state,
+        flowId: action.payload,
+      };
+
+    case CONSTANTS.SET_BODY_PART:
+      return {
+        ...state,
+        bodyPart: action.payload,
+      };
+
+    case CONSTANTS.SET_BRAND:
+      return {
+        ...state,
+        brand: action.payload,
+      };
+
+    case CONSTANTS.SET_PRODUCT_URL:
+      return {
+        ...state,
+        productUrl: action.payload,
+      };
+
+    case CONSTANTS.SET_RECOMMENDATIONS:
+      return {
+        ...state,
+        recommendations: {
+          ...state.recommendations,
+          ...action.payload,
+        },
+      };
+
+    case CONSTANTS.SET_SOFT_VALIDATION:
+      return {
+        ...state,
+        softValidation: {
+          ...state.softValidation,
+          ...action.payload,
+        },
       };
 
     default:
