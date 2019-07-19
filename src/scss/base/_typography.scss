@@ -2,7 +2,7 @@ body {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: $base-font-size;
   line-height: rem($base-line-height);
-  font-weight: 300;
+  font-weight: normal;
 
   @include breakpoint((max-width 500px, max-height 650px)) {
     font-size: $base-font-size--sm;
