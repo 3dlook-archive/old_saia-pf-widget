@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import { route, Link } from 'preact-router';
 import { connect } from 'preact-redux';
 
-import { objectToUrlParams } from '../../utils';
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
 
@@ -14,15 +13,22 @@ const hmmIcon2x = require('../../images/hmm@2x.png');
  */
 class SoftValidation extends Component {
   back = () => {
-    const { matches } = this.props;
-
-    const params = {
-      ...matches,
-    };
-    route(`/upload?${objectToUrlParams(params)}`, true);
+    route('/upload', true);
   }
 
   render() {
+    const {
+      softValidation,
+    } = this.props;
+
+    const isFrontError = softValidation.front.bodyAreaPercentage < 0.7
+      || softValidation.front.legsDistance < 2
+      || softValidation.front.legsDistance > 15
+      || softValidation.front.messages.length;
+
+    const isSideError = softValidation.side.bodyAreaPercentage < 0.7
+      || softValidation.side.messages.length;
+
     return (
       <div className="screen active">
         <div className="screen__content soft-validation">
@@ -34,7 +40,17 @@ class SoftValidation extends Component {
           <p className="soft-validation__text">
             Good job, but for a better result we suggest
             <br />
-            you to redo the side photo
+            {(isFrontError && !isSideError)
+              ? 'you to redo the front photo'
+              : '' }
+
+            {(isSideError && !isFrontError)
+              ? 'you to redo the side photo'
+              : '' }
+
+            {(isFrontError && isSideError)
+              ? 'you to redo the front and the side photos'
+              : '' }
           </p>
 
           <img className="soft-validation__image" src={hmmIcon1x} srcSet={`${hmmIcon1x} 1x, ${hmmIcon2x} 2x`} alt="Soft validation errors" />
@@ -46,27 +62,65 @@ class SoftValidation extends Component {
           </h4>
 
           <ol className="soft-validation__recommendations">
-            <li>Make sure your feet are shoulder width apart.</li>
-            <li>
-              Keep your hands at waist level.
+            {(softValidation.front.legsDistance > 15 || softValidation.front.legsDistance < 2)
+              ? (
+                <li>
+                  Make sure your feet are shoulder width apart.
+                  <ImageExample />
+                </li>
+              )
+              : null
+            }
 
-              <ImageExample />
-            </li>
-            <li>
-              Keep your hands at waist level.
+            {(softValidation.front.bodyAreaPercentage < 0.7
+              || softValidation.side.bodyAreaPercentage < 0.7)
+              ? (
+                <li>
+                  Come a bit closer to a camera.
+                </li>
+              )
+              : null
+            }
 
-              <ImageExample type="side" />
-            </li>
-            <li>
-              Keep your hands at waist level.
+            {(softValidation.front.messages.includes('Keep your head straight'))
+              ? (
+                <li>
+                  Keep your head straight.
+                  <ImageExample type="front" />
+                </li>
+              )
+              : null
+            }
 
-              <ImageExample />
-            </li>
-            <li>
-              Keep your hands at waist level.
+            {(softValidation.side.messages.includes('Keep your head straight'))
+              ? (
+                <li>
+                  Keep your head straight.
+                  <ImageExample type="side" />
+                </li>
+              )
+              : null
+            }
 
-              <ImageExample />
-            </li>
+            {(softValidation.front.messages.includes('Keep your hands at waist level'))
+              ? (
+                <li>
+                  Keep your hands at waist level.
+                  <ImageExample type="front" />
+                </li>
+              )
+              : null
+            }
+
+            {(softValidation.side.messages.includes('Keep your hands at waist level'))
+              ? (
+                <li>
+                  Keep your hands at waist level.
+                  <ImageExample type="side" />
+                </li>
+              )
+              : null
+            }
           </ol>
 
         </div>
