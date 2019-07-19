@@ -1,6 +1,8 @@
 import { h, render, Component } from 'preact';
 import Router from 'preact-router';
 import { createHashHistory } from 'history';
+import { Provider } from 'preact-redux';
+import store from './store';
 
 /**
  * Components
@@ -11,10 +13,14 @@ import Header from './components/header/Header';
  * Containers
  */
 import Welcome from './containers/welcome/Welcome';
-import { Upload } from './containers/upload/Upload';
+import Upload from './containers/upload/Upload';
+import Tutorial from './containers/tutorial/Tutorial';
 import Data from './containers/data/Data';
 import Results from './containers/results/Results';
 import Help from './components/help/Help';
+import SoftValidation from './containers/soft-validation/SoftValidation';
+import HardValidation from './containers/hard-validation/HardValidation';
+import NotFound from './containers/not-found/NotFound';
 
 require('./scss/widget.scss');
 
@@ -24,7 +30,6 @@ class App extends Component {
 
     this.state = {
       isHelpActive: false,
-      isLogoActive: false,
     };
   }
 
@@ -40,19 +45,27 @@ class App extends Component {
   }
 
   render() {
-    const { isLogoActive, isHelpActive } = this.state;
+    const {
+      isHelpActive,
+    } = this.state;
     return (
-      <div className="widget-container">
-        <Header help={this.toggleHelp} isLogoActive={isLogoActive} />
-        <Help show={isHelpActive} close={this.toggleHelp} />
+      <Provider store={store}>
+        <div className="widget-container">
+          <Header help={this.toggleHelp} />
+          <Help show={isHelpActive} close={this.toggleHelp} />
 
-        <Router history={createHashHistory()}>
-          <Welcome path="/" />
-          <Data path="/data" />
-          <Upload path="/upload" />
-          <Results path="/results" />
-        </Router>
-      </div>
+          <Router history={createHashHistory()}>
+            <Welcome path="/" />
+            <Data path="/data" />
+            <Upload path="/upload" />
+            <Tutorial path="/tutorial" />
+            <SoftValidation path="/soft-validation" />
+            <HardValidation path="/hard-validation" />
+            <NotFound path="/not-found" />
+            <Results path="/results" />
+          </Router>
+        </div>
+      </Provider>
     );
   }
 }
