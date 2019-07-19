@@ -42,7 +42,7 @@ class SaiaButton {
       product: {
         description: '',
         imageUrl: '',
-        url: window.location.href,
+        url: `${window.location.origin}${window.location.pathname}`,
 
         ...options.product,
       },
