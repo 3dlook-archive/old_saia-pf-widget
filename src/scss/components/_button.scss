@@ -2,7 +2,6 @@ $border-width: 2px;
 
 .button {
   display: block;
-  margin: 0 auto;
   height: 40px;
   width: 174px;
   padding: 0;
@@ -10,8 +9,8 @@ $border-width: 2px;
   background: linear-gradient(217.1deg, #FF8D32 0%, #FFC06F 100%);
   box-shadow: 0 6px 20px 0 rgba(111,50,0,0.2);
   color: #fff;
-  letter-spacing: 2px;
-  font-size: rem(11px);
+  letter-spacing: rem(2px);
+  font-size: rem(10px);
   text-transform: uppercase;
   font-weight: normal;
   border: none;
