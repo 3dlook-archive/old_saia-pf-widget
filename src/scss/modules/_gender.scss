@@ -36,9 +36,9 @@ $border-width: 2px;
       }
     }
 
-    &:focus-within {
-      outline: -webkit-focus-ring-color auto 5px;
-    }
+    // &:focus-within {
+    //   outline: -webkit-focus-ring-color auto 5px;
+    // }
 
     &:after {
       content: '';

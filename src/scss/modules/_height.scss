@@ -90,9 +90,9 @@
     text-align: center;
     cursor: pointer;
 
-    &:focus-within {
-      outline: -webkit-focus-ring-color auto 5px;
-    }
+    // &:focus-within {
+    //   outline: -webkit-focus-ring-color auto 5px;
+    // }
 
     &--cm {
       order: 1;
@@ -111,6 +111,7 @@
     order: 2;
     position: relative;
     cursor: pointer;
+    background: #fff;
 
     span {
       @include visually-hidden();
