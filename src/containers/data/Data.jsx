@@ -1,23 +1,21 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import classNames from 'classnames';
+import { connect } from 'preact-redux';
 
-import { objectToUrlParams } from '../../utils';
 import Gender from '../../components/gender/Gender';
 import Height from '../../components/height/Height';
 import { gaDataOnContinue, gaDataMale, gaDataFemale } from '../../ga';
+import actions from '../../store/actions';
 
 /**
  * Data page component
  */
-export default class Data extends Component {
+class Data extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      gender: null,
-      height: null,
-      agree: false,
       isHeightValid: true,
       isGenderValid: true,
       isAgreeValid: true,
@@ -26,25 +24,37 @@ export default class Data extends Component {
   }
 
   /**
+   * Check button state on component update
+   */
+  componentDidUpdate() {
+    this.checkButtonState();
+  }
+
+  /**
    * Change gender handler
    */
   changeGender = (gender) => {
+    const { addGender } = this.props;
+
     if (gender === 'male') {
       gaDataMale();
     } else {
       gaDataFemale();
     }
 
+    addGender(gender);
+
     this.setState({
-      gender,
       isGenderValid: (gender === 'male' || gender === 'female'),
-    }, () => this.checkButtonState());
+    });
   }
 
   /**
    * Change height handler
    */
   changeHeight = (height) => {
+    const { addHeight } = this.props;
+
     let isValueValid = false;
     const numHeight = parseInt(height, 10);
 
@@ -52,48 +62,55 @@ export default class Data extends Component {
       isValueValid = true;
     }
 
+    addHeight(numHeight);
+
     this.setState({
-      height: numHeight,
       isHeightValid: isValueValid,
-    }, () => this.checkButtonState());
+    });
   }
 
   /**
    * Change argee checkbox state handler
    */
   changeAgree = (e) => {
+    const { addAgree } = this.props;
+
+    addAgree(e.target.checked);
+
     this.setState({
-      agree: e.target.checked,
       isAgreeValid: e.target.checked,
-    }, () => this.checkButtonState());
+    });
   }
 
   /**
    * On next screen event handler
    */
   onNextScreen = () => {
-    const { matches } = this.props;
-    const { gender, height } = this.state;
-
-    const params = {
-      ...matches,
-      gender,
-      height,
-    };
-
     gaDataOnContinue();
-    route(`/upload?${objectToUrlParams(params)}`, false);
+    route('/upload', false);
   }
 
   /**
    * Set Next button disabled state
    */
   checkButtonState() {
-    this.setState(prevState => ({
-      buttonDisabled: !prevState.gender || !prevState.height
-        || !prevState.agree || !prevState.isAgreeValid
-        || !prevState.isGenderValid || !prevState.isHeightValid,
-    }));
+    const { gender, height, agree } = this.props;
+    const {
+      buttonDisabled,
+      isAgreeValid,
+      isGenderValid,
+      isHeightValid,
+    } = this.state;
+
+    const isButtonDisabled = !gender || !height
+      || !agree || !isAgreeValid
+      || !isGenderValid || !isHeightValid;
+
+    if (isButtonDisabled !== buttonDisabled) {
+      this.setState({
+        buttonDisabled: isButtonDisabled,
+      });
+    }
   }
 
   render() {
@@ -101,9 +118,12 @@ export default class Data extends Component {
       isGenderValid,
       isHeightValid,
       isAgreeValid,
-      agree,
       buttonDisabled,
     } = this.state;
+
+    const {
+      agree,
+    } = this.props;
 
     return (
       <div className="screen active">
@@ -136,3 +156,5 @@ export default class Data extends Component {
     );
   }
 }
+
+export default connect(state => state, actions)(Data);
