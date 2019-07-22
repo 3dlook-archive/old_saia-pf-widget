@@ -32,6 +32,11 @@ export const INITIAL_STATE = {
       messages: [],
     },
   },
+
+  hardValidation: {
+    front: null,
+    side: null,
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -110,6 +115,15 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         softValidation: {
           ...state.softValidation,
+          ...action.payload,
+        },
+      };
+
+    case CONSTANTS.SET_HARD_VALIDATION:
+      return {
+        ...state,
+        hardValidation: {
+          ...state.hardValidation,
           ...action.payload,
         },
       };

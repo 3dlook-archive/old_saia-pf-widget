@@ -77,12 +77,12 @@ class Upload extends Component {
       sideImage,
       height,
       gender,
-      matches,
       brand,
       bodyPart,
       productUrl,
       setRecommendations,
       setSoftValidation,
+      setHardValidation,
     } = this.props;
 
     try {
@@ -200,33 +200,17 @@ class Upload extends Component {
       if (error && error.response && error.response.data && error.response.data.sub_tasks) {
         const subTasks = error.response.data.sub_tasks;
 
-        const front = subTasks.filter(item => item.name.indexOf('front_') !== -1)[0];
-        const side = subTasks.filter(item => item.name.indexOf('side_') !== -1)[0];
+        const frontTask = subTasks.filter(item => item.name.indexOf('front_') !== -1)[0];
+        const sideTask = subTasks.filter(item => item.name.indexOf('side_') !== -1)[0];
 
-        const frontStatusPose = (front.status === 'FAILURE') ? 'invalid' : 'valid';
-        const frontStatusBody = (front.status === 'FAILURE' && front.message.indexOf('Side photo in the front') === -1) ? 'invalid' : 'valid';
-
-        const sideStatusPose = (side.status === 'FAILURE') ? 'invalid' : 'valid';
-        const sideStatusBody = (side.status === 'FAILURE') ? 'invalid' : 'valid';
-
-        this.setState({
-          isFrontImageValid: frontStatusPose === 'valid' && frontStatusBody === 'valid' && front.status === 'SUCCESS',
-          isSideImageValid: sideStatusPose === 'valid' && sideStatusBody === 'valid' && side.status === 'SUCCESS',
-
-          frontImagePose: frontStatusPose,
-          sideImagePose: sideStatusPose,
-
-          frontImageBody: frontStatusBody,
-          sideImageBody: sideStatusBody,
-
-          isPending: false,
+        setHardValidation({
+          front: frontTask.message,
+          side: sideTask.message,
         });
-      } else if (error && error.response && error.response.status === 400) {
-        const params = {
-          ...matches,
-        };
 
-        route(`/results?${objectToUrlParams(params)}`, true);
+        route('/hard-validation', true);
+      } else if (error && error.response && error.response.status === 400) {
+        route('/not-found', true);
       } else if (error && error.response && error.response.data) {
         const { detail, brand: brandError, body_part: bodyPartError } = error.response.data;
         alert(detail || brandError || bodyPartError);

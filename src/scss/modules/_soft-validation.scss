@@ -1,4 +1,8 @@
 .soft-validation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 
   &__title {
     margin-bottom: 5px;
@@ -33,7 +37,8 @@
     padding-left: 18px;
     list-style: none;
     overflow-y: auto;
-    max-height: 156px;
+    flex-grow: 1;
+    max-height: 145px;
 
     li {
       counter-increment: inc;
@@ -76,6 +81,7 @@
   &__footer {
     display: flex;
     justify-content: center;
+    padding-top: 40px;
 
     .button {
       margin: 0;

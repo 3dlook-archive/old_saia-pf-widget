@@ -14,6 +14,7 @@ export const CONSTANTS = {
   SET_PRODUCT_URL: 'SET_PRODUCT_URL',
   SET_RECOMMENDATIONS: 'SET_RECOMMENDATIONS',
   SET_SOFT_VALIDATION: 'SET_SOFT_VALIDATION',
+  SET_HARD_VALIDATION: 'SET_HARD_VALIDATION',
 };
 
 /**
@@ -148,6 +149,18 @@ export const setSoftValidation = softValidation => ({
   payload: softValidation,
 });
 
+/**
+ * Set hard validation
+ *
+ * @param {Object} hardValidation - recommendations
+ * @param {sting} hardValidation.front - front photo hard validation message
+ * @param {sting} hardValidation.side - side photo hard validation message
+ */
+export const setHardValidation = hardValidation => ({
+  type: CONSTANTS.SET_HARD_VALIDATION,
+  payload: hardValidation,
+});
+
 export default {
   setToken,
   addFrontImage,
@@ -161,4 +174,5 @@ export default {
   setProductUrl,
   setRecommendations,
   setSoftValidation,
+  setHardValidation,
 };

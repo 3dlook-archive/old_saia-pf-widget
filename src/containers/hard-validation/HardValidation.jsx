@@ -13,6 +13,28 @@ const cryingIcon2x = require('../../images/crying@2x.png');
  * Hard validation page component
  */
 class HardValidation extends Component {
+  componentDidMount() {
+    const {
+      hardValidation,
+      setFrontImage,
+      setSideImage,
+    } = this.props;
+
+    const { front, side } = hardValidation;
+
+    // reset front image if there is hard validation error
+    // in the front image
+    if (front) {
+      setFrontImage(null);
+    }
+
+    // reset side image if there is hard validation error
+    // in the side image
+    if (side) {
+      setSideImage(null);
+    }
+  }
+
   back = () => {
     const { matches } = this.props;
 
@@ -23,6 +45,76 @@ class HardValidation extends Component {
   }
 
   render() {
+    const {
+      hardValidation,
+    } = this.props;
+
+    const { front, side } = hardValidation;
+
+    // front error handling
+    let sideInTheFront = false;
+    let cannotDetectBodyFront = false;
+    let bodyIsNotFullFront = false;
+    let wrongFrontPose = false;
+    let wrongPartsFront;
+    let tipMessageFront;
+    let topMessageFront;
+
+    if (front) {
+      if (front === 'Side photo in the front') {
+        sideInTheFront = true;
+        topMessageFront = 'It seems you uploaded side photo instead of the front one';
+        tipMessageFront = 'Please upload the front photo.';
+      } else if (front === 'Can\'t detect the human body') {
+        cannotDetectBodyFront = true;
+        topMessageFront = 'We couldn’t detect your body on the front photo';
+        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present on the photo.';
+      } else if (front === 'The body is not full') {
+        bodyIsNotFullFront = true;
+        topMessageFront = 'Your full body should be present on the front photo';
+        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present and the pose is right.';
+      } else if (front.indexOf('The pose is wrong, check: ') !== -1) {
+        wrongFrontPose = true;
+
+        wrongPartsFront = front.replace('The pose is wrong, check: ', '');
+        wrongPartsFront = wrongPartsFront.replace(/_/g, ' ');
+        topMessageFront = `The pose on the front photo is a bit off, we couldn’t detect your ${wrongPartsFront}`;
+        tipMessageFront = `Make sure your ${wrongPartsFront} is present on a photo`;
+      }
+    }
+
+    // front error handling
+    let sideInTheSide = false;
+    let cannotDetectBodySide = false;
+    let bodyIsNotFullSide = false;
+    let wrongSidePose = false;
+    let wrongPartsSide;
+    let tipMessageSide;
+    let topMessageSide;
+
+    if (side) {
+      if (side === 'Front photo in the side') {
+        sideInTheSide = true;
+        topMessageSide = 'It seems you uploaded frong photo instead of the side one';
+        tipMessageSide = 'Please upload the side photo.';
+      } else if (side === 'Can\'t detect the human body') {
+        cannotDetectBodySide = true;
+        topMessageSide = 'We couldn’t detect your body on the side photo';
+        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present on the photo.';
+      } else if (side === 'The body is not full') {
+        bodyIsNotFullSide = true;
+        topMessageSide = 'Your full body should be present on the side photo';
+        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present and the pose is right.';
+      } else if (side.indexOf('The pose is wrong, check: ') !== -1) {
+        wrongSidePose = true;
+
+        wrongPartsSide = side.replace('The pose is wrong, check: ', '');
+        wrongPartsSide = wrongPartsSide.replace(/_/g, ' ');
+        topMessageSide = `The pose on the side photo is a bit off, we couldn’t detect your ${wrongPartsSide}`;
+        tipMessageSide = `Make sure your ${wrongPartsSide} is present on a photo`;
+      }
+    }
+
     return (
       <div className="screen active">
         <div className="screen__content hard-validation">
@@ -31,40 +123,69 @@ class HardValidation extends Component {
           </h2>
 
           <h3 className="screen__title hard-validation__title">Oops!</h3>
-          <p className="hard-validation__text">
-            We couldn’t detect your body
-          </p>
+
+          {(topMessageFront)
+            ? (
+              <p className="hard-validation__text">{topMessageFront}</p>
+            ) : null }
+
+          {(topMessageSide)
+            ? (
+              <p className="hard-validation__text">{topMessageSide}</p>
+            ) : null }
 
           <img className="hard-validation__image" src={cryingIcon1x} srcSet={`${cryingIcon1x} 1x, ${cryingIcon2x} 2x`} alt="hard validation errors" />
 
-          <h4 className="hard-validation__title-2">
-            Just follow these
-            <br />
-            recommendations:
-          </h4>
+          {(front && !side)
+            ? (
+              <h4 className="hard-validation__title-2">
+                Retake the front photo.
+                <br />
+                Here are some tips:
+              </h4>
+            )
+            : null }
+
+          {(side && !front)
+            ? (
+              <h4 className="hard-validation__title-2">
+                Retake the side photo.
+                <br />
+                Here are some tips:
+              </h4>
+            )
+            : null }
+
+          {(side && front)
+            ? (
+              <h4 className="hard-validation__title-2">
+                Retake the front and the side photos.
+                <br />
+                Here are some tips:
+              </h4>
+            )
+            : null }
 
           <ol className="hard-validation__recommendations">
-            <li>Make sure your feet are shoulder width apart.</li>
-            <li>
-              Keep your hands at waist level.
+            {(front)
+              ? (
+                <li>
+                  {tipMessageFront}
+                  {(sideInTheFront || cannotDetectBodyFront || bodyIsNotFullFront || wrongFrontPose) ? <ImageExample type="front" /> : null}
+                </li>
+              )
+              : null
+            }
 
-              <ImageExample />
-            </li>
-            <li>
-              Keep your hands at waist level.
-
-              <ImageExample />
-            </li>
-            <li>
-              Keep your hands at waist level.
-
-              <ImageExample />
-            </li>
-            <li>
-              Keep your hands at waist level.
-
-              <ImageExample />
-            </li>
+            {(side)
+              ? (
+                <li>
+                  {tipMessageSide}
+                  {(sideInTheSide || cannotDetectBodySide || bodyIsNotFullSide || wrongSidePose) ? <ImageExample type="side" /> : null}
+                </li>
+              )
+              : null
+            }
           </ol>
 
         </div>
