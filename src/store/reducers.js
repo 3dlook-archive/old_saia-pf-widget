@@ -10,6 +10,7 @@ export const INITIAL_STATE = {
   sideImage: null,
 
   flowId: null,
+  personId: null,
 
   brand: null,
   bodyPart: null,
@@ -81,6 +82,12 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         flowId: action.payload,
+      };
+
+    case CONSTANTS.SET_PERSON_ID:
+      return {
+        ...state,
+        personId: action.payload,
       };
 
     case CONSTANTS.SET_BODY_PART:

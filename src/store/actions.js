@@ -9,6 +9,7 @@ export const CONSTANTS = {
   ADD_GENDER: 'ADD_GENDER',
   ADD_AGREE: 'ADD_AGREE',
   SET_FLOW_ID: 'SET_FLOW_ID',
+  SET_PERSON_ID: 'SET_PERSON_ID',
   SET_BRAND: 'SET_BRAND',
   SET_BODY_PART: 'SET_BODY_PART',
   SET_PRODUCT_URL: 'SET_PRODUCT_URL',
@@ -85,6 +86,16 @@ export const addAgree = agree => ({
 export const setFlowId = flowId => ({
   type: CONSTANTS.SET_FLOW_ID,
   payload: flowId,
+});
+
+/**
+ * Set person id action
+ *
+ * @param {number} personId - person id value
+ */
+export const setPersonId = personId => ({
+  type: CONSTANTS.SET_PERSON_ID,
+  payload: personId,
 });
 
 /**
@@ -169,6 +180,7 @@ export default {
   addGender,
   addAgree,
   setFlowId,
+  setPersonId,
   setBrand,
   setBodyPart,
   setProductUrl,

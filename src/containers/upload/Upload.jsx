@@ -84,6 +84,8 @@ class Upload extends Component {
       setHardValidation,
       addFrontImage,
       addSideImage,
+      setPersonId,
+      personId,
     } = this.props;
 
     try {
@@ -109,12 +111,32 @@ class Upload extends Component {
         isPending: true,
       });
 
-      const taskSetId = await this.api.person.create({
-        gender,
-        height,
-        frontImage,
-        sideImage,
-      });
+      let taskSetId;
+
+      if (!personId) {
+        const createdPersonId = await this.api.person.create({
+          gender,
+          height,
+        });
+
+        setPersonId(createdPersonId);
+
+        await this.flow.update({
+          person: createdPersonId,
+        });
+
+        taskSetId = await this.api.person.updateAndCalculate(createdPersonId, {
+          frontImage,
+          sideImage,
+        });
+      } else {
+        await this.api.person.update(personId, {
+          frontImage,
+          sideImage,
+        });
+
+        taskSetId = await this.api.person.calculate(personId);
+      }
 
       const r = await this.api.queue.getResults(taskSetId);
 
