@@ -1,13 +1,12 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
-import classNames from 'classnames';
 import API from '@3dlook/saia-sdk/lib/api';
 import { connect } from 'preact-redux';
 
 import UploadBlock from '../../components/upload-block/UploadBlock';
 import QRCodeBlock from '../../components/qrcode/QRCode';
 import Preloader from '../../components/preloader/Preloader';
-import { objectToUrlParams, send, transformRecomendations } from '../../utils';
+import { send, transformRecomendations } from '../../utils';
 import { gaUploadOnContinue } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
