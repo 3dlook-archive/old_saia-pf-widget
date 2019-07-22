@@ -6,6 +6,10 @@ import axios from 'axios';
 export default class FlowService {
   flowId = null;
 
+  state = {
+    status: 'created',
+  };
+
   constructor(key) {
     this.axios = axios.create();
     this.axios.defaults.headers = {
@@ -32,7 +36,10 @@ export default class FlowService {
       url: `${API_HOST}/api/v2/persons/widget/`,
       method: 'POST',
       data: {
-        state,
+        state: {
+          ...this.state,
+          ...state,
+        },
       },
     })
       .then((response) => {
@@ -57,6 +64,7 @@ export default class FlowService {
   /**
    * Patch flow object details
    *
+   * @param {Object} data - data object
    * @param {string} flowId - flow object id
    */
   update(data, flowId = this.flowId) {
@@ -64,6 +72,26 @@ export default class FlowService {
       url: `${API_HOST}/api/v2/persons/widget/${flowId}/`,
       method: 'PATCH',
       data,
+    })
+      .then(response => response.data);
+  }
+
+  /**
+   * Patch flow state object details
+   *
+   * @param {Object} state - data object
+   * @param {string} flowId - flow object id
+   */
+  updateState(state, flowId = this.flowId) {
+    return this.axios({
+      url: `${API_HOST}/api/v2/persons/widget/${flowId}/`,
+      method: 'PATCH',
+      data: {
+        state: {
+          ...this.state,
+          ...state,
+        },
+      },
     })
       .then(response => response.data);
   }
