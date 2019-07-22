@@ -1,7 +1,10 @@
 import { h, Component } from 'preact';
+import { Link } from 'preact-router';
+import { connect } from 'preact-redux';
 
-import { send } from '../../utils';
-import { gaSizeNotFound, gaResultsOnContinue } from '../../ga';
+import { gaSizeNotFound } from '../../ga';
+import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
 const confusedIcon1x = require('../../images/confused.png');
 const confusedIcon2x = require('../../images/confused@2x.png');
@@ -12,11 +15,25 @@ const confusedIcon2x = require('../../images/confused@2x.png');
 class NotFound extends Component {
   componentDidMount() {
     gaSizeNotFound();
-  }
 
-  static onClick() {
-    send('close');
-    gaResultsOnContinue();
+    const {
+      addFrontImage,
+      addSideImage,
+      token,
+      setFlowId,
+    } = this.props;
+
+    addFrontImage(null);
+    addSideImage(null);
+
+    this.flow = new FlowService(token);
+    this.flow.create({
+      status: 'created',
+    })
+      .then((res) => {
+        setFlowId(res);
+      })
+      .catch(err => alert(err.message));
   }
 
   render() {
@@ -43,13 +60,11 @@ class NotFound extends Component {
           </p>
         </div>
         <div className="screen__footer">
-          <button className="button" type="button" onClick={this.onClick}>
-            ok
-          </button>
+          <Link className="button" href="/upload">ok</Link>
         </div>
       </section>
     );
   }
 }
 
-export default NotFound;
+export default connect(state => state, actions)(NotFound);
