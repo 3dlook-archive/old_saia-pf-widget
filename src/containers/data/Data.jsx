@@ -7,6 +7,7 @@ import Gender from '../../components/gender/Gender';
 import Height from '../../components/height/Height';
 import { gaDataOnContinue, gaDataMale, gaDataFemale } from '../../ga';
 import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
 /**
  * Data page component
@@ -21,6 +22,10 @@ class Data extends Component {
       isAgreeValid: true,
       buttonDisabled: true,
     };
+
+    const { flowId, token } = this.props;
+    this.flow = new FlowService(token);
+    this.flow.setFlowId(flowId);
   }
 
   /**
@@ -85,8 +90,17 @@ class Data extends Component {
   /**
    * On next screen event handler
    */
-  onNextScreen = () => {
+  onNextScreen = async () => {
     gaDataOnContinue();
+
+    const { gender, height } = this.props;
+
+    await this.flow.updateState({
+      status: 'set metadata',
+      gender,
+      height,
+    });
+
     route('/upload', false);
   }
 
