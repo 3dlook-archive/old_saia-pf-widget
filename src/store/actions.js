@@ -2,6 +2,7 @@
  * CONSTANTS constants
  */
 export const CONSTANTS = {
+  SET_TOKEN: 'SET_TOKEN',
   ADD_FRONT_IMAGE: 'ADD_FRONT_IMAGE',
   ADD_SIDE_IMAGE: 'ADD_SIDE_IMAGE',
   ADD_HEIGHT: 'ADD_HEIGHT',
@@ -14,6 +15,16 @@ export const CONSTANTS = {
   SET_RECOMMENDATIONS: 'SET_RECOMMENDATIONS',
   SET_SOFT_VALIDATION: 'SET_SOFT_VALIDATION',
 };
+
+/**
+ * Set api token action
+ *
+ * @param {string} token - api token
+ */
+export const setToken = token => ({
+  type: CONSTANTS.SET_TOKEN,
+  payload: token,
+});
 
 /**
  * Add front image action
@@ -138,6 +149,7 @@ export const setSoftValidation = softValidation => ({
 });
 
 export default {
+  setToken,
   addFrontImage,
   addSideImage,
   addHeight,

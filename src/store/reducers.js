@@ -1,6 +1,8 @@
 import { CONSTANTS } from './actions';
 
 export const INITIAL_STATE = {
+  token: null,
+
   gender: null,
   height: null,
 
@@ -34,6 +36,12 @@ export const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
+      };
+
     case CONSTANTS.ADD_FRONT_IMAGE:
       return {
         ...state,
