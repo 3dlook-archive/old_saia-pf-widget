@@ -1,8 +1,7 @@
 import { h, Component } from 'preact';
-import { route, Link } from 'preact-router';
+import { route } from 'preact-router';
 import { connect } from 'preact-redux';
 
-import { objectToUrlParams } from '../../utils';
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
 
@@ -13,35 +12,8 @@ const cryingIcon2x = require('../../images/crying@2x.png');
  * Hard validation page component
  */
 class HardValidation extends Component {
-  componentDidMount() {
-    const {
-      hardValidation,
-      setFrontImage,
-      setSideImage,
-    } = this.props;
-
-    const { front, side } = hardValidation;
-
-    // reset front image if there is hard validation error
-    // in the front image
-    if (front) {
-      setFrontImage(null);
-    }
-
-    // reset side image if there is hard validation error
-    // in the side image
-    if (side) {
-      setSideImage(null);
-    }
-  }
-
   back = () => {
-    const { matches } = this.props;
-
-    const params = {
-      ...matches,
-    };
-    route(`/upload?${objectToUrlParams(params)}`, true);
+    route('/upload', true);
   }
 
   render() {
@@ -190,7 +162,7 @@ class HardValidation extends Component {
 
         </div>
         <div className="screen__footer hard-validation__footer">
-          <Link className="button" href="/upload"><span>Retake photo</span></Link>
+          <button className="button" onClick={this.back} type="button"><span>Retake photo</span></button>
         </div>
       </div>
     );

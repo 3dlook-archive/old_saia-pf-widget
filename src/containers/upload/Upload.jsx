@@ -83,6 +83,8 @@ class Upload extends Component {
       setRecommendations,
       setSoftValidation,
       setHardValidation,
+      addFrontImage,
+      addSideImage,
     } = this.props;
 
     try {
@@ -207,6 +209,18 @@ class Upload extends Component {
           front: frontTask.message,
           side: sideTask.message,
         });
+
+        // reset front image if there is hard validation error
+        // in the front image
+        if (frontTask.message) {
+          addFrontImage(null);
+        }
+
+        // reset side image if there is hard validation error
+        // in the side image
+        if (sideTask.message) {
+          addSideImage(null);
+        }
 
         route('/hard-validation', true);
       } else if (error && error.response && error.response.status === 400) {
