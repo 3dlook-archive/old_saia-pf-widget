@@ -22,7 +22,7 @@ class Upload extends Component {
   constructor(props) {
     super(props);
 
-    const { matches, flowId } = this.props;
+    const { flowId, token } = this.props;
 
     this.state = {
       isFrontImageValid: true,
@@ -39,10 +39,10 @@ class Upload extends Component {
 
     this.api = new API({
       host: `${API_HOST}/api/v2/`,
-      key: matches.key || API_KEY,
+      key: token,
     });
 
-    this.flow = new FlowService(matches.key || API_KEY);
+    this.flow = new FlowService(token);
     this.flow.setFlowId(flowId);
   }
 
@@ -171,14 +171,23 @@ class Upload extends Component {
       gaUploadOnContinue();
 
       // check if there is any soft validation message
-      if (softValidation.front.bodyAreaPercentage < 0.7
+      if ((softValidation.front.bodyAreaPercentage < 0.7
           || softValidation.front.legsDistance < 2
           || softValidation.front.legsDistance > 15
           || softValidation.front.messages.length
 
           || softValidation.side.bodyAreaPercentage < 0.7
-          || softValidation.side.messages.length) {
+          || softValidation.side.messages.length)
+          && (recommendations.normal
+            || recommendations.tight
+            || recommendations.loose)) {
         route('/soft-validation', true);
+      // check if there is any size recommendation
+      } else if (!recommendations.normal
+        && !recommendations.tight
+        && !recommendations.loose) {
+        route('/not-found', true);
+      // ok, show just recommendations
       } else {
         route('/results', true);
       }
@@ -187,6 +196,7 @@ class Upload extends Component {
         isPending: false,
       });
 
+      // hard validation part
       if (error && error.response && error.response.data && error.response.data.sub_tasks) {
         const subTasks = error.response.data.sub_tasks;
 

@@ -17,25 +17,24 @@ const slideImage3 = require('../../images/slide3.svg');
  * Welcome page component
  */
 class Welcome extends Component {
-  constructor(props) {
-    super(props);
-    const { matches } = this.props;
-    this.flow = new FlowService(matches.key || API_KEY);
-  }
-
   componentDidMount() {
     const {
       setFlowId,
       setBrand,
       setBodyPart,
       setProductUrl,
+      setToken,
       matches,
     } = this.props;
 
+    const token = matches.key || API_KEY;
+
+    setToken(token);
     setBrand(matches.brand);
     setBodyPart(matches.body_part);
     setProductUrl(matches.product);
 
+    this.flow = new FlowService(token);
     this.flow.create({
       status: 'created',
     })
