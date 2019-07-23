@@ -47,6 +47,10 @@ class Upload extends Component {
     this.flow.setFlowId(flowId);
   }
 
+  componentWillUnmount() {
+    if (this.unsubscribe) this.unsubscribe();
+  }
+
   /**
    * Save front image to state
    */
@@ -321,7 +325,7 @@ class Upload extends Component {
 
     let title = 'SCAN THIS QR CODE';
 
-    if (isMobile && !frontImage && !sideImage) {
+    if (isMobile && ((!frontImage && !sideImage) || (!frontImage && sideImage))) {
       title = 'Take Front photo';
     } else if (isMobile && frontImage && !sideImage) {
       title = 'Take Side photo';
@@ -357,7 +361,7 @@ class Upload extends Component {
             <div className="upload__files">
               <UploadBlock
                 className={classNames({
-                  active: isMobile && !frontImage && !sideImage,
+                  active: isMobile && ((!frontImage && !sideImage) || (!frontImage && sideImage)),
                 })}
                 gender={gender}
                 type="front"
@@ -384,7 +388,7 @@ class Upload extends Component {
         <div className="screen__footer">
           <button
             className={classNames('button', 'upload__front-image-btn', {
-              active: isMobile && !frontImage && !sideImage,
+              active: isMobile && ((!frontImage && !sideImage) || (!frontImage && sideImage)),
             })}
             onClick={this.triggerFrontImage}
             type="button"
