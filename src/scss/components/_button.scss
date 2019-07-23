@@ -39,6 +39,13 @@ $border-width: 2px;
     color: #FF8D32;
     box-shadow: none;
 
+    @include breakpoint($mobile) {
+      height: auto;
+      line-height: rem(21px);
+      background: #fff;
+      border-radius: 0;
+    }
+
     &:before {
       content: '';
       display: block;
@@ -49,6 +56,10 @@ $border-width: 2px;
       bottom: $border-width;
       background: #fff;
       border-radius: 20px;
+
+      @include breakpoint($mobile) {
+        display: none;
+      }
     }
 
     span {
