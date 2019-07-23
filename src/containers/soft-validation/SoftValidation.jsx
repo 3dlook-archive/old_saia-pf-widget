@@ -125,7 +125,7 @@ class SoftValidation extends Component {
 
         </div>
         <div className="screen__footer soft-validation__footer">
-          <Link className="button button--outline" href="/results"><span>Continue</span></Link>
+          <Link className="button button--outline" href="/results"><span>Continue anyway</span></Link>
           <button className="button" onClick={this.back} type="button">Retake photo</button>
         </div>
       </div>
