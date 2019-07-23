@@ -3,11 +3,25 @@
 
   &__title {
     margin-bottom: 5px;
+
+    @include breakpoint($mobile) {
+      margin-bottom: 40px;
+    }
   }
 
   &__title-2 {
     margin-top: 33px;
     margin-bottom: 21px;
+
+    @include breakpoint($mobile) {
+      display: none;
+    }
+  }
+
+  & > p {
+    @include breakpoint($mobile) {
+      display: none;
+    }
   }
 
   &__qrcode {
@@ -17,6 +31,10 @@
 
   &__video {
     margin-right: 35px;
+
+    @include breakpoint($mobile) {
+      display: none;
+    }
 
     &-btn {
       border-radius: 25px;
@@ -58,5 +76,21 @@
     display: flex;
     justify-content: space-between;
     width: 210px;
+
+    @include breakpoint($mobile) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &__front-image-btn,
+  &__side-image-btn {
+    display: none;
+
+    &.active {
+      @include breakpoint($mobile) {
+        display: block;
+      }
+    }
   }
 }

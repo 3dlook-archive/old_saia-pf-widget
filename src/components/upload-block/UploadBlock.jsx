@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames';
 
 import UploadFile from '../upload-file/UploadFile';
 
@@ -17,12 +18,13 @@ export default class UploadBlock extends Component {
       gender,
       isValid,
       value,
+      className,
     } = this.props;
 
     const fileText = (type === 'front') ? 'Front' : 'Side';
 
     return (
-      <div className="upload-block">
+      <div className={classNames('upload-block', className)}>
         <UploadFile
           gender={gender}
           type={type}

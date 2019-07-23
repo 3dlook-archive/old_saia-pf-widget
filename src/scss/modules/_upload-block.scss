@@ -1,4 +1,11 @@
 .upload-block {
+  @include breakpoint($mobile) {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
 
   &__title {
     color: #F88E32;
@@ -7,5 +14,9 @@
     font-weight: normal;
     text-transform: uppercase;
     margin-top: 5px;
+
+    @include breakpoint($mobile) {
+      display: none;
+    }
   }
 }

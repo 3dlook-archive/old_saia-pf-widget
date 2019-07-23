@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import API from '@3dlook/saia-sdk/lib/api';
 import { connect } from 'preact-redux';
+import classNames from 'classnames';
 
 import UploadBlock from '../../components/upload-block/UploadBlock';
 import QRCodeBlock from '../../components/qrcode/QRCode';
@@ -10,6 +11,7 @@ import { send, transformRecomendations } from '../../utils';
 import { gaUploadOnContinue } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
+import store from '../../store';
 
 // assets
 const playIcon = require('../../images/play.svg');
@@ -58,7 +60,18 @@ class Upload extends Component {
    * Save side image to state
    */
   saveSideFile = (params) => {
-    const { addSideImage } = this.props;
+    const { addSideImage, isMobile } = this.props;
+
+    if (isMobile) {
+      this.unsubscribe = store.subscribe(() => {
+        const state = store.getState();
+
+        if (state.frontImage && state.sideImage) {
+          this.unsubscribe();
+          this.onNextButtonClick(null, state);
+        }
+      });
+    }
 
     addSideImage(params.file);
   }
@@ -68,8 +81,10 @@ class Upload extends Component {
    *
    * @async
    */
-  onNextButtonClick = async (e) => {
-    e.preventDefault();
+  onNextButtonClick = async (e, props = this.props) => {
+    if (e) {
+      e.preventDefault();
+    }
 
     const {
       frontImage,
@@ -79,13 +94,16 @@ class Upload extends Component {
       brand,
       bodyPart,
       productUrl,
+      personId,
+    } = props;
+
+    const {
       setRecommendations,
       setSoftValidation,
       setHardValidation,
       addFrontImage,
       addSideImage,
       setPersonId,
-      personId,
     } = this.props;
 
     try {
@@ -272,6 +290,16 @@ class Upload extends Component {
     route('/tutorial', true);
   }
 
+  triggerFrontImage = () => {
+    const frontFile = document.getElementById('front');
+    frontFile.click();
+  }
+
+  triggerSideImage = () => {
+    const sideFile = document.getElementById('side');
+    sideFile.click();
+  }
+
   render() {
     const {
       qrCodeUrl,
@@ -288,7 +316,16 @@ class Upload extends Component {
       frontImage,
       sideImage,
       gender,
+      isMobile,
     } = this.props;
+
+    let title = 'SCAN THIS QR CODE';
+
+    if (isMobile && !frontImage && !sideImage) {
+      title = 'Take Front photo';
+    } else if (isMobile && frontImage && !sideImage) {
+      title = 'Take Side photo';
+    }
 
     return (
       <div className="screen active">
@@ -299,11 +336,13 @@ class Upload extends Component {
             <span className="success">STEP 2</span>
           </h2>
 
-          <h3 className="screen__title upload__title">SCAN THIS QR CODE</h3>
+          <h3 className="screen__title upload__title">{title}</h3>
           <p>and proceed on your mobile device</p>
 
-          <QRCodeBlock className="upload__qrcode" data={qrCodeUrl} />
-
+          {(!isMobile)
+            ? (
+              <QRCodeBlock className="upload__qrcode" data={qrCodeUrl} />
+            ) : null }
 
           <h3 className="screen__title upload__title-2">OR UPLOAD PHOTOS FROM YOUR PC</h3>
 
@@ -317,6 +356,9 @@ class Upload extends Component {
             </div>
             <div className="upload__files">
               <UploadBlock
+                className={classNames({
+                  active: isMobile && !frontImage && !sideImage,
+                })}
                 gender={gender}
                 type="front"
                 validation={{ pose: frontImagePose, body: frontImageBody }}
@@ -325,6 +367,9 @@ class Upload extends Component {
                 value={frontImage}
               />
               <UploadBlock
+                className={classNames({
+                  active: isMobile && frontImage && !sideImage,
+                })}
                 gender={gender}
                 type="side"
                 validation={{ pose: sideImagePose, body: sideImageBody }}
@@ -338,13 +383,36 @@ class Upload extends Component {
         </div>
         <div className="screen__footer">
           <button
-            className="button"
-            onClick={this.onNextButtonClick}
+            className={classNames('button', 'upload__front-image-btn', {
+              active: isMobile && !frontImage && !sideImage,
+            })}
+            onClick={this.triggerFrontImage}
             type="button"
-            disabled={!frontImage || !sideImage}
           >
-            next
+            Open camera
           </button>
+
+          <button
+            className={classNames('button', 'upload__side-image-btn', {
+              active: isMobile && frontImage && !sideImage,
+            })}
+            onClick={this.triggerSideImage}
+            type="button"
+          >
+            Open camera
+          </button>
+
+          {(!isMobile)
+            ? (
+              <button
+                className="button"
+                onClick={this.onNextButtonClick}
+                type="button"
+                disabled={!frontImage || !sideImage}
+              >
+                next
+              </button>
+            ) : null }
         </div>
 
         <Preloader isActive={isPending} />
