@@ -1,6 +1,7 @@
 import { CONSTANTS } from './actions';
 
 export const INITIAL_STATE = {
+  isMobile: false,
   token: null,
 
   gender: null,
@@ -42,6 +43,12 @@ export const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.SET_IS_MOBILE:
+      return {
+        ...state,
+        isMobile: action.payload,
+      };
+
     case CONSTANTS.SET_TOKEN:
       return {
         ...state,

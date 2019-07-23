@@ -2,6 +2,7 @@
  * CONSTANTS constants
  */
 export const CONSTANTS = {
+  SET_IS_MOBILE: 'SET_IS_MOBILE',
   SET_TOKEN: 'SET_TOKEN',
   ADD_FRONT_IMAGE: 'ADD_FRONT_IMAGE',
   ADD_SIDE_IMAGE: 'ADD_SIDE_IMAGE',
@@ -17,6 +18,16 @@ export const CONSTANTS = {
   SET_SOFT_VALIDATION: 'SET_SOFT_VALIDATION',
   SET_HARD_VALIDATION: 'SET_HARD_VALIDATION',
 };
+
+/**
+ * Set api token action
+ *
+ * @param {string} token - api token
+ */
+export const setIsMobile = isMobile => ({
+  type: CONSTANTS.SET_IS_MOBILE,
+  payload: isMobile,
+});
 
 /**
  * Set api token action
@@ -173,6 +184,7 @@ export const setHardValidation = hardValidation => ({
 });
 
 export default {
+  setIsMobile,
   setToken,
   addFrontImage,
   addSideImage,
