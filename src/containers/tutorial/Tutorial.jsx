@@ -1,22 +1,26 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { connect } from 'preact-redux';
 
-import { objectToUrlParams } from '../../utils';
+import actions from '../../store/actions';
 
 /**
  * Tutorial video page component
  */
-export default class Tutorial extends Component {
+class Tutorial extends Component {
   back = () => {
-    const { matches } = this.props;
+    const { isMobile } = this.props;
 
-    const params = {
-      ...matches,
-    };
-    route(`/upload?${objectToUrlParams(params)}`, true);
+    if (isMobile) {
+      route('/upload-front', true);
+    } else {
+      route('/upload', true);
+    }
   }
 
   render() {
+    const { isMobile } = this.props;
+
     return (
       <div className="screen active">
         <div className="screen__content tutorial">
@@ -42,9 +46,13 @@ export default class Tutorial extends Component {
 
         </div>
         <div className="screen__footer">
-          <button className="button" onClick={this.back} type="button">Back</button>
+          <button className="button" onClick={this.back} type="button">
+            {(isMobile) ? 'Ok, I am ready' : 'Back'}
+          </button>
         </div>
       </div>
     );
   }
 }
+
+export default connect(state => state, actions)(Tutorial);

@@ -93,7 +93,11 @@ class Data extends Component {
   onNextScreen = async () => {
     gaDataOnContinue();
 
-    const { gender, height } = this.props;
+    const {
+      gender,
+      height,
+      isMobile,
+    } = this.props;
 
     await this.flow.updateState({
       status: 'set metadata',
@@ -101,7 +105,11 @@ class Data extends Component {
       height,
     });
 
-    route('/upload', false);
+    if (isMobile) {
+      route('/tutorial', false);
+    } else {
+      route('/upload', false);
+    }
   }
 
   /**

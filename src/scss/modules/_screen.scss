@@ -38,6 +38,10 @@ $failure: $error-border-color;
     margin-bottom: 30px;
     text-transform: uppercase;
 
+    @include breakpoint($mobile) {
+      margin-bottom: 40px;
+    }
+
     span {
       &.success {
         color: $success;

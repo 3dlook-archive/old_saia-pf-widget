@@ -6,6 +6,11 @@
   justify-content: space-between;
   align-items: center;
 
+  @include breakpoint($mobile) {
+    height: 40px;
+    padding: 18px 28px 0px;
+  }
+
   &__help,
   &__close {
     background: transparent;
