@@ -17,6 +17,10 @@
     display: flex;
     justify-content: center;
     margin: 35px 0 27px;
+
+    @include breakpoint($mobile) {
+      margin-top: 15px;
+    }
   }
 
   &__bullet {

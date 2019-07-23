@@ -20,6 +20,15 @@ $border-width: 2px;
   transition: all ease 300ms;
   text-align: center;
 
+  @include breakpoint($mobile) {
+    height: 50px;
+    width: 220px;
+    line-height: 50px;
+    border-radius: 25px;
+    font-size: rem(12px);
+    font-weight: 500;
+  }
+
   &__icon {
     display: inline-block;
     margin-left: 4px;
