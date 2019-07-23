@@ -9,13 +9,7 @@ import actions from '../../store/actions';
  */
 class Tutorial extends Component {
   back = () => {
-    const { isMobile } = this.props;
-
-    if (isMobile) {
-      route('/upload-front', true);
-    } else {
-      route('/upload', true);
-    }
+    route('/upload', true);
   }
 
   render() {
