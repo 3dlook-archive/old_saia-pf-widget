@@ -75,12 +75,18 @@ export const transformRecomendations = (recomendations) => {
  * @returns {Object} object with feets and inches values
  */
 export const cmToFtIn = (cm) => {
-  const inches = cm / 2.54;
-  const ft = inches / 12;
+  const realFeet = ((cm * 0.393700) / 12);
+  let feet = Math.floor(realFeet);
+  let inches = Math.round((realFeet - feet) * 12);
+
+  if (inches === 12) {
+    feet += 1;
+    inches = 0;
+  }
 
   return {
-    ft: Math.floor(ft),
-    in: Math.ceil(inches.toFixed(0) % 12),
+    ft: feet,
+    in: inches,
   };
 };
 
