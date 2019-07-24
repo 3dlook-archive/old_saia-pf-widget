@@ -43,6 +43,7 @@ class SoftValidation extends Component {
   render() {
     const {
       softValidation,
+      isMobile,
     } = this.props;
 
     return (
@@ -82,7 +83,7 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Make sure your feet are shoulder width apart.
-                  <ImageExample />
+                  <ImageExample type="front" isMobile={isMobile} />
                 </li>
               )
               : null
@@ -102,7 +103,7 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your head straight.
-                  <ImageExample type="front" />
+                  <ImageExample type="front" isMobile={isMobile} />
                 </li>
               )
               : null
@@ -112,7 +113,7 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your head straight.
-                  <ImageExample type="side" />
+                  <ImageExample type="side" isMobile={isMobile} />
                 </li>
               )
               : null
@@ -122,7 +123,7 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your hands at waist level.
-                  <ImageExample type="front" />
+                  <ImageExample type="front" isMobile={isMobile} />
                 </li>
               )
               : null
@@ -132,7 +133,7 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your hands at waist level.
-                  <ImageExample type="side" />
+                  <ImageExample type="side" isMobile={isMobile} />
                 </li>
               )
               : null

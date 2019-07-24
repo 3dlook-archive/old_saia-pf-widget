@@ -27,16 +27,31 @@ class ImageExample extends Component {
    * @param {MouseEvent} event - mouse event object
    */
   onMouseOver = ({ target }) => {
+    const { isMobile } = this.props;
+    const { imageX, imageY } = this.state;
+
     const rect = target.getBoundingClientRect();
 
-    this.setState({
-      imageX: rect.left + target.offsetWidth / 2,
-      imageY: rect.top - 366 - 8,
-    });
+    let newImageX;
+
+    if (isMobile) {
+      newImageX = rect.left;
+    } else {
+      newImageX = rect.left + target.offsetWidth / 2;
+    }
+
+    const newImageY = rect.top - 366 - 8;
+
+    if (imageX !== newImageX || imageY !== newImageY) {
+      this.setState({
+        imageX: newImageX,
+        imageY: newImageY,
+      });
+    }
   }
 
   render() {
-    const { type } = this.props;
+    const { type, isMobile } = this.props;
     const { imageX, imageY } = this.state;
 
     const imageStyle = {
@@ -45,7 +60,7 @@ class ImageExample extends Component {
     };
 
     return (
-      <div className={classNames('image-example')}>
+      <div className={classNames('image-example', { 'image-example--mobile': isMobile })}>
         <button className="image-example__btn" type="button" onMouseOver={this.onMouseOver} onFocus={this.onMouseOver}>See example</button>
         <div className="image-example__img" style={imageStyle}>
           {(type === 'side')

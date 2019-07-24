@@ -38,6 +38,7 @@ class HardValidation extends Component {
   render() {
     const {
       hardValidation,
+      isMobile,
     } = this.props;
 
     const { front, side } = hardValidation;
@@ -162,7 +163,7 @@ class HardValidation extends Component {
               ? (
                 <li>
                   {tipMessageFront}
-                  {(sideInTheFront || cannotDetectBodyFront || bodyIsNotFullFront || wrongFrontPose) ? <ImageExample type="front" /> : null}
+                  {(sideInTheFront || cannotDetectBodyFront || bodyIsNotFullFront || wrongFrontPose) ? <ImageExample type="front" isMobile={isMobile} /> : null}
                 </li>
               )
               : null
@@ -172,7 +173,7 @@ class HardValidation extends Component {
               ? (
                 <li>
                   {tipMessageSide}
-                  {(sideInTheSide || cannotDetectBodySide || bodyIsNotFullSide || wrongSidePose) ? <ImageExample type="side" /> : null}
+                  {(sideInTheSide || cannotDetectBodySide || bodyIsNotFullSide || wrongSidePose) ? <ImageExample type="side" isMobile={isMobile} /> : null}
                 </li>
               )
               : null

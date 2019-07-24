@@ -32,6 +32,14 @@
     }
   }
 
+  &--mobile &__img {
+    transform: translateX(0);
+
+    &:before {
+      left: 45px;
+    }
+  }
+
   &__btn {
     color: #FFAB55;
     font-size: rem(8px);
