@@ -4,6 +4,7 @@ import { connect } from 'preact-redux';
 
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
+import FlowService from '../../services/flowService';
 
 const hmmIcon1x = require('../../images/hmm.png');
 const hmmIcon2x = require('../../images/hmm@2x.png');
@@ -12,6 +13,29 @@ const hmmIcon2x = require('../../images/hmm@2x.png');
  * Soft validation page component
  */
 class SoftValidation extends Component {
+  constructor(props) {
+    super(props);
+
+    const { flowId, token, softValidation } = this.props;
+    this.flow = new FlowService(token);
+    this.flow.setFlowId(flowId);
+
+    this.isFrontError = softValidation.front.bodyAreaPercentage < 0.7
+      || softValidation.front.legsDistance < 2
+      || softValidation.front.legsDistance > 15
+      || softValidation.front.messages.length;
+
+    this.isSideError = softValidation.side.bodyAreaPercentage < 0.7
+      || softValidation.side.messages.length;
+  }
+
+  componentDidMount = async () => {
+    await this.flow.updateState({
+      frontImage: !this.isFrontError,
+      sideImage: !this.isSideError,
+    });
+  }
+
   back = () => {
     route('/upload', true);
   }
@@ -20,14 +44,6 @@ class SoftValidation extends Component {
     const {
       softValidation,
     } = this.props;
-
-    const isFrontError = softValidation.front.bodyAreaPercentage < 0.7
-      || softValidation.front.legsDistance < 2
-      || softValidation.front.legsDistance > 15
-      || softValidation.front.messages.length;
-
-    const isSideError = softValidation.side.bodyAreaPercentage < 0.7
-      || softValidation.side.messages.length;
 
     return (
       <div className="screen active">
@@ -40,15 +56,15 @@ class SoftValidation extends Component {
           <p className="soft-validation__text">
             Good job, but for a better result we suggest
             <br />
-            {(isFrontError && !isSideError)
+            {(this.isFrontError && !this.isSideError)
               ? 'you to redo the front photo'
               : '' }
 
-            {(isSideError && !isFrontError)
+            {(this.isSideError && !this.isFrontError)
               ? 'you to redo the side photo'
               : '' }
 
-            {(isFrontError && isSideError)
+            {(this.isFrontError && this.isSideError)
               ? 'you to redo the front and the side photos'
               : '' }
           </p>
