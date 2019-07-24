@@ -39,7 +39,7 @@ export const parseHashParams = () => {
  * @param {*} data - object with data that should be sent to parent window
  */
 export const send = (command, data = {}, origin) => {
-  const finalOrigin = origin || parseHashParams().origin;
+  const finalOrigin = origin || parseHashParams().origin || window.location.origin;
 
   window.parent.postMessage({
     command: `saia-pf-widget.${command}`,
