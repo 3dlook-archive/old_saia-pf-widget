@@ -341,8 +341,10 @@ class Upload extends Component {
       } else if (error && error.response && error.response.data) {
         const { detail, brand: brandError, body_part: bodyPartError } = error.response.data;
         alert(detail || brandError || bodyPartError);
+        route('/not-found', true);
       } else {
         alert(error);
+        route('/not-found', true);
       }
     }
   }

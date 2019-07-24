@@ -18,15 +18,11 @@ class ImageExample extends Component {
     this.state = {
       imageX: 0,
       imageY: 0,
+      isImageActive: false,
     };
   }
 
-  /**
-   * Button hover and focus handler
-   *
-   * @param {MouseEvent} event - mouse event object
-   */
-  onMouseOver = ({ target }) => {
+  showImage(target) {
     const { isMobile } = this.props;
     const { imageX, imageY } = this.state;
 
@@ -42,17 +38,87 @@ class ImageExample extends Component {
 
     const newImageY = rect.top - 366 - 8;
 
+    const updatedState = {};
+
     if (imageX !== newImageX || imageY !== newImageY) {
-      this.setState({
-        imageX: newImageX,
-        imageY: newImageY,
-      });
+      updatedState.imageX = newImageX;
+      updatedState.imageY = newImageY;
     }
+
+    updatedState.isImageActive = true;
+
+    this.setState(updatedState);
+  }
+
+  hideImage() {
+    this.setState({
+      isImageActive: false,
+    });
+  }
+
+  /**
+   * Show example image on mouse enter event
+   *
+   * @param {MouseEvent} event - mouse event object
+   */
+  onMouseEnter = ({ target }) => {
+    const { isMobile } = this.props;
+
+    if (isMobile) {
+      return;
+    }
+
+    this.showImage(target);
+  }
+
+  /**
+   * Hide example image on mouse leave event
+   *
+   * @param {MouseEvent} event - mouse event object
+   */
+  onMouseLeave = () => {
+    const { isMobile } = this.props;
+
+    if (isMobile) {
+      return;
+    }
+
+    this.hideImage();
+  }
+
+  /**
+   * Show example image on touch start event
+   *
+   * @param {TouchEvent} event - mouse event object
+   */
+  onTouchStart = ({ target }) => {
+    const { isMobile } = this.props;
+
+    if (!isMobile) {
+      return;
+    }
+
+    this.showImage(target);
+  }
+
+  /**
+   * Hide example image on touch end event
+   *
+   * @param {TouchEvent} event - mouse event object
+   */
+  onTouchEnd = () => {
+    const { isMobile } = this.props;
+
+    if (!isMobile) {
+      return;
+    }
+
+    this.hideImage();
   }
 
   render() {
     const { type, isMobile } = this.props;
-    const { imageX, imageY } = this.state;
+    const { imageX, imageY, isImageActive } = this.state;
 
     const imageStyle = {
       top: imageY,
@@ -61,8 +127,17 @@ class ImageExample extends Component {
 
     return (
       <div className={classNames('image-example', { 'image-example--mobile': isMobile })}>
-        <button className="image-example__btn" type="button" onMouseOver={this.onMouseOver} onFocus={this.onMouseOver}>See example</button>
-        <div className="image-example__img" style={imageStyle}>
+        <button
+          className="image-example__btn"
+          type="button"
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          onTouchStart={this.onTouchStart}
+          onTouchEnd={this.onTouchEnd}
+        >
+          See example
+        </button>
+        <div className={classNames('image-example__img', { active: isImageActive })} style={imageStyle}>
           {(type === 'side')
             ? <img src={exampleSide1x} srcSet={`${exampleSide1x} 1x, ${exampleSide2x} 2x`} alt="Side example" />
             : <img src={exampleFront1x} srcSet={`${exampleFront1x} 1x, ${exampleFront2x} 2x`} alt="Front example" /> }
