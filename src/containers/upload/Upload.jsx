@@ -450,7 +450,7 @@ class Upload extends Component {
             onClick={this.triggerFrontImage}
             type="button"
           >
-            Open camera
+            Take a photo
           </button>
 
           <button
@@ -460,7 +460,7 @@ class Upload extends Component {
             onClick={this.triggerSideImage}
             type="button"
           >
-            Open camera
+            Take a photo
           </button>
 
           {(!isMobile)

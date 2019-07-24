@@ -269,7 +269,7 @@ export default class UploadFile extends Component {
         onKeyPress={this.keyboardAccess}
         onKeyUp={this.keyboardAccess}
       >
-        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" value={value} accept="image/*" capture="camera" />
+        <input type="file" name={type} id={type} onChange={this.onChange} tabIndex="-1" value={value} accept="image/*" />
         <div className={`upload-file__image upload-file__image--placeholder ${mode === 'placeholder' ? 'active' : ''}`}>
           {(type === 'front') ? (
             <svg width="36px" height="102px" viewBox="0 0 36 102" version="1.1" xmlns="http://www.w3.org/2000/svg">
