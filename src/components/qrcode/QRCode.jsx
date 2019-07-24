@@ -17,22 +17,33 @@ export default class QRCodeBlock extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
+
+    this.drawQrCode(data);
+  }
+
   componentDidMount() {
     const { data } = this.props;
 
-    QRCode.toDataURL(data, {
-      width: 140,
-      margin: 0,
-    })
-      .then((imageData) => {
-        this.setState({
-          imageData,
-        });
-      })
-      .catch(err => this.setState({ error: err.message }));
-
+    this.drawQrCode(data);
     // init clipboard
     this.clipboard = new Clipboard('.qrcode__btn');
+  }
+
+  drawQrCode(data) {
+    if (data) {
+      QRCode.toDataURL(data, {
+        width: 140,
+        margin: 0,
+      })
+        .then((imageData) => {
+          this.setState({
+            imageData,
+          });
+        })
+        .catch(err => this.setState({ error: err.message }));
+    }
   }
 
   copy = () => {
