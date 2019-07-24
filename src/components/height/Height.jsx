@@ -138,6 +138,7 @@ export default class Height extends Component {
               type="number"
               value={cm}
               onChange={this.onCmInputChange}
+              placeholder="0"
             />
           </div>
         </div>
