@@ -10,6 +10,11 @@
     visibility: hidden;
     z-index: 1;
 
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     &:before {
       position: absolute;
       content: '';
@@ -53,11 +58,12 @@
     background-color: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
     border: 0;
+    user-select: none;
   }
 
-  &__btn:hover + &__img,
-  &__btn:focus + &__img {
-    opacity: 1;
-    visibility: visible;
-  }
+  // &__btn:hover + &__img,
+  // &__btn:focus + &__img {
+  //   opacity: 1;
+  //   visibility: visible;
+  // }
 }

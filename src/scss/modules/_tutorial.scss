@@ -16,7 +16,8 @@
 
     @include breakpoint($mobile) {
       margin-top: 25px;
-      padding-bottom: 107.25%;
+      padding: 0;
+      height: 375px;
     }
   }
 }

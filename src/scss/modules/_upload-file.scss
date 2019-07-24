@@ -1,3 +1,5 @@
+$mobile-image-height: 360px;
+
 .upload-file {
   display: flex;
   cursor: pointer;
@@ -12,7 +14,7 @@
   @include breakpoint($mobile) {
     border: 0;
     border-radius: 0;
-    height: 374px;
+    height: $mobile-image-height;
     width: 100%;
     max-width: 200px;
   }
@@ -37,7 +39,7 @@
     &--placeholder svg {
       @include breakpoint($mobile) {
         width: 200px;
-        height: 374px;
+        height: $mobile-image-height;
       }
     }
 
