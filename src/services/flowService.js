@@ -1,14 +1,14 @@
 import axios from 'axios';
 
+let globalState = {
+  status: 'created',
+};
+
 /**
  * Flow API service
  */
 export default class FlowService {
   flowId = null;
-
-  state = {
-    status: 'created',
-  };
 
   constructor(key) {
     this.axios = axios.create();
@@ -32,13 +32,17 @@ export default class FlowService {
    * @param {any} state - flow state
    */
   create(state) {
+    globalState = {
+      ...globalState,
+      ...state,
+    };
+
     return this.axios({
       url: `${API_HOST}/api/v2/persons/widget/`,
       method: 'POST',
       data: {
         state: {
-          ...this.state,
-          ...state,
+          ...globalState,
         },
       },
     })
@@ -71,7 +75,13 @@ export default class FlowService {
     return this.axios({
       url: `${API_HOST}/api/v2/persons/widget/${flowId}/`,
       method: 'PATCH',
-      data,
+      data: {
+        ...data,
+        state: {
+          ...globalState,
+          ...data.state,
+        },
+      },
     })
       .then(response => response.data);
   }
@@ -83,13 +93,17 @@ export default class FlowService {
    * @param {string} flowId - flow object id
    */
   updateState(state, flowId = this.flowId) {
+    globalState = {
+      ...globalState,
+      ...state,
+    };
+
     return this.axios({
       url: `${API_HOST}/api/v2/persons/widget/${flowId}/`,
       method: 'PATCH',
       data: {
         state: {
-          ...this.state,
-          ...state,
+          ...globalState,
         },
       },
     })
