@@ -23,7 +23,7 @@ class Upload extends Component {
   constructor(props) {
     super(props);
 
-    const { flowId, token } = this.props;
+    this.init(props);
 
     this.state = {
       isFrontImageValid: true,
@@ -35,20 +35,71 @@ class Upload extends Component {
 
       isPending: false,
 
-      qrCodeUrl: `${window.location.origin}/#/upload?flowId=${flowId}`,
+      qrCodeUrl: null,
     };
+  }
 
-    this.api = new API({
-      host: `${API_HOST}/api/v2/`,
-      key: token,
+  componentDidMount() {
+    const { flowId, token } = this.props;
+
+    this.setState({
+      qrCodeUrl: `${window.location.origin}/#/mobile/${flowId}/?=token=${token}`,
     });
+  }
 
-    this.flow = new FlowService(token);
-    this.flow.setFlowId(flowId);
+  componentWillReceiveProps(nextProps) {
+    this.init(nextProps);
   }
 
   componentWillUnmount() {
     if (this.unsubscribe) this.unsubscribe();
+    clearInterval(this.timer);
+  }
+
+  init(props) {
+    const {
+      token,
+      flowId,
+      isMobile,
+      setRecommendations,
+    } = props;
+
+    if (token && flowId && !this.api && !this.flow) {
+      this.api = new API({
+        host: `${API_HOST}/api/v2/`,
+        key: token,
+      });
+
+      this.flow = new FlowService(token);
+      this.flow.setFlowId(flowId);
+
+      if (!isMobile) {
+        this.timer = setInterval(() => {
+          this.flow.get()
+            .then((flowState) => {
+              if (flowState.state.status === 'opened-on-mobile') {
+                this.setState({
+                  isPending: true,
+                });
+              }
+
+              if (flowState.state.status === 'finished') {
+                const { recommendations } = flowState.state;
+                setRecommendations(recommendations);
+
+                if (!recommendations.normal
+                  && !recommendations.tight
+                  && !recommendations.loose) {
+                  route('/not-found', true);
+                } else {
+                  route('/results', true);
+                }
+              }
+            })
+            .catch(err => console.log(err));
+        }, 3000);
+      }
+    }
   }
 
   /**
@@ -135,6 +186,18 @@ class Upload extends Component {
 
       let taskSetId;
 
+      // use only real images
+      // ignore booleans for mobile flow
+      const images = {};
+
+      if (frontImage !== true) {
+        images.frontImage = frontImage;
+      }
+
+      if (sideImage !== true) {
+        images.sideImage = sideImage;
+      }
+
       if (!personId) {
         const createdPersonId = await this.api.person.create({
           gender,
@@ -147,15 +210,9 @@ class Upload extends Component {
           person: createdPersonId,
         });
 
-        taskSetId = await this.api.person.updateAndCalculate(createdPersonId, {
-          frontImage,
-          sideImage,
-        });
+        taskSetId = await this.api.person.updateAndCalculate(createdPersonId, images);
       } else {
-        await this.api.person.update(personId, {
-          frontImage,
-          sideImage,
-        });
+        await this.api.person.update(personId, images);
 
         taskSetId = await this.api.person.calculate(personId);
       }

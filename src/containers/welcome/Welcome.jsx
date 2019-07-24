@@ -39,6 +39,9 @@ class Welcome extends Component {
     this.flow = new FlowService(token);
     this.flow.create({
       status: 'created',
+      productUrl: matches.product,
+      brand: matches.brand,
+      bodyPart: matches.body_part,
     })
       .then((res) => {
         setFlowId(res);
@@ -46,7 +49,7 @@ class Welcome extends Component {
       .catch(err => alert(err.message));
   }
 
-  render({ matches }) {
+  render() {
     return (
       <section className="screen active">
         <div className="screen__content welcome">
@@ -74,7 +77,7 @@ class Welcome extends Component {
           </Slider>
         </div>
         <div className="screen__footer">
-          <Link className="button" href={`/data?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
+          <Link className="button" href="/data" onClick={gaWelcomeOnContinue}>
             <span>Start</span>
           </Link>
         </div>

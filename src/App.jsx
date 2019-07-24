@@ -21,6 +21,7 @@ import Help from './components/help/Help';
 import SoftValidation from './containers/soft-validation/SoftValidation';
 import HardValidation from './containers/hard-validation/HardValidation';
 import NotFound from './containers/not-found/NotFound';
+import MobileFlow from './containers/mobile-flow/MobileFlow';
 
 require('./scss/widget.scss');
 
@@ -63,6 +64,7 @@ class App extends Component {
             <HardValidation path="/hard-validation" />
             <NotFound path="/not-found" />
             <Results path="/results" />
+            <MobileFlow path="/mobile/:id" />
           </Router>
         </div>
       </Provider>

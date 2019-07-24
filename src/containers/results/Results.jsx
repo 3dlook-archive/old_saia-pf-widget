@@ -5,15 +5,46 @@ import { connect } from 'preact-redux';
 import { send } from '../../utils';
 import { gaResultsOnContinue } from '../../ga';
 import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
 /**
  * Results page component.
  * Displays results of the flow.
  */
 class Results extends Component {
+  constructor(props) {
+    super(props);
+
+    const { flowId, token } = this.props;
+    this.flow = new FlowService(token);
+    this.flow.setFlowId(flowId);
+  }
+
+  componentDidMount = async () => {
+    const {
+      recommendations,
+    } = this.props;
+
+    await this.flow.updateState({
+      status: 'finished',
+      recommendations,
+    });
+  }
+
   static onClick = () => {
-    send('close');
+    const {
+      isMobile,
+    } = this.props;
+
     gaResultsOnContinue();
+
+    if (!isMobile) {
+      send('close');
+    }
+
+    if (isMobile) {
+      window.close();
+    }
   }
 
   render() {
