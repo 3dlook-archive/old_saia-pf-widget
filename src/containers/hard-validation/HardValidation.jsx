@@ -4,6 +4,7 @@ import { connect } from 'preact-redux';
 
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
+import FlowService from '../../services/flowService';
 
 const cryingIcon1x = require('../../images/crying.png');
 const cryingIcon2x = require('../../images/crying@2x.png');
@@ -12,6 +13,24 @@ const cryingIcon2x = require('../../images/crying@2x.png');
  * Hard validation page component
  */
 class HardValidation extends Component {
+  constructor(props) {
+    super(props);
+
+    const { flowId, token } = this.props;
+    this.flow = new FlowService(token);
+    this.flow.setFlowId(flowId);
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    const { hardValidation } = nextProps;
+    const { front, side } = hardValidation;
+
+    await this.flow.updateState({
+      frontImage: !front,
+      sideImage: !side,
+    });
+  }
+
   back = () => {
     route('/upload', true);
   }
