@@ -23,12 +23,23 @@
     line-height: 50px;
   }
 
+  @include breakpoint((max-width 320px, max-height 568px)) {
+    height: 40px;
+    width: 150px;
+    line-height: 40px;
+    font-size: rem(12px);
+  }
+
   &__icon {
     display: inline-block;
     margin-left: 4px;
 
     @include breakpoint((max-width 500px, max-height 650px)) {
       width: 20px;
+    }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      width: 16px;
     }
   }
 

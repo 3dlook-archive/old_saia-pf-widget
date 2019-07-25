@@ -9,6 +9,10 @@
     }
   }
 
+  @include breakpoint((max-width 320px, max-height 568px)) {
+    max-width: 200px;
+  }
+
   &__files {
     display: flex;
     justify-content: space-between;
@@ -17,6 +21,10 @@
 
     @include breakpoint((max-width 500px, max-height 650px)) {
       margin-top: 20px;
+    }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-top: 15px;
     }
   }
 
@@ -37,6 +45,11 @@
     font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 12px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(10px);
+      margin-bottom: 0;
+    }
   }
 
   &__file {
@@ -52,6 +65,11 @@
       height: 200px;
     }
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      width: 100%;
+      height: 120px;
+    }
+
     &--invalid {
       border-color: $error-border-color;
       background: $error-background-color;
@@ -61,6 +79,10 @@
   &__file-select-text {
     text-decoration: underline;
     font-size: rem(10px);
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: rem(8px);
+    }
   }
 
   &__file-image {
@@ -80,6 +102,10 @@
 
       @include breakpoint((max-width 500px, max-height 650px)) {
         height: 115px;
+      }
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        height: 70px;
       }
     }
 
@@ -106,6 +132,11 @@
     opacity: 0;
     visibility: hidden;
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-top: 10px;
+      margin-left: 15px;
+    }
+
     &.active {
       opacity: 1;
       visibility: visible;
@@ -121,6 +152,11 @@
     justify-content: center;
     margin-right: 5px;
     transition: all ease 300ms;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      height: 7px;
+      width: 7px;
+    }
 
     &--valid {
 
@@ -143,6 +179,10 @@
 
   &__file-validation-status {
     line-height: rem(16px);
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      font-size: 9px;
+    }
   }
 
   &__file-validation-status--valid &__file-validation-icon {
@@ -170,6 +210,10 @@
 
   .button {
     margin-top: 44px;
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-top: 35px;
+    }
   }
 
   &__files-error {
@@ -181,6 +225,10 @@
       left: 50%;
       transform: translateX(-50%);
       top: calc(100% + 10px);
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        top: calc(100% + 5px);
+      }
     }
   }
 
