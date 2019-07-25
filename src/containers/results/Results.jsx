@@ -18,6 +18,15 @@ class Results extends Component {
     const { flowId, token } = this.props;
     this.flow = new FlowService(token);
     this.flow.setFlowId(flowId);
+
+    // the problem is that if we have soft validation screen
+    // then at results screen we have size recommendations in componentDidMount
+    // but if we dont have soft validation errors, then in componentDidMount
+    // size recommendations will be equal null
+    // to fix this we need to send patch request
+    // only once (in componentDidMount or componentWillReceiveProps)
+    // and because of that we need this flag to prevent double patch request
+    this.isRecommendationsSent = false;
   }
 
   componentDidMount = async () => {
@@ -25,10 +34,36 @@ class Results extends Component {
       recommendations,
     } = this.props;
 
-    await this.flow.updateState({
-      status: 'finished',
+    this.sendSizeRecommendations(recommendations);
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    const {
       recommendations,
-    });
+    } = nextProps;
+
+    this.sendSizeRecommendations(recommendations);
+  }
+
+  /**
+   * Send size recommendations to flow api
+   *
+   * @param {Object} recommendations - size recommendation object
+   * @param {string} [recommendations.tight] - tight size
+   * @param {string} [recommendations.normal] - normal size
+   * @param {string} [recommendations.loose] - loose size
+   */
+  sendSizeRecommendations = async (recommendations) => {
+    if (recommendations.tight
+        || recommendations.normal
+        || recommendations.loose) {
+      this.isRecommendationsSent = true;
+
+      await this.flow.updateState({
+        status: 'finished',
+        recommendations,
+      });
+    }
   }
 
   static onClick = () => {
