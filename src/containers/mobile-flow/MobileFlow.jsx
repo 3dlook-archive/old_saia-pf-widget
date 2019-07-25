@@ -63,7 +63,7 @@ class MobileFlow extends Component {
     if (flowState.state.status === 'finished') {
       route('/results', true);
     } else {
-      route('/upload', true);
+      route('/tutorial', true);
     }
   }
 
