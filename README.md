@@ -187,6 +187,7 @@ SaiaButton constructor
 | [options.brand] | <code>string</code> | brand name. If brand and bodyPart are set, then product.url is ignored |
 | [options.bodyPart] | <code>string</code> | body part name. If brand and bodyPart are set, then product.url is ignored |
 | [options.id] | <code>number</code> \| <code>string</code> | unique id of the button |
+| [options.returnUrl] | <code>string</code> | product page url on which user will be redirected after he pressing close button at results screen after he complite the mobile flow |
 
 <a name="SaiaButton+init"></a>
 

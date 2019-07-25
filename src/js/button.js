@@ -14,7 +14,8 @@ class SaiaButton {
    * @param {string} options.container - selector for button container
    * @param {string} options.key - SAIA PF API key
    * @param {string} [options.widgetUrl] - url to the widget host to open it in the iframe
-   * @param {string} [options.buttonStyle] - button style. Could be 'gradient', 'gradient-reversed', 'black', 'white'
+   * @param {string} [options.buttonStyle] - button style.
+   * Could be 'gradient', 'gradient-reversed', 'black', 'white'
    * @param {Object} [options.product] - object with product parameters (optional)
    * @param {string} [options.product.description] - product description.
    * Will be displayed on final results page
@@ -27,6 +28,8 @@ class SaiaButton {
    * @param {string} [options.bodyPart] - body part name. If brand and bodyPart are set,
    * then product.url is ignored
    * @param {number|string} [options.id] - unique id of the button
+   * @param {string} [options.returnUrl] - product page url on which user will be redirected
+   * after he pressing close button at results screen after he complite the mobile flow
    */
   constructor(options) {
     this.defaults = {
