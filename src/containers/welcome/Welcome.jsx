@@ -42,6 +42,7 @@ class Welcome extends Component {
       productUrl: matches.product,
       brand: matches.brand,
       bodyPart: matches.body_part,
+      returnUrl: matches.returnUrl,
     })
       .then((res) => {
         setFlowId(res);

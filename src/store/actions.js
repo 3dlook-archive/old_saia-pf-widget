@@ -3,6 +3,8 @@
  */
 export const CONSTANTS = {
   SET_IS_MOBILE: 'SET_IS_MOBILE',
+  SET_IS_FROM_DESKTOP_TO_MOBILE: 'SET_IS_FROM_DESKTOP_TO_MOBILE',
+  SET_RETURN_URL: 'SET_RETURN_URL',
   SET_TOKEN: 'SET_TOKEN',
   ADD_FRONT_IMAGE: 'ADD_FRONT_IMAGE',
   ADD_SIDE_IMAGE: 'ADD_SIDE_IMAGE',
@@ -20,13 +22,33 @@ export const CONSTANTS = {
 };
 
 /**
- * Set api token action
+ * Set is mobile device
  *
- * @param {string} token - api token
+ * @param {boolean} isMobile - is mobile device
  */
 export const setIsMobile = isMobile => ({
   type: CONSTANTS.SET_IS_MOBILE,
   payload: isMobile,
+});
+
+/**
+ * Set if user continue flow from desktop to mobile
+ *
+ * @param {string} isFromDesktopToMobile - is from desktop to mobile
+ */
+export const setIsFromDesktopToMobile = isFromDesktopToMobile => ({
+  type: CONSTANTS.SET_IS_FROM_DESKTOP_TO_MOBILE,
+  payload: isFromDesktopToMobile,
+});
+
+/**
+ * Set return url
+ *
+ * @param {string} returnUrl - return url
+ */
+export const setReturnUrl = returnUrl => ({
+  type: CONSTANTS.SET_RETURN_URL,
+  payload: returnUrl,
 });
 
 /**
@@ -185,6 +207,8 @@ export const setHardValidation = hardValidation => ({
 
 export default {
   setIsMobile,
+  setIsFromDesktopToMobile,
+  setReturnUrl,
   setToken,
   addFrontImage,
   addSideImage,

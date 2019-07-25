@@ -28,6 +28,8 @@ class MobileFlow extends Component {
       addFrontImage,
       addSideImage,
       setPersonId,
+      setIsFromDesktopToMobile,
+      setReturnUrl,
     } = this.props;
 
     const token = matches.key || API_KEY;
@@ -53,6 +55,8 @@ class MobileFlow extends Component {
     addGender(flowState.state.gender);
     addFrontImage(flowState.state.frontImage);
     addSideImage(flowState.state.sideImage);
+    setIsFromDesktopToMobile(true);
+    setReturnUrl(flowState.state.returnUrl);
 
     route('/upload', true);
   }

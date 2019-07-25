@@ -66,9 +66,11 @@ class Results extends Component {
     }
   }
 
-  static onClick = () => {
+  onClick = () => {
     const {
       isMobile,
+      returnUrl,
+      isFromDesktopToMobile,
     } = this.props;
 
     gaResultsOnContinue();
@@ -79,6 +81,10 @@ class Results extends Component {
 
     if (isMobile) {
       window.close();
+    }
+
+    if (isFromDesktopToMobile) {
+      window.location = returnUrl;
     }
   }
 

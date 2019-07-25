@@ -1,6 +1,8 @@
 import { CONSTANTS } from './actions';
 
 export const INITIAL_STATE = {
+  returnUrl: null,
+  isFromDesktopToMobile: false,
   isMobile: false,
   token: null,
 
@@ -47,6 +49,18 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isMobile: action.payload,
+      };
+
+    case CONSTANTS.SET_IS_FROM_DESKTOP_TO_MOBILE:
+      return {
+        ...state,
+        isFromDesktopToMobile: action.payload,
+      };
+
+    case CONSTANTS.SET_RETURN_URL:
+      return {
+        ...state,
+        returnUrl: action.payload,
       };
 
     case CONSTANTS.SET_TOKEN:

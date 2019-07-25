@@ -1,6 +1,9 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
+
 import { send } from '../../utils';
 import { gaHelpOnClick, gaCloseOnClick } from '../../ga';
+import actions from '../../store/actions';
 
 const helpIcon = require('../../images/help-icon.svg');
 const modalCloseIcon = require('../../images/close-icon.svg');
@@ -8,13 +11,19 @@ const modalCloseIcon = require('../../images/close-icon.svg');
 /**
  * Widget header component
  */
-export default class Header extends Component {
+class Header extends Component {
   /**
    * Close button click
    */
   onCloseButtonClick = () => {
     gaCloseOnClick();
     send('close');
+
+    const { returnUrl, isFromDesktopToMobile } = this.props;
+
+    if (isFromDesktopToMobile) {
+      window.location = returnUrl;
+    }
   };
 
   /**
@@ -40,3 +49,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default connect(state => state, actions)(Header);
