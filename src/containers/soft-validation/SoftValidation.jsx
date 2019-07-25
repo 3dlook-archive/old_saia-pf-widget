@@ -83,14 +83,12 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Make sure your feet are shoulder width apart.
-                  <ImageExample type="front" isMobile={isMobile} />
                 </li>
               )
               : null
             }
 
-            {(softValidation.front.bodyAreaPercentage < 0.7
-              || softValidation.side.bodyAreaPercentage < 0.7)
+            {(softValidation.front.bodyAreaPercentage < 0.7)
               ? (
                 <li>
                   Come a bit closer to a camera.
@@ -103,27 +101,36 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your head straight.
-                  <ImageExample type="front" isMobile={isMobile} />
                 </li>
               )
               : null
             }
 
-            {(softValidation.side.messages.includes('Keep your head straight'))
-              ? (
-                <li>
-                  Keep your head straight.
-                  <ImageExample type="side" isMobile={isMobile} />
-                </li>
-              )
-              : null
-            }
 
             {(softValidation.front.messages.includes('Keep your hands at waist level'))
               ? (
                 <li>
                   Keep your hands at waist level.
-                  <ImageExample type="front" isMobile={isMobile} />
+                </li>
+              )
+              : null
+            }
+
+            {(this.isFrontError) ? <ImageExample type="front" isMobile={isMobile} /> : null}
+
+            {(softValidation.side.messages.includes('Keep your head straight'))
+              ? (
+                <li>
+                  Keep your head straight.
+                </li>
+              )
+              : null
+            }
+
+            {(softValidation.side.bodyAreaPercentage < 0.7)
+              ? (
+                <li>
+                  Come a bit closer to a camera.
                 </li>
               )
               : null
@@ -133,11 +140,12 @@ class SoftValidation extends Component {
               ? (
                 <li>
                   Keep your hands at waist level.
-                  <ImageExample type="side" isMobile={isMobile} />
                 </li>
               )
               : null
             }
+
+            {(this.isSideError) ? <ImageExample type="side" isMobile={isMobile} /> : null}
           </ol>
 
         </div>
