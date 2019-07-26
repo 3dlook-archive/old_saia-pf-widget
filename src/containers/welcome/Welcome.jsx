@@ -3,7 +3,7 @@ import { Link } from 'preact-router';
 import { connect } from 'preact-redux';
 
 import Slider from '../../components/slider/Slider';
-import { objectToUrlParams, isMobileDevice } from '../../utils';
+import { isMobileDevice } from '../../utils';
 import { gaWelcomeOnContinue } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
@@ -25,6 +25,7 @@ class Welcome extends Component {
       setProductUrl,
       setToken,
       setIsMobile,
+      setOrigin,
       matches,
     } = this.props;
 
@@ -34,6 +35,7 @@ class Welcome extends Component {
     setBrand(matches.brand);
     setBodyPart(matches.body_part);
     setProductUrl(matches.product);
+    setOrigin(matches.origin);
     setIsMobile(isMobileDevice());
 
     this.flow = new FlowService(token);

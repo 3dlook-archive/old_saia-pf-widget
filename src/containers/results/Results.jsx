@@ -71,12 +71,13 @@ class Results extends Component {
       isMobile,
       returnUrl,
       isFromDesktopToMobile,
+      origin,
     } = this.props;
 
     gaResultsOnContinue();
 
     if (!isMobile) {
-      send('close');
+      send('close', {}, origin);
     }
 
     if (isMobile) {

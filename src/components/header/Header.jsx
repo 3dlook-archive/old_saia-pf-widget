@@ -17,9 +17,9 @@ class Header extends Component {
    */
   onCloseButtonClick = () => {
     gaCloseOnClick();
-    send('close');
+    const { returnUrl, isFromDesktopToMobile, origin } = this.props;
 
-    const { returnUrl, isFromDesktopToMobile } = this.props;
+    send('close', {}, origin);
 
     if (isFromDesktopToMobile) {
       window.location = returnUrl;

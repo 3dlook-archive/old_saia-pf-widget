@@ -4,6 +4,7 @@
 export const CONSTANTS = {
   SET_IS_MOBILE: 'SET_IS_MOBILE',
   SET_IS_FROM_DESKTOP_TO_MOBILE: 'SET_IS_FROM_DESKTOP_TO_MOBILE',
+  SET_ORIGIN: 'SET_ORIGIN',
   SET_RETURN_URL: 'SET_RETURN_URL',
   SET_TOKEN: 'SET_TOKEN',
   ADD_FRONT_IMAGE: 'ADD_FRONT_IMAGE',
@@ -39,6 +40,16 @@ export const setIsMobile = isMobile => ({
 export const setIsFromDesktopToMobile = isFromDesktopToMobile => ({
   type: CONSTANTS.SET_IS_FROM_DESKTOP_TO_MOBILE,
   payload: isFromDesktopToMobile,
+});
+
+/**
+ * Set origin
+ *
+ * @param {string} origin - origin
+ */
+export const setOrigin = origin => ({
+  type: CONSTANTS.SET_ORIGIN,
+  payload: origin,
 });
 
 /**
@@ -209,6 +220,7 @@ export default {
   setIsMobile,
   setIsFromDesktopToMobile,
   setReturnUrl,
+  setOrigin,
   setToken,
   addFrontImage,
   addSideImage,

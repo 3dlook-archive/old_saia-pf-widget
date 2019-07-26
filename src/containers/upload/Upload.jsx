@@ -159,6 +159,7 @@ class Upload extends Component {
       addFrontImage,
       addSideImage,
       setPersonId,
+      origin,
     } = this.props;
 
     try {
@@ -225,7 +226,7 @@ class Upload extends Component {
         waist: r.volume_params.waist,
         gender,
         height,
-      });
+      }, origin);
 
       const softValidation = {
         front: {
@@ -268,7 +269,7 @@ class Upload extends Component {
         setRecommendations(recommendations);
       }
 
-      send('recommendations', recommendations);
+      send('recommendations', recommendations, origin);
 
       gaUploadOnContinue();
 
