@@ -43,7 +43,7 @@ class Upload extends Component {
     const { flowId, token } = this.props;
 
     this.setState({
-      qrCodeUrl: `${window.location.origin}?key=${this.defaults.key}#/mobile/${flowId}/?=token=${token}`,
+      qrCodeUrl: `${window.location.origin}?key=${token}#/mobile/${flowId}/?=token=${token}`,
     });
   }
 
