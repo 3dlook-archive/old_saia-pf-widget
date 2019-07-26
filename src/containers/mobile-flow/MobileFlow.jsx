@@ -2,12 +2,12 @@ import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { route } from 'preact-router';
 
-import { isMobileDevice } from '../../utils';
+import { isMobileDevice, parseGetParams } from '../../utils';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
 
 /**
- * Welcome page component
+ * Mobile flow page component
  */
 class MobileFlow extends Component {
   componentWillUnmount() {
@@ -33,7 +33,7 @@ class MobileFlow extends Component {
       setRecommendations,
     } = this.props;
 
-    const token = matches.key || API_KEY;
+    const token = matches.key || API_KEY || parseGetParams().key;
 
     this.flow = new FlowService(token);
     setFlowId(matches.id);

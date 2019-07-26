@@ -3,7 +3,7 @@ import { Link } from 'preact-router';
 import { connect } from 'preact-redux';
 
 import Slider from '../../components/slider/Slider';
-import { isMobileDevice } from '../../utils';
+import { isMobileDevice, parseGetParams } from '../../utils';
 import { gaWelcomeOnContinue } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
@@ -29,7 +29,7 @@ class Welcome extends Component {
       matches,
     } = this.props;
 
-    const token = matches.key || API_KEY;
+    const token = matches.key || API_KEY || parseGetParams().key;
 
     setToken(token);
     setBrand(matches.brand);

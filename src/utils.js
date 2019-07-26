@@ -33,6 +33,22 @@ export const parseHashParams = () => {
 };
 
 /**
+ * Parse get params
+ */
+export const parseGetParams = () => {
+  let hash = window.location.search.substr(1);
+  hash = decodeURIComponent(hash);
+
+  const result = hash.split('&').reduce((result, item) => {
+    const parts = item.split('=');
+    result[parts[0]] = parts[1];
+    return result;
+  }, {});
+
+  return result;
+};
+
+/**
  * Send command to parent window
  *
  * @param {string} command - command name
