@@ -1,19 +1,20 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames';
 import { cmToFtIn, getHeightCm } from '../../utils';
 
 /**
  * Height component
  */
-export class Height extends Component {
+export default class Height extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      units: 'cm',
+      units: 'in',
       cm: null,
       ft: null,
-      in: null,
-    }
+      inches: null,
+    };
   }
 
   /**
@@ -21,7 +22,6 @@ export class Height extends Component {
    */
   onUnitsChange = (e) => {
     this.setState({
-      ...this.state,
       units: e.target.value,
     });
   }
@@ -30,16 +30,17 @@ export class Height extends Component {
    * Switch element click handler
    */
   onSwitchClick = () => {
-    this.setState({
-      ...this.state,
-      units: (this.state.units === 'cm') ? 'in' : 'cm',
-    });
+    this.setState(prevState => ({
+      units: (prevState.units === 'cm') ? 'in' : 'cm',
+    }));
   }
 
   /**
    * Cm change handler
    */
   onCmInputChange = (e) => {
+    const { change } = this.props;
+
     // get height in cm
     const { value } = e.target;
 
@@ -47,62 +48,68 @@ export class Height extends Component {
     const ftIn = cmToFtIn(value);
 
     this.setState({
-      ...this.state,
       cm: value,
       ft: ftIn.ft,
-      in: ftIn.in,
+      inches: ftIn.in,
+    }, () => {
+      const { cm } = this.state;
+      change(cm);
     });
-
-    this.props.change(this.state.cm);
   }
 
   /**
    * Ft change handler
    */
   onFtInputChange = (e) => {
+    const { change } = this.props;
+    const { inches } = this.state;
+
     // get ft
     const { value } = e.target;
 
     // convert value to cm
-    let cm = getHeightCm(value, this.state.in || 0);
-    cm = cm.toFixed(0);
+    let centimeters = getHeightCm(value, inches || 0);
+    centimeters = centimeters.toFixed(0);
 
     this.setState({
-      ...this.state,
-      cm,
+      cm: centimeters,
       ft: value,
-      in: this.state.in || 0,
+      inches: inches || 0,
+    }, () => {
+      const { cm } = this.state;
+      change(cm);
     });
-
-    this.props.change(this.state.cm);
   }
 
   /**
-   * In change handler
+   * Inches change handler
    */
   onInInputChange = (e) => {
-    // get in
+    const { change } = this.props;
+    const { ft } = this.state;
+
+    // get inches
     const { value } = e.target;
 
     // convert value to cm
-    let cm = getHeightCm(this.state.ft || 0, value);
-    cm = cm.toFixed(0);
+    let centimeters = getHeightCm(ft || 0, value);
+    centimeters = centimeters.toFixed(0);
 
     this.setState({
-      ...this.state,
-      cm,
-      ft: this.state.ft || 0,
-      in: value,
+      cm: centimeters,
+      ft: ft || 0,
+      inches: value,
+    }, () => {
+      const { cm } = this.state;
+      change(cm);
     });
-
-    this.props.change(this.state.cm);
   }
 
   /**
    * Validate cm value
    */
   validateCm = (e) => {
-    let { value } = e.target;
+    const { value } = e.target;
     // TODO: create regexp to validate numbers
     // value = value.replace(/^(?![1-2]|[1-2][0-9]|1[5-9][0-9]|2[0-1][0-9]|2[1-2]0)$/g, '');
 
@@ -110,52 +117,81 @@ export class Height extends Component {
   }
 
   render() {
-    return (
-      <div class={`height ${!this.props.isValid ? 'height--invalid' : ''}`} data-measure={this.state.units}>
-        <div class="height__measure height__measure--cm">
-          <div class="height__input-block" data-measure="cm">
-            <input
-              class="height__input"
-              type="number"
-              value={this.state.cm}
-              onChange={this.onCmInputChange} />
-          </div>
-        </div>
+    const {
+      className,
+      isValid,
+    } = this.props;
 
-        <div class="height__measure height__measure--in">
-          <div class="height__input-block" data-measure="ft">
-            <input class="height__input"
-            type="number"
-            value={this.state.ft}
-            onChange={this.onFtInputChange}
+    const {
+      units,
+      cm,
+      ft,
+      inches,
+    } = this.state;
+
+    return (
+      <div className={classNames(className, 'height', { 'height--invalid': !isValid })} data-measure={units}>
+        <div className="height__measure height__measure--cm">
+          <div className="height__input-block" data-measure="cm">
+            <input
+              className="height__input"
+              type="number"
+              value={cm}
+              onChange={this.onCmInputChange}
+              placeholder="0"
             />
           </div>
-          <div class="height__input-block" data-measure="in">
+        </div>
+
+        <div className="height__measure height__measure--in">
+          <div className="height__input-block" data-measure="ft">
             <input
-              class="height__input"
+              className="height__input"
               type="number"
-              value={this.state.in}
-              onChange={this.onInInputChange} />
+              value={ft}
+              onChange={this.onFtInputChange}
+              placeholder="0"
+            />
+          </div>
+          <div className="height__input-block" data-measure="in">
+            <input
+              className="height__input"
+              type="number"
+              value={inches}
+              onChange={this.onInInputChange}
+              placeholder="0"
+            />
           </div>
         </div>
 
-        <div class="height__switcher">
-          <input type="radio" name="measure" id="measure-cm" value="cm" onChange={this.onUnitsChange} checked={this.state.units === 'cm'} />
-          <label class="height__switcher-item height__switcher-item--cm" for="measure-cm">cm</label>
+        <div className={classNames('height__switcher', { 'height__switcher--cm': units === 'cm', 'height__switcher--in': units === 'in' })}>
+          <label className={classNames('height__switcher-item', 'height__switcher-item--cm', { checked: units === 'cm' })} htmlFor="measure-cm" tabIndex="-1">
+            <input type="radio" name="measure" id="measure-cm" value="cm" onChange={this.onUnitsChange} checked={units === 'cm'} />
+            cm
+          </label>
 
-          <input type="radio" name="measure" id="measure-in" value="in" onChange={this.onUnitsChange} checked={this.state.units === 'in'} />
-          <label class="height__switcher-item height__switcher-item--in" for="measure-in">in</label>
+          <label className={classNames('height__switcher-item', 'height__switcher-item--in', { checked: units === 'in' })} htmlFor="measure-in" tabIndex="-1">
+            <input type="radio" name="measure" id="measure-in" value="in" onChange={this.onUnitsChange} checked={units === 'in'} />
+            in
+          </label>
 
-          <div class="height__switcher-switch" onClick={this.onSwitchClick}></div>
+          <button className="height__switcher-switch" onClick={this.onSwitchClick} type="button">
+            <span>
+              { 'Change units to ' }
+              {(units === 'in') ? 'centimeters' : 'feets and inches'}
+            </span>
+          </button>
         </div>
 
-        <p class={`height__desc ${this.state.units === 'in' ? 'height__desc--hidden' : ''}`}>
-          Your height should be between<br />
+        <p className={classNames('height__desc', { active: units === 'cm' && !isValid })}>
+          Your height should be between
+          <br />
           150-220 cm
         </p>
 
-        <p class={`height__desc ${this.state.units === 'cm' ? 'height__desc--hidden' : ''}`}>
-          Your height should be between<br />
+        <p className={classNames('height__desc', { active: units === 'in' && !isValid })}>
+          Your height should be between
+          <br />
           4’11” and 7’2”
         </p>
       </div>

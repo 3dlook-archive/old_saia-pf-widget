@@ -1,21 +1,27 @@
 import { h, render, Component } from 'preact';
 import Router from 'preact-router';
 import { createHashHistory } from 'history';
+import { Provider } from 'preact-redux';
+import store from './store';
 
 /**
  * Components
  */
-import { Header } from './components/header/Header';
+import Header from './components/header/Header';
 
 /**
  * Containers
  */
 import Welcome from './containers/welcome/Welcome';
-import Tips from './containers/tips/Tips';
-import { Upload } from './containers/upload/Upload';
-import { Data } from './containers/data/Data';
+import Upload from './containers/upload/Upload';
+import Tutorial from './containers/tutorial/Tutorial';
+import Data from './containers/data/Data';
 import Results from './containers/results/Results';
 import Help from './components/help/Help';
+import SoftValidation from './containers/soft-validation/SoftValidation';
+import HardValidation from './containers/hard-validation/HardValidation';
+import NotFound from './containers/not-found/NotFound';
+import MobileFlow from './containers/mobile-flow/MobileFlow';
 
 require('./scss/widget.scss');
 
@@ -25,7 +31,6 @@ class App extends Component {
 
     this.state = {
       isHelpActive: false,
-      isLogoActive: false,
     };
   }
 
@@ -33,42 +38,36 @@ class App extends Component {
    * Toggle Help component visibility
    */
   toggleHelp = () => {
+    const { isHelpActive } = this.state;
+
     this.setState({
-      isHelpActive: !this.state.isHelpActive,
-    });
-  }
-
-  /**
-   * Show or hide logo in header
-   */
-  showHideLogo = (e) => {
-    if (e.url === '/' || e.url.indexOf('/?') === 0) {
-      return this.setState({
-        ...this.state,
-        isLogoActive: false,
-      });
-    }
-
-    return this.setState({
-      ...this.state,
-      isLogoActive: true,
+      isHelpActive: !isHelpActive,
     });
   }
 
   render() {
+    const {
+      isHelpActive,
+    } = this.state;
     return (
-      <div className="widget-container">
-        <Header help={this.toggleHelp} isLogoActive={this.state.isLogoActive} />
-        <Help show={this.state.isHelpActive} close={this.toggleHelp} />
+      <Provider store={store}>
+        <div className="widget-container">
+          <Header help={this.toggleHelp} />
+          <Help show={isHelpActive} close={this.toggleHelp} />
 
-        <Router history={createHashHistory()} onChange={this.showHideLogo}>
-          <Welcome path="/" />
-          <Tips path="/tips" />
-          <Data path="/data" />
-          <Upload path="/upload" />
-          <Results path="/results" />
-        </Router>
-      </div>
+          <Router history={createHashHistory()}>
+            <Welcome path="/" />
+            <Data path="/data" />
+            <Upload path="/upload" />
+            <Tutorial path="/tutorial" />
+            <SoftValidation path="/soft-validation" />
+            <HardValidation path="/hard-validation" />
+            <NotFound path="/not-found" />
+            <Results path="/results" />
+            <MobileFlow path="/mobile/:id" />
+          </Router>
+        </div>
+      </Provider>
     );
   }
 }

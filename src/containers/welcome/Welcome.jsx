@@ -1,31 +1,92 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import { Link } from 'preact-router';
+import { connect } from 'preact-redux';
 
-import { objectToUrlParams } from '../../utils';
+import Slider from '../../components/slider/Slider';
+import { isMobileDevice, parseGetParams } from '../../utils';
 import { gaWelcomeOnContinue } from '../../ga';
+import actions from '../../store/actions';
+import FlowService from '../../services/flowService';
 
-const saiaPfLogo = require('../../images/logo.svg');
-const nextArrowIcon = require('../../images/arrow.svg');
+// slider images
+const slideImage1 = require('../../images/slide1.svg');
+const slideImage2 = require('../../images/slide2.svg');
+const slideImage3 = require('../../images/slide3.svg');
 
 /**
  * Welcome page component
  */
-const Welcome = ({ matches }) => (
-  <div className="screen screen--welcome active">
-    <div className="screen__content welcome">
-      <div className="welcome__logo">
-        <img src={saiaPfLogo} alt="SAIA Perfect Fit Logo" />
-        <p className="welcome__powered">POWERED BY 3DLOOK</p>
-      </div>
+class Welcome extends Component {
+  componentDidMount() {
+    const {
+      setFlowId,
+      setBrand,
+      setBodyPart,
+      setProductUrl,
+      setToken,
+      setIsMobile,
+      setOrigin,
+      matches,
+    } = this.props;
 
-      <p className="welcome__text">After uploading only two photos we will determine your body measurements and select the size that will fit you best</p>
+    const token = matches.key || API_KEY || parseGetParams().key;
 
-      <Link className="button" href={`/tips?${objectToUrlParams(matches)}`} onClick={gaWelcomeOnContinue}>
-        Start
-        <img className="button__icon" src={nextArrowIcon} alt="Go next arrow icon" />
-      </Link>
-    </div>
-  </div>
-);
+    setToken(token);
+    setBrand(matches.brand);
+    setBodyPart(matches.body_part);
+    setProductUrl(matches.product);
+    setOrigin(matches.origin);
+    setIsMobile(isMobileDevice());
 
-export default Welcome;
+    this.flow = new FlowService(token);
+    this.flow.create({
+      status: 'created',
+      productUrl: matches.product,
+      brand: matches.brand,
+      bodyPart: matches.body_part,
+      returnUrl: matches.returnUrl,
+    })
+      .then((res) => {
+        setFlowId(res);
+      })
+      .catch(err => alert(err.message));
+  }
+
+  render() {
+    return (
+      <section className="screen active">
+        <div className="screen__content welcome">
+          <Slider className="welcome__slider">
+            <div>
+              <img src={slideImage1} alt="Slide 1" />
+              <p className="welcome__slider-text">take two photos</p>
+            </div>
+            <div>
+              <img src={slideImage2} alt="Slide 2" />
+              <p className="welcome__slider-text">
+                { 'Get personalized size ' }
+                <br />
+                { ' recommendations' }
+              </p>
+            </div>
+            <div>
+              <img src={slideImage3} alt="Slide 3" />
+              <p className="welcome__slider-text">
+                { 'Shop for apparel ' }
+                <br />
+                { ' that fits you' }
+              </p>
+            </div>
+          </Slider>
+        </div>
+        <div className="screen__footer">
+          <Link className="button" href="/data" onClick={gaWelcomeOnContinue}>
+            <span>Start</span>
+          </Link>
+        </div>
+      </section>
+    );
+  }
+}
+
+export default connect(state => state, actions)(Welcome);

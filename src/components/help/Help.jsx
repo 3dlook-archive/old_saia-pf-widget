@@ -1,20 +1,12 @@
 import { h } from 'preact';
 import classNames from 'classnames';
 
-const modalCloseIcon = require('../../images/close-icon.svg');
-
 /**
  * Help component.
  * Displays help information
  */
 const Help = ({ close, show }) => (
   <div className={classNames('help', { active: show })}>
-    <header className="help__header">
-      <button className="help__close" type="button" onClick={close}>
-        <img src={modalCloseIcon} alt="Close button icon" />
-      </button>
-      <h1 className="help__logo">Help</h1>
-    </header>
     <div className="help__content">
       <h2>SAIA could not detect my body. What am I doing wrong?</h2>
       <p>Most likely you either didn't fully fit in the frame or took a wrong pose while taking photos. Please check our video guide once again and try to take photos according to our guidelines. Please note that poor lighting might also affect the results. </p>
@@ -39,6 +31,11 @@ const Help = ({ close, show }) => (
 
       <h2>I don't see SAIA Perfect Fit button on some store pages.</h2>
       <p>This means that the seller decided not to use Perfect Fit solution for those items.</p>
+    </div>
+    <div className="help__footer">
+      <button className="help__close button" type="button" onClick={close}>
+        <span>Back</span>
+      </button>
     </div>
   </div>
 );

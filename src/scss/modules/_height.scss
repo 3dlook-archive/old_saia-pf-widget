@@ -8,20 +8,17 @@
     display: flex;
   }
 
-  &--invalid &__input {
-    border-color: $error-border-color;
-    background-color: $error-background-color;
-  }
-
   &__measure  {
     display: none;
+    width: 106px;
+    margin: 0 auto;
   }
 
   &__input-block {
     position: relative;
 
     &:nth-child(2) {
-      margin-left: 28px;
+      margin-left: 18px;
     }
 
     &:after {
@@ -29,29 +26,35 @@
       display: block;
       position: absolute;
       top: 50%;
-      right: 11px;
-      color: #9B9B9B;
+      right: 0;
+      color: #DDDDDD;
       text-transform: uppercase;
       transform: translateY(-50%);
       pointer-events: none;
+      font-size: rem(12px);
     }
   }
 
   &__input {
-    height: 50px;
-    border: 1px solid #000000;
-    border-radius: 3px;
+    height: 24px;
+    border: 0;
+    border-bottom: 2px solid #DDDDDD;
     display: block;
     width: 100%;
     font-size: 1rem;
-    font-weight: bold;
-    padding: 0 15px;
+    font-weight: normal;
+    padding-right: 18px;
     appearance: none;
+    border-radius: 0;
+
+    &:focus {
+      border-color: #FFAB55;
+    }
 
     @include disable-number();
 
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      height: 40px;
+    @include placeholder {
+      color: #DDDDDD;
     }
 
     @include breakpoint((max-width 320px, max-height 568px)) {
@@ -64,26 +67,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 26px;
+    margin-top: 29px;
 
     input {
       @include visually-hidden();
     }
 
-    input:checked + label {
+    label.checked {
       color: #000;
     }
 
-    input:focus + label {
-      outline: -webkit-focus-ring-color auto 5px;
-    }
-
-    input[value="cm"]:checked ~ .height__switcher-switch:before {
-      left: 3px;
+    &--cm &-switch:before {
+      left: 4px;
       display: block;
     }
 
-    input[value="in"]:checked ~ .height__switcher-switch:before {
+    &--in &-switch:before {
       left: 29px;
       display: block;
 
@@ -94,17 +93,16 @@
   }
 
   &__switcher-item {
-    color: #9B9B9B;
+    color: #DDDDDD;
     text-transform: uppercase;
-    font-size: rem(14px);
+    font-size: rem(12px);
     width: 40px;
     text-align: center;
     cursor: pointer;
 
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      font-size: rem(11px);
-      width: 30px;
-    }
+    // &:focus-within {
+    //   outline: -webkit-focus-ring-color auto 5px;
+    // }
 
     &--cm {
       order: 1;
@@ -118,11 +116,16 @@
   &__switcher-switch {
     height: 26px;
     width: 52px;
-    border: 1px solid #000000;
-    border-radius: 5px;
+    border: 2px solid #FFAB55;
+    border-radius: 25px;
     order: 2;
     position: relative;
     cursor: pointer;
+    background: #fff;
+
+    span {
+      @include visually-hidden();
+    }
 
     @include breakpoint((max-width 320px, max-height 568px)) {
       height: 20px;
@@ -132,12 +135,12 @@
     &:before {
       content: '';
       display: none;
-      height: 18px;
-      width: 18px;
-      border-radius: 5px;
-      background-color: #000000;
+      height: 14px;
+      width: 14px;
+      border-radius: 25px;
+      background-color: #FFAB55;
       position: absolute;
-      top: 3px;
+      top: 4px;
       transition: all ease 300ms;
 
       @include breakpoint((max-width 320px, max-height 568px)) {
@@ -149,20 +152,12 @@
 
   &__desc {
     text-align: center;
-    color: #9B9B9B;
-    margin-top: 29px;
+    color: #E2102A;
+    margin-top: 20px;
+    display: none;
 
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      margin-top: 15px;
-    }
-
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      line-height: 16px;
-      margin-top: 10px;
-    }
-
-    &--hidden {
-      display: none;
+    &.active {
+      display: block;
     }
   }
 }

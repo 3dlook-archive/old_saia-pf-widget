@@ -1,34 +1,86 @@
+$success: #69BE0C;
+$warning: #FF9F00;
+$failure: $error-border-color;
+
 .screen {
   display: none;
-  max-width: 400px;
   width: 100%;
   margin: 0 auto;
 
-  @include breakpoint((max-width 500px, max-height 650px)) {
-    padding: 20px !important;
-  }
-
-  &--welcome {
-    padding-bottom: 64px;
-  }
-
-  &--tips {
-    padding-top: 7px;
-  }
-
   &__content {
-    margin: auto;
+    margin: 0 auto;
     width: 100%;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    @include breakpoint($mobile) {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+
+    .button {
+      margin: 0 auto;
+    }
   }
 
   &__title {
     text-transform: uppercase;
     font-weight: bold;
     font-size: rem(16px);
-    margin-bottom: 10px;
+    text-align: center;
+  }
 
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      font-size: rem(12px);
+  &__subtitle {
+    color: #CDCDCD;
+    font-size: rem(11px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+
+    @include breakpoint($mobile) {
+      margin-bottom: 40px;
+    }
+
+    span {
+      &.success {
+        color: $success;
+      }
+
+      &.warning {
+        color: $warning;
+      }
+
+      &.failure {
+        color: $failure;
+      }
+    }
+
+    &-separ {
+      display: inline-block;
+      height: 2px;
+      width: 24px;
+      background: #CDCDCD;
+      vertical-align: middle;
+      margin: 0 13px;
+
+      &.success {
+        background: $success;
+      }
+
+      &.warning {
+        background: $warning;
+      }
+
+      &.failure {
+        background: $failure;
+      }
     }
   }
 
@@ -43,6 +95,7 @@
 
   &.active {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
   }
 }

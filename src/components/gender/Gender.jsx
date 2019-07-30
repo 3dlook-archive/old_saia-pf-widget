@@ -1,37 +1,49 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames';
+
+const maleIcon = require('../../images/male-icon.png');
+const maleIconX2 = require('../../images/male-icon@2x.png');
+const femaleIcon = require('../../images/female-icon.png');
+const femaleIconX2 = require('../../images/female-icon@2x.png');
 
 /**
  * Gender component
  */
-export class Gender extends Component {
+export default class Gender extends Component {
   state = {
     value: null,
-  }
-
-  constructor(props) {
-    super(props);
   }
 
   /**
    * Gender change event handler
    */
   onGenderChange = (e) => {
+    const { change } = this.props;
+
     const { value } = e.target;
 
-    this.props.change(value);
     this.setState({
       value,
-    });
+    }, () => change(value));
   }
 
   render() {
-    return (
-      <div class={`gender ${!this.props.isValid ? 'gender--invalid' : ''}`}>
-        <input type="radio" name="gender" id="gender-female" value="female" onChange={this.onGenderChange} checked={this.state.value === 'female'} />
-        <label class="gender__item" for="gender-female">Female</label>
+    const { className, isValid } = this.props;
+    const { value } = this.state;
 
-        <input type="radio" name="gender" id="gender-male" value="male" onChange={this.onGenderChange} checked={this.state.value === 'male'} />
-        <label class="gender__item" for="gender-male">Male</label>
+    return (
+      <div className={classNames('gender', className, { 'gender--invalid': !isValid })}>
+        <label className={classNames('gender__item', { checked: value === 'female' })} htmlFor="gender-female">
+          <input type="radio" name="gender" id="gender-female" value="female" onChange={this.onGenderChange} checked={value === 'female'} />
+          <span>Female</span>
+          <img src={femaleIcon} srcSet={`${femaleIcon} 1x, ${femaleIconX2} 2x`} alt="female icon" />
+        </label>
+
+        <label className={classNames('gender__item', { checked: value === 'male' })} htmlFor="gender-male">
+          <input type="radio" name="gender" id="gender-male" value="male" onChange={this.onGenderChange} checked={value === 'male'} />
+          <span>Male</span>
+          <img src={maleIcon} srcSet={`${maleIcon} 1x, ${maleIconX2} 2x`} alt="male icon" />
+        </label>
       </div>
     );
   }

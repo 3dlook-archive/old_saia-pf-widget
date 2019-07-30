@@ -3,3 +3,4 @@ node_modules/
 coverage/
 saia-config.development.js
 docs/
+designs/

@@ -1,6 +1,9 @@
+$border-width: 2px;
+
 .gender {
   display: flex;
   justify-content: space-between;
+  max-width: 240px;
 
   input {
     @include visually-hidden();
@@ -12,36 +15,57 @@
   }
 
   &__item {
-    height: 50px;
-    border: 1px solid #000000;
-    border-radius: 3px;
+    height: 127px;
+    background: linear-gradient(223.12deg, #FF8D32 0%, #FFB764 100%);
+    border-radius: 25px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     text-transform: uppercase;
     width: 100%;
     cursor: pointer;
+    font-weight: normal;
+    position: relative;
+    color: #000;
+
+    &.checked {
+      color: #fff;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    // &:focus-within {
+    //   outline: -webkit-focus-ring-color auto 5px;
+    // }
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      top: $border-width;
+      left: $border-width;
+      bottom: $border-width;
+      right: $border-width;
+      background: #fff;
+      border-radius: 23px;
+    }
 
     &:first-of-type {
       margin-right: 28px;
     }
 
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      height: 40px;
+    span {
+      display: inline-block;
+      margin-top: 15px;
+      margin-bottom: 8px;
     }
 
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      height: 30px;
-      font-size: 0.8rem;
+    span,
+    img {
+      position: relative;
+      z-index: 1;
     }
-  }
-
-  input:checked + label {
-    background: #000;
-    color: #fff;
-  }
-
-  input:focus + label {
-    outline: -webkit-focus-ring-color auto 5px;
   }
 }

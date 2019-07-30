@@ -1,26 +1,32 @@
+$border-width: 2px;
+
 .button {
   display: block;
-  margin: 0 auto;
-  height: 60px;
-  width: 240px;
+  height: 40px;
+  width: 174px;
   padding: 0;
-  border-radius: 30px;
-  background-color: #000000;
-  box-shadow: 0 4px 13px 0 rgba(0,0,0,0.34);
+  border-radius: 20px;
+  background: linear-gradient(217.1deg, #FF8D32 0%, #FFC06F 100%);
+  box-shadow: 0 6px 20px 0 rgba(111,50,0,0.2);
   color: #fff;
-  font-size: rem(14px);
+  letter-spacing: rem(2px);
+  font-size: rem(10px);
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: normal;
   border: none;
   cursor: pointer;
   text-decoration: none;
-  line-height: 60px;
+  line-height: 40px;
   transition: all ease 300ms;
+  text-align: center;
 
-  @include breakpoint((max-width 500px, max-height 650px)) {
+  @include breakpoint($mobile) {
     height: 50px;
-    width: 200px;
+    width: 220px;
     line-height: 50px;
+    border-radius: 25px;
+    font-size: rem(12px);
+    font-weight: 500;
   }
 
   @include breakpoint((max-width 320px, max-height 568px)) {
@@ -33,9 +39,38 @@
   &__icon {
     display: inline-block;
     margin-left: 4px;
+  }
 
-    @include breakpoint((max-width 500px, max-height 650px)) {
-      width: 20px;
+  &--outline {
+    position: relative;
+    color: #FF8D32;
+    box-shadow: none;
+
+    @include breakpoint($mobile) {
+      height: auto;
+      line-height: rem(21px);
+      background: #fff;
+      border-radius: 0;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: $border-width;
+      left: $border-width;
+      right: $border-width;
+      bottom: $border-width;
+      background: #fff;
+      border-radius: 20px;
+
+      @include breakpoint($mobile) {
+        display: none;
+      }
+    }
+
+    span {
+      position: relative;
     }
 
     @include breakpoint((max-width 320px, max-height 568px)) {
@@ -48,5 +83,11 @@
     box-shadow: none;
     opacity: 0.7;
     pointer-events: none;
+    background: linear-gradient(217.1deg, #E9E6E4 0%, #E9E6E2 100%);
+    color: #fff;
+
+    &:before {
+      display: none;
+    }
   }
 }

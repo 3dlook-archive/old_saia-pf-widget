@@ -1,30 +1,39 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames';
 
-import UploadValidation from '../upload-validation/UploadValidation';
-import { UploadFile } from '../upload-file/UploadFile';
+import UploadFile from '../upload-file/UploadFile';
 
 /**
  * Upload file block component
  */
-export class UploadBlock extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class UploadBlock extends Component {
   fileChange = (params) => {
-    this.props.change(params);
+    const { change } = this.props;
+    change(params);
   }
 
-  render({ type, validation }) {
+  render() {
+    const {
+      type,
+      gender,
+      isValid,
+      value,
+      className,
+    } = this.props;
+
     const fileText = (type === 'front') ? 'Front' : 'Side';
 
     return (
-      <div class="upload__file-block">
-        <h3 class="upload__file-title">{fileText}</h3>
+      <div className={classNames('upload-block', className)}>
+        <UploadFile
+          gender={gender}
+          type={type}
+          change={this.fileChange}
+          isValid={isValid}
+          value={value}
+        />
 
-        <UploadFile gender={this.props.gender} type={type} change={this.fileChange} isValid={this.props.isValid} />
-
-        <UploadValidation validation={validation} />
+        <h3 className="upload-block__title">{fileText}</h3>
       </div>
     );
   }
