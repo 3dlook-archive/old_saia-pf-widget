@@ -2,6 +2,7 @@
  * CONSTANTS constants
  */
 export const CONSTANTS = {
+  RESET_STATE: 'RESET_STATE',
   SET_IS_MOBILE: 'SET_IS_MOBILE',
   SET_IS_FROM_DESKTOP_TO_MOBILE: 'SET_IS_FROM_DESKTOP_TO_MOBILE',
   SET_ORIGIN: 'SET_ORIGIN',
@@ -21,6 +22,13 @@ export const CONSTANTS = {
   SET_SOFT_VALIDATION: 'SET_SOFT_VALIDATION',
   SET_HARD_VALIDATION: 'SET_HARD_VALIDATION',
 };
+
+/**
+ * Reset state
+ */
+export const resetState = () => ({
+  type: CONSTANTS.RESET_STATE,
+});
 
 /**
  * Set is mobile device
@@ -217,6 +225,7 @@ export const setHardValidation = hardValidation => ({
 });
 
 export default {
+  resetState,
   setIsMobile,
   setIsFromDesktopToMobile,
   setReturnUrl,

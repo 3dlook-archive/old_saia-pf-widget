@@ -1,6 +1,6 @@
 {
   "name": "saia-pf-widget",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "SAIA Perfect Fit Widget",
   "main": "src/js/button.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "build:shopify": "export NODE_ENV=production && export CONFIG=shopify && webpack --progress",
     "test": "karma start karma.config.js --log-level debug --single-run",
     "docs": "jsdoc -r ./src/js/button.js -c .jsdoc.json -d docs",
-    "readme": "jsdoc2md --template ./.jsdoc2md/readme.hbs --files src/js/button.js -c .jsdoc.json > README.md"
+    "readme": "jsdoc2md --template ./.jsdoc2md/readme.hbs --files src/js/button.js -c .jsdoc.json > README.md",
+    "release": "npm run readme && standard-version"
   },
   "repository": {
     "type": "git",

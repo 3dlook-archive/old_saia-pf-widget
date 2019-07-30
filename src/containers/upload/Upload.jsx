@@ -43,7 +43,7 @@ class Upload extends Component {
     const { flowId, token } = this.props;
 
     this.setState({
-      qrCodeUrl: `${window.location.origin}?key=${token}#/mobile/${flowId}`,
+      qrCodeUrl: `${window.location.origin}${window.location.pathname}?key=${token}#/mobile/${flowId}`,
     });
   }
 
@@ -62,6 +62,7 @@ class Upload extends Component {
       flowId,
       isMobile,
       setRecommendations,
+      origin,
     } = props;
 
     if (token && flowId && !this.api && !this.flow) {
@@ -86,6 +87,8 @@ class Upload extends Component {
               if (flowState.state.status === 'finished') {
                 const { recommendations } = flowState.state;
                 setRecommendations(recommendations);
+
+                send('recommendations', recommendations, origin);
 
                 if (!recommendations.normal
                   && !recommendations.tight
