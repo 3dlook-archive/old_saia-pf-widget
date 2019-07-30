@@ -72,16 +72,15 @@ class Results extends Component {
       returnUrl,
       isFromDesktopToMobile,
       origin,
+      resetState,
     } = this.props;
 
     gaResultsOnContinue();
 
+    resetState();
+
     if (!isMobile) {
       send('close', {}, origin);
-    }
-
-    if (isMobile) {
-      window.close();
     }
 
     if (isFromDesktopToMobile) {

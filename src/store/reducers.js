@@ -46,6 +46,11 @@ export const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.RESET_STATE:
+      return {
+        ...INITIAL_STATE,
+      };
+
     case CONSTANTS.SET_IS_MOBILE:
       return {
         ...state,
