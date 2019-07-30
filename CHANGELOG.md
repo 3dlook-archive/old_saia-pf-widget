@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.0.0...v2.1.0) (2019-07-30)
+
+
+### Bug Fixes
+
+* add reset state action on widget close event ([52f7f70](https://github.com/3dlook-me/saia-pf-widget/commit/52f7f70))
+* correct return product url, set recommendation in saia button in desktop-mobile flow ([64d592c](https://github.com/3dlook-me/saia-pf-widget/commit/64d592c))
+* pass api key for shopify plugin via real get params ([69f7713](https://github.com/3dlook-me/saia-pf-widget/commit/69f7713))
+* qr code generation ([e6b32e7](https://github.com/3dlook-me/saia-pf-widget/commit/e6b32e7))
+* scroll on iphone 5 ([9902f84](https://github.com/3dlook-me/saia-pf-widget/commit/9902f84))
+
+
+### Features
+
+* update tutorial video ([5b7e3a6](https://github.com/3dlook-me/saia-pf-widget/commit/5b7e3a6))
+
+
+
 ## [2.0.0](https://github.com/3dlook-me/saia-pf-widget/compare/v1.1.7...v2.0.0) (2019-07-26)
 
 
