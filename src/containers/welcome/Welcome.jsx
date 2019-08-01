@@ -17,6 +17,10 @@ const slideImage3 = require('../../images/slide3.svg');
  * Welcome page component
  */
 class Welcome extends Component {
+  state = {
+    isButtonDisabled: true,
+  }
+
   componentDidMount() {
     const {
       setFlowId,
@@ -48,11 +52,16 @@ class Welcome extends Component {
     })
       .then((res) => {
         setFlowId(res);
+        this.setState({
+          isButtonDisabled: false,
+        });
       })
       .catch(err => alert(err.message));
   }
 
   render() {
+    const { isButtonDisabled } = this.state;
+
     return (
       <section className="screen active">
         <div className="screen__content welcome">
@@ -80,7 +89,7 @@ class Welcome extends Component {
           </Slider>
         </div>
         <div className="screen__footer">
-          <Link className="button" href="/data" onClick={gaWelcomeOnContinue}>
+          <Link className="button" href="/data" onClick={gaWelcomeOnContinue} disabled={isButtonDisabled}>
             <span>Start</span>
           </Link>
         </div>
