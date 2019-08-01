@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/3dlook-me/saia-pf-widget/compare/v2.1.0...v2.1.1) (2019-08-01)
+
+
+### Bug Fixes
+
+* disable button on welcome screen untill widget flow is not created ([a3b3878](https://github.com/3dlook-me/saia-pf-widget/commit/a3b3878))
+
+
+
 ## [2.1.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.0.0...v2.1.0) (2019-07-30)
 
 
