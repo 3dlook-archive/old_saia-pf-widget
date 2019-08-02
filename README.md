@@ -163,6 +163,7 @@ After that you will get "Your perfect fit" button on the page.
 * [SaiaButton](#SaiaButton)
     * [new SaiaButton(options)](#new_SaiaButton_new)
     * [.init()](#SaiaButton+init)
+    * [.checkGetParamsForMeasurements()](#SaiaButton+checkGetParamsForMeasurements)
     * [.checkButtonVisibility()](#SaiaButton+checkButtonVisibility)
     * [.getSize()](#SaiaButton+getSize) ⇒ <code>Object</code> \| <code>null</code>
     * [.displaySize(recomendations)](#SaiaButton+displaySize)
@@ -193,6 +194,12 @@ SaiaButton constructor
 
 ### saiaButton.init()
 Init widget
+
+**Kind**: instance method of [<code>SaiaButton</code>](#SaiaButton)  
+<a name="SaiaButton+checkGetParamsForMeasurements"></a>
+
+### saiaButton.checkGetParamsForMeasurements()
+Get persons data from get parameters and save them to localStorage
 
 **Kind**: instance method of [<code>SaiaButton</code>](#SaiaButton)  
 <a name="SaiaButton+checkButtonVisibility"></a>
