@@ -24,12 +24,11 @@ class Header extends Component {
       resetState,
     } = this.props;
 
-    resetState();
-
-    send('close', {}, origin);
-
     if (isFromDesktopToMobile) {
       window.location = returnUrl;
+    } else {
+      resetState();
+      send('close', {}, origin);
     }
   };
 
