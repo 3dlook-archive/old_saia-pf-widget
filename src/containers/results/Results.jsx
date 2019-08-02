@@ -77,12 +77,12 @@ class Results extends Component {
 
     gaResultsOnContinue();
 
-    resetState();
 
     if (isFromDesktopToMobile) {
       // pass measurements via hash get params to the destination page
       window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
     } else {
+      resetState();
       send('close', {}, origin);
     }
   }
