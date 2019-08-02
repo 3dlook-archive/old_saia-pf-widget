@@ -155,7 +155,7 @@ class SaiaButton {
         hips: parseFloat(params.hips),
         chest: parseFloat(params.chest),
         waist: parseFloat(params.waist),
-        gender: parseFloat(params.gender),
+        gender: params.gender,
         height: parseFloat(params.height),
       };
 
