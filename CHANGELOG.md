@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.1.1...v2.2.0) (2019-08-02)
+
+
+### Bug Fixes
+
+* parseHashParams correct params parsing ([ec0a53c](https://github.com/3dlook-me/saia-pf-widget/commit/ec0a53c))
+* parsing gender string as float ([a2db8e4](https://github.com/3dlook-me/saia-pf-widget/commit/a2db8e4))
+
+
+### Features
+
+* pass measurements parameters in "from desktop to mobile flow" to product page ([62ade71](https://github.com/3dlook-me/saia-pf-widget/commit/62ade71))
+* write person data to localStorage when user is from desktop to mobile flow ([71764bd](https://github.com/3dlook-me/saia-pf-widget/commit/71764bd))
+
+
+
 ### [2.1.1](https://github.com/3dlook-me/saia-pf-widget/compare/v2.1.0...v2.1.1) (2019-08-01)
 
 
