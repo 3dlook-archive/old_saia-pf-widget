@@ -153,6 +153,7 @@ class Upload extends Component {
       bodyPart,
       productUrl,
       personId,
+      isFromDesktopToMobile,
     } = props;
 
     const {
@@ -223,13 +224,19 @@ class Upload extends Component {
 
       const r = await this.api.queue.getResults(taskSetId);
 
-      send('data', {
+      const data = {
         hips: r.volume_params.high_hips,
         chest: r.volume_params.chest,
         waist: r.volume_params.waist,
         gender,
         height,
-      }, origin);
+      };
+
+      send('data', data, origin);
+
+      if (isFromDesktopToMobile) {
+        localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
+      }
 
       const softValidation = {
         front: {
