@@ -68,7 +68,6 @@ class Results extends Component {
 
   onClick = () => {
     const {
-      isMobile,
       returnUrl,
       isFromDesktopToMobile,
       origin,
@@ -80,13 +79,11 @@ class Results extends Component {
 
     resetState();
 
-    if (!isMobile) {
-      send('close', {}, origin);
-    }
-
     if (isFromDesktopToMobile) {
       // pass measurements via hash get params to the destination page
       window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
+    } else {
+      send('close', {}, origin);
     }
   }
 
