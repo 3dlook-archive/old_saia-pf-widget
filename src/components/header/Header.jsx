@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 
-import { send } from '../../utils';
+import { send, objectToUrlParams } from '../../utils';
 import { gaHelpOnClick, gaCloseOnClick } from '../../ga';
 import actions from '../../store/actions';
 
@@ -22,10 +22,15 @@ class Header extends Component {
       isFromDesktopToMobile,
       origin,
       resetState,
+      measurements,
     } = this.props;
 
     if (isFromDesktopToMobile) {
-      window.location = returnUrl;
+      if (measurements) {
+        window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
+      } else {
+        window.location = returnUrl;
+      }
     } else {
       resetState();
       send('close', {}, origin);
