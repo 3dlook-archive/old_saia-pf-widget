@@ -85,6 +85,7 @@ class Results extends Component {
     }
 
     if (isFromDesktopToMobile) {
+      // pass measurements via hash get params to the destination page
       window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
     }
   }
