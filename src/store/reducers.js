@@ -1,6 +1,7 @@
 import { CONSTANTS } from './actions';
 
 export const INITIAL_STATE = {
+  measurements: null,
   origin: null,
   returnUrl: null,
   isFromDesktopToMobile: false,
@@ -46,6 +47,12 @@ export const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.SET_MEASUREMENTS:
+      return {
+        ...state,
+        measurements: action.payload,
+      };
+
     case CONSTANTS.RESET_STATE:
       return {
         ...INITIAL_STATE,

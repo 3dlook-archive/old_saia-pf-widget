@@ -20,7 +20,9 @@ export const objectToUrlParams = (obj) => {
  * Parse hash params
  */
 export const parseHashParams = () => {
-  let hash = window.location.hash.substr(1);
+  const indexOfStartParams = window.location.hash.indexOf('?') + 1;
+
+  let hash = window.location.hash.substr(indexOfStartParams);
   hash = decodeURIComponent(hash);
 
   const result = hash.split('&').reduce((result, item) => {
