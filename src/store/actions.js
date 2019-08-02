@@ -3,6 +3,7 @@
  */
 export const CONSTANTS = {
   RESET_STATE: 'RESET_STATE',
+  SET_MEASUREMENTS: 'SET_MEASUREMENTS',
   SET_IS_MOBILE: 'SET_IS_MOBILE',
   SET_IS_FROM_DESKTOP_TO_MOBILE: 'SET_IS_FROM_DESKTOP_TO_MOBILE',
   SET_ORIGIN: 'SET_ORIGIN',
@@ -22,6 +23,14 @@ export const CONSTANTS = {
   SET_SOFT_VALIDATION: 'SET_SOFT_VALIDATION',
   SET_HARD_VALIDATION: 'SET_HARD_VALIDATION',
 };
+
+/**
+ * Save measurements
+ */
+export const setMeasurements = measurements => ({
+  type: CONSTANTS.SET_MEASUREMENTS,
+  payload: measurements,
+});
 
 /**
  * Reset state
@@ -225,6 +234,7 @@ export const setHardValidation = hardValidation => ({
 });
 
 export default {
+  setMeasurements,
   resetState,
   setIsMobile,
   setIsFromDesktopToMobile,

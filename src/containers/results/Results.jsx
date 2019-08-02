@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import classNames from 'classnames';
 import { connect } from 'preact-redux';
 
-import { send } from '../../utils';
+import { send, objectToUrlParams } from '../../utils';
 import { gaResultsOnContinue } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
@@ -73,6 +73,7 @@ class Results extends Component {
       isFromDesktopToMobile,
       origin,
       resetState,
+      measurements,
     } = this.props;
 
     gaResultsOnContinue();
@@ -84,7 +85,7 @@ class Results extends Component {
     }
 
     if (isFromDesktopToMobile) {
-      window.location = returnUrl;
+      window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
     }
   }
 

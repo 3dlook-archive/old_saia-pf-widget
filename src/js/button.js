@@ -1,5 +1,5 @@
 import API from '@3dlook/saia-sdk/lib/api';
-import { transformRecomendations } from '../utils';
+import { transformRecomendations, parseHashParams } from '../utils';
 
 require('../scss/button.scss');
 
@@ -77,6 +77,7 @@ class SaiaButton {
    * Init widget
    */
   init() {
+    this.checkGetParamsForMeasurements();
     const buttonClasses = ` saia-pf-button--${this.defaults.buttonStyle} saia-pf-button--${this.defaults.id}`;
     const buttonTemplateClasses = buttonTemplate.replace('classes', buttonClasses);
     const container = document.querySelector(this.defaults.container);
@@ -136,6 +137,30 @@ class SaiaButton {
           break;
       }
     }, false);
+  }
+
+  /* eslint class-methods-use-this: off */
+  /**
+   * Get persons data from get parameters and save them to localStorage
+   */
+  checkGetParamsForMeasurements() {
+    const params = parseHashParams();
+
+    if (params.chest
+        && params.height
+        && params.hips
+        && params.waist
+        && params.gender) {
+      const data = {
+        hips: parseFloat(params.hips),
+        chest: parseFloat(params.chest),
+        waist: parseFloat(params.waist),
+        gender: parseFloat(params.gender),
+        height: parseFloat(params.height),
+      };
+
+      localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
+    }
   }
 
   /**
