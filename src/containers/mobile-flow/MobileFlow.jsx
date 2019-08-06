@@ -3,6 +3,7 @@ import { connect } from 'preact-redux';
 import { route } from 'preact-router';
 
 import { isMobileDevice, parseGetParams } from '../../utils';
+import { gaSwitchToMobileFlow } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
 
@@ -15,6 +16,8 @@ class MobileFlow extends Component {
   }
 
   componentDidMount = async () => {
+    gaSwitchToMobileFlow();
+
     const {
       setFlowId,
       setBrand,

@@ -5,6 +5,7 @@ import { connect } from 'preact-redux';
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
 import FlowService from '../../services/flowService';
+import { gaSoftValidationError, gaRetakePhotoWarning, gaContinueAnyway } from '../../ga';
 
 const hmmIcon1x = require('../../images/hmm.png');
 const hmmIcon2x = require('../../images/hmm@2x.png');
@@ -34,10 +35,20 @@ class SoftValidation extends Component {
       frontImage: !this.isFrontError,
       sideImage: !this.isSideError,
     });
+
+    gaSoftValidationError();
   }
 
   back = () => {
     route('/upload', true);
+
+    gaRetakePhotoWarning();
+  }
+
+  continue = () => {
+    route('/results', true);
+
+    gaContinueAnyway();
   }
 
   render() {
@@ -150,7 +161,7 @@ class SoftValidation extends Component {
 
         </div>
         <div className="screen__footer soft-validation__footer">
-          <Link className="button button--outline" href="/results"><span>Continue anyway</span></Link>
+          <button className="button button--outline" onClick={this.continue} type="button"><span>Continue anyway</span></button>
           <button className="button" onClick={this.back} type="button">Retake photo</button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { connect } from 'preact-redux';
 import actions from '../../store/actions';
 import ImageExample from '../../components/image-example/ImageExample';
 import FlowService from '../../services/flowService';
+import { gaHardValidationError, gaRetakePhotoError } from '../../ga';
 
 const cryingIcon1x = require('../../images/crying.png');
 const cryingIcon2x = require('../../images/crying@2x.png');
@@ -21,6 +22,10 @@ class HardValidation extends Component {
     this.flow.setFlowId(flowId);
   }
 
+  componentDidMount() {
+    gaHardValidationError();
+  }
+
   componentWillReceiveProps = async (nextProps) => {
     const { hardValidation } = nextProps;
     const { front, side } = hardValidation;
@@ -33,6 +38,8 @@ class HardValidation extends Component {
 
   back = () => {
     route('/upload', true);
+
+    gaRetakePhotoError();
   }
 
   render() {

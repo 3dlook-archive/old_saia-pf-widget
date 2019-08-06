@@ -47,6 +47,12 @@ export default class QRCodeBlock extends Component {
   }
 
   copy = () => {
+    const { onCopy } = this.props;
+
+    if (onCopy) {
+      onCopy();
+    }
+
     this.setState({
       isCopied: true,
     }, () => {

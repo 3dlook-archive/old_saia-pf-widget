@@ -8,7 +8,13 @@ import UploadBlock from '../../components/upload-block/UploadBlock';
 import QRCodeBlock from '../../components/qrcode/QRCode';
 import Preloader from '../../components/preloader/Preloader';
 import { send, transformRecomendations } from '../../utils';
-import { gaUploadOnContinue } from '../../ga';
+import {
+  gaUploadOnContinue,
+  gaTutorialDesktop,
+  gaCopyUrl,
+  gaOpenCameraFrontPhoto,
+  gaOpenCameraSidePhoto,
+} from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
 import store from '../../store';
@@ -363,17 +369,27 @@ class Upload extends Component {
   }
 
   openVideo = () => {
+    gaTutorialDesktop();
+
     route('/tutorial', true);
+  }
+
+  copyUrl = () => {
+    gaCopyUrl();
   }
 
   triggerFrontImage = () => {
     const frontFile = document.getElementById('front');
     frontFile.click();
+
+    gaOpenCameraFrontPhoto();
   }
 
   triggerSideImage = () => {
     const sideFile = document.getElementById('side');
     sideFile.click();
+
+    gaOpenCameraSidePhoto();
   }
 
   render() {
@@ -417,7 +433,7 @@ class Upload extends Component {
 
           {(!isMobile)
             ? (
-              <QRCodeBlock className="upload__qrcode" data={qrCodeUrl} />
+              <QRCodeBlock className="upload__qrcode" data={qrCodeUrl} onCopy={this.copyUrl} />
             ) : null }
 
           <h3 className="screen__title upload__title-2">OR UPLOAD PHOTOS FROM YOUR PC</h3>

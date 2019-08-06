@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { connect } from 'preact-redux';
 
+import { gaTutorialMobile, gaTutorialBack } from '../../ga';
 import actions from '../../store/actions';
 
 /**
@@ -9,6 +10,14 @@ import actions from '../../store/actions';
  */
 class Tutorial extends Component {
   back = () => {
+    const { isMobile } = this.props;
+
+    if (isMobile) {
+      gaTutorialMobile();
+    } else {
+      gaTutorialBack();
+    }
+
     route('/upload', true);
   }
 

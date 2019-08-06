@@ -4,12 +4,6 @@ export const gaWelcomeOnContinue = () => ga('send', {
   eventAction: 'continue',
 });
 
-export const gaTipsOnContinue = () => ga('send', {
-  hitType: 'event',
-  eventCategory: 'tips',
-  eventAction: 'continue',
-});
-
 export const gaDataMale = () => ga('send', {
   hitType: 'event',
   eventCategory: 'gender',
@@ -30,9 +24,90 @@ export const gaDataOnContinue = () => ga('send', {
   eventAction: 'continue',
 });
 
+export const gaTutorialMobile = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'tutorial',
+  eventAction: 'next',
+  eventLabel: 'mobile',
+});
+
+export const gaTutorialDesktop = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'tutorial',
+  eventAction: 'view',
+  eventLabel: 'desktop',
+});
+
+export const gaTutorialBack = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'tutorial',
+  eventAction: 'back',
+  eventLabel: 'desktop',
+});
+
+export const gaCopyUrl = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'link',
+  eventAction: 'copy',
+});
+
 export const gaUploadOnContinue = () => ga('send', {
   hitType: 'event',
   eventCategory: 'photos',
+  eventAction: 'continue',
+});
+
+export const gaSwitchToMobileFlow = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'widget',
+  eventAction: 'switch_to_mobile',
+});
+
+export const gaOpenCameraFrontPhoto = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'camera',
+  eventAction: 'front',
+});
+
+export const gaOpenCameraSidePhoto = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'camera',
+  eventAction: 'side',
+});
+
+export const gaSuccess = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'processing',
+  eventAction: 'success',
+});
+
+export const gaHardValidationError = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'processing',
+  eventAction: 'error',
+});
+
+export const gaSoftValidationError = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'processing',
+  eventAction: 'warning',
+});
+
+export const gaRetakePhotoError = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'photo_error',
+  eventAction: 'retake',
+});
+
+export const gaRetakePhotoWarning = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'photo_warning',
+  eventAction: 'retake',
+});
+
+export const gaContinueAnyway = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'photo_warning',
   eventAction: 'continue',
 });
 

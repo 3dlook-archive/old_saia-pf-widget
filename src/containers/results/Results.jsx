@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { connect } from 'preact-redux';
 
 import { send, objectToUrlParams } from '../../utils';
-import { gaResultsOnContinue } from '../../ga';
+import { gaResultsOnContinue, gaSuccess } from '../../ga';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
 
@@ -35,6 +35,8 @@ class Results extends Component {
     } = this.props;
 
     this.sendSizeRecommendations(recommendations);
+
+    gaSuccess();
   }
 
   componentWillReceiveProps = async (nextProps) => {
