@@ -16,6 +16,10 @@
     @include breakpoint($mobile) {
       display: none;
     }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin-top: 15px;
+    }
   }
 
   & > p {
@@ -52,6 +56,10 @@
 
       span {
         @include visually-hidden;
+      }
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        height: 70px;
       }
     }
 

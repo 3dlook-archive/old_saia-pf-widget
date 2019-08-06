@@ -21,6 +21,10 @@
     @include breakpoint($mobile) {
       margin-top: 30px;
     }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      margin: 10px 0;
+    }
   }
 
   &__bullet {

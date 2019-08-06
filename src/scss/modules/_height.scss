@@ -56,6 +56,11 @@
     @include placeholder {
       color: #DDDDDD;
     }
+
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      height: 30px;
+      font-size: 0.8rem;
+    }
   }
 
   &__switcher {
@@ -80,6 +85,10 @@
     &--in &-switch:before {
       left: 29px;
       display: block;
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        left: 17px;
+      }
     }
   }
 
@@ -118,6 +127,11 @@
       @include visually-hidden();
     }
 
+    @include breakpoint((max-width 320px, max-height 568px)) {
+      height: 20px;
+      width: 35px;
+    }
+
     &:before {
       content: '';
       display: none;
@@ -128,6 +142,11 @@
       position: absolute;
       top: 4px;
       transition: all ease 300ms;
+
+      @include breakpoint((max-width 320px, max-height 568px)) {
+        height: 12px;
+        width: 12px;
+      }
     }
   }
 

@@ -3,6 +3,10 @@
   display: flex;
   justify-content: center;
 
+  @include breakpoint((max-width 320px, max-height 568px)) {
+    font-size: rem(10px);
+  }
+
   input {
     @include visually-hidden();
   }
