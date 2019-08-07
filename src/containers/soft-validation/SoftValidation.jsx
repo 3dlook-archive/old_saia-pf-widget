@@ -66,7 +66,7 @@ class SoftValidation extends Component {
 
           <h3 className="screen__title soft-validation__title">Huh…</h3>
           <p className="soft-validation__text">
-            Good job, but for a better result we suggest
+          Good job, but for a better result we suggest that
             <br />
             {(this.isFrontError && !this.isSideError)
               ? 'you to redo the front photo'

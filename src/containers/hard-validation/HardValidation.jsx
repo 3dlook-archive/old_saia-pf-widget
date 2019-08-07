@@ -66,12 +66,12 @@ class HardValidation extends Component {
         tipMessageFront = 'Please upload the front photo.';
       } else if (front === 'Can\'t detect the human body') {
         cannotDetectBodyFront = true;
-        topMessageFront = 'We couldn’t detect your body on the front photo';
+        topMessageFront = 'We can’t detect your body on the front photo';
         tipMessageFront = 'Please retake the front photo. Make sure your whole body is present on the photo.';
       } else if (front === 'The body is not full') {
         bodyIsNotFullFront = true;
         topMessageFront = 'Your full body should be present on the front photo';
-        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present and the pose is right.';
+        tipMessageFront = 'Please retake the front photo. Make sure your whole body is present and the pose is correct.';
       } else if (front.indexOf('The pose is wrong, check: ') !== -1) {
         wrongFrontPose = true;
 
@@ -98,12 +98,12 @@ class HardValidation extends Component {
         tipMessageSide = 'Please upload the side photo.';
       } else if (side === 'Can\'t detect the human body') {
         cannotDetectBodySide = true;
-        topMessageSide = 'We couldn’t detect your body on the side photo';
+        topMessageSide = 'We can’t detect your body on the side photo';
         tipMessageSide = 'Please retake the side photo. Make sure your whole body is present on the photo.';
       } else if (side === 'The body is not full') {
         bodyIsNotFullSide = true;
         topMessageSide = 'Your full body should be present on the side photo';
-        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present and the pose is right.';
+        tipMessageSide = 'Please retake the side photo. Make sure your whole body is present and the pose is correct.';
       } else if (side.indexOf('The pose is wrong, check: ') !== -1) {
         wrongSidePose = true;
 
