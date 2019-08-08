@@ -69,15 +69,15 @@ class SoftValidation extends Component {
           Good job, but for a better result we suggest that
             <br />
             {(this.isFrontError && !this.isSideError)
-              ? 'you to redo the front photo'
+              ? 'you redo the front photo'
               : '' }
 
             {(this.isSideError && !this.isFrontError)
-              ? 'you to redo the side photo'
+              ? 'you redo the side photo'
               : '' }
 
             {(this.isFrontError && this.isSideError)
-              ? 'you to redo the front and the side photos'
+              ? 'you redo the front and the side photos'
               : '' }
           </p>
 
