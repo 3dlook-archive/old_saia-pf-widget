@@ -98,30 +98,7 @@ class SaiaButton {
     modal = document.querySelector('.saia-pf-drop');
     this.buttonEl = document.querySelector(`.saia-pf-button--${this.defaults.id}`);
 
-    this.buttonEl.addEventListener('click', () => {
-      modal.classList.toggle('active');
-
-      let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}#/?origin=${window.location.origin}&returnUrl=${this.defaults.returnUrl}`;
-
-      if (this.defaults.product.url) {
-        url += `&product=${this.defaults.product.url}`;
-      }
-
-      if (this.defaults.product.description) {
-        url += `&product_description=${this.defaults.product.description}`;
-      }
-
-      if (this.defaults.product.imageUrl) {
-        url += `&image=${this.defaults.product.imageUrl}`;
-      }
-
-      if (this.defaults.brand && this.defaults.bodyPart) {
-        url += `&brand=${this.defaults.brand}`;
-        url += `&body_part=${this.defaults.bodyPart}`;
-      }
-
-      modal.querySelector('iframe').setAttribute('src', url);
-    });
+    this.buttonEl.addEventListener('click', () => this.showWidget(modal));
 
     window.addEventListener('message', (event) => {
       const { command, data } = event.data;
@@ -183,6 +160,36 @@ class SaiaButton {
 
         return product.widget_is_visible;
       });
+  }
+
+  /**
+   * Show widget
+   *
+   * @param {HTMLElement} modal - modal container element
+   */
+  showWidget(modal) {
+    modal.classList.toggle('active');
+
+    let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}#/?origin=${window.location.origin}&returnUrl=${this.defaults.returnUrl}`;
+
+    if (this.defaults.product.url) {
+      url += `&product=${this.defaults.product.url}`;
+    }
+
+    if (this.defaults.product.description) {
+      url += `&product_description=${this.defaults.product.description}`;
+    }
+
+    if (this.defaults.product.imageUrl) {
+      url += `&image=${this.defaults.product.imageUrl}`;
+    }
+
+    if (this.defaults.brand && this.defaults.bodyPart) {
+      url += `&brand=${this.defaults.brand}`;
+      url += `&body_part=${this.defaults.bodyPart}`;
+    }
+
+    modal.querySelector('iframe').setAttribute('src', url);
   }
 
   /**
