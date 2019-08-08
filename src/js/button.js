@@ -6,6 +6,8 @@ require('../scss/button.scss');
 const buttonTemplate = require('../views/button.html');
 const modalTemplate = require('../views/modal-drop.html');
 
+let uid = 0;
+
 class SaiaButton {
   /**
    * SaiaButton constructor
@@ -32,6 +34,8 @@ class SaiaButton {
    * after he pressing close button at results screen after he complite the mobile flow
    */
   constructor(options) {
+    uid += 1;
+
     this.defaults = {
       buttonStyle: 'gradient', // gradient, gradient-reversed, black, white
       container: '.saia-widget-container',
@@ -49,7 +53,7 @@ class SaiaButton {
 
         ...options.product,
       },
-      id: Date.now(),
+      id: uid,
       returnUrl: `${window.location.origin}${window.location.pathname}`,
     };
 
