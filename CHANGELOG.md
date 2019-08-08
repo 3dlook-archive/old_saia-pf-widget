@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.2.0...v2.3.0) (2019-08-08)
+
+
+### Bug Fixes
+
+* change close widget condition on mobile ([5eef54b](https://github.com/3dlook-me/saia-pf-widget/commit/5eef54b))
+* pass measurements on results screen when clicking on close button ([6cd80b1](https://github.com/3dlook-me/saia-pf-widget/commit/6cd80b1))
+* reset state only if opened directly on desktop or mobile, ignore this on "from desktop to mobile" flow ([dbf7c88](https://github.com/3dlook-me/saia-pf-widget/commit/dbf7c88))
+* unique id for each saia button on the page ([3fc62ea](https://github.com/3dlook-me/saia-pf-widget/commit/3fc62ea))
+
+
+### Features
+
+* add new google analytics events ([8eea2f6](https://github.com/3dlook-me/saia-pf-widget/commit/8eea2f6))
+
+
+
+### [1.1.8](https://github.com/3dlook-me/saia-pf-widget/compare/v1.1.7...v1.1.8) (2019-07-25)
+
+
+### Bug Fixes
+
+* cm to ft-inches convertation ([1efa731](https://github.com/3dlook-me/saia-pf-widget/commit/1efa731))
+* update responsiveness style on iphone 5s ([f9f9afd](https://github.com/3dlook-me/saia-pf-widget/commit/f9f9afd))
+
+
+
 ## [2.2.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.1.1...v2.2.0) (2019-08-02)
 
 
