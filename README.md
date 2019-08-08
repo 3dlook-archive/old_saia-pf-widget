@@ -165,6 +165,7 @@ After that you will get "Your perfect fit" button on the page.
     * [.init()](#SaiaButton+init)
     * [.checkGetParamsForMeasurements()](#SaiaButton+checkGetParamsForMeasurements)
     * [.checkButtonVisibility()](#SaiaButton+checkButtonVisibility)
+    * [.showWidget(modal)](#SaiaButton+showWidget)
     * [.getSize()](#SaiaButton+getSize) ⇒ <code>Object</code> \| <code>null</code>
     * [.displaySize(recomendations)](#SaiaButton+displaySize)
 
@@ -208,6 +209,17 @@ Get persons data from get parameters and save them to localStorage
 Check should we display button for current product page or not
 
 **Kind**: instance method of [<code>SaiaButton</code>](#SaiaButton)  
+<a name="SaiaButton+showWidget"></a>
+
+### saiaButton.showWidget(modal)
+Show widget
+
+**Kind**: instance method of [<code>SaiaButton</code>](#SaiaButton)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| modal | <code>HTMLElement</code> | modal container element |
+
 <a name="SaiaButton+getSize"></a>
 
 ### saiaButton.getSize() ⇒ <code>Object</code> \| <code>null</code>
