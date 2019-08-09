@@ -300,9 +300,9 @@ class Upload extends Component {
       || softValidation.side.messages.length;
 
       if ((isFrontImageHasSoftValidationError || isSideImageHasSoftValidationError)
-          && (recommendations.normal
+          && (recommendations && (recommendations.normal
             || recommendations.tight
-            || recommendations.loose)) {
+            || recommendations.loose))) {
         // reset front image if there is soft validation error
         // in the front image
         if (isFrontImageHasSoftValidationError) {
@@ -317,9 +317,9 @@ class Upload extends Component {
 
         route('/soft-validation', true);
       // check if there is any size recommendation
-      } else if (!recommendations.normal
+      } else if (!recommendations || (!recommendations.normal
         && !recommendations.tight
-        && !recommendations.loose) {
+        && !recommendations.loose)) {
         route('/not-found', true);
       // ok, show just recommendations
       } else {
