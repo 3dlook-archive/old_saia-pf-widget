@@ -72,10 +72,6 @@ $border-width: 2px;
     span {
       position: relative;
     }
-
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      width: 16px;
-    }
   }
 
   &[disabled],
