@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router';
+import { route } from 'preact-router';
 import { connect } from 'preact-redux';
 
 import { gaSizeNotFound } from '../../ga';
+import { objectToUrlParams } from '../../utils';
 import actions from '../../store/actions';
 import FlowService from '../../services/flowService';
 
@@ -13,27 +14,44 @@ const confusedIcon2x = require('../../images/confused@2x.png');
  * Size not found page component
  */
 class NotFound extends Component {
-  componentDidMount() {
+  componentDidMount = async () => {
     gaSizeNotFound();
 
     const {
       addFrontImage,
       addSideImage,
       token,
-      setFlowId,
+      flowId,
     } = this.props;
 
     addFrontImage(null);
     addSideImage(null);
 
     this.flow = new FlowService(token);
-    this.flow.create({
-      status: 'created',
-    })
-      .then((res) => {
-        setFlowId(res);
-      })
-      .catch(err => alert(err.message));
+    this.flow.setFlowId(flowId);
+
+    await this.flow.updateState({
+      status: 'finished',
+      recommendations: {},
+    });
+  }
+
+  close = async () => {
+    const {
+      returnUrl,
+      isFromDesktopToMobile,
+      measurements,
+    } = this.props;
+
+    if (isFromDesktopToMobile) {
+      window.location = `${returnUrl}#/?${objectToUrlParams(measurements)}`;
+    } else {
+      await this.flow.updateState({
+        status: 'created',
+      });
+
+      route('/upload');
+    }
   }
 
   render() {
@@ -60,7 +78,7 @@ class NotFound extends Component {
           </p>
         </div>
         <div className="screen__footer">
-          <Link className="button" href="/upload">ok</Link>
+          <button className="button" onClick={this.close} type="button">ok</button>
         </div>
       </section>
     );
