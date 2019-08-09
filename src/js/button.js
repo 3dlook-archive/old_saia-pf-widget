@@ -96,16 +96,17 @@ class SaiaButton {
 
     // get modal and button elements by their selectors
     modal = document.querySelector('.saia-pf-drop');
+    this.modal = modal;
     this.buttonEl = document.querySelector(`.saia-pf-button--${this.defaults.id}`);
 
-    this.buttonEl.addEventListener('click', () => this.showWidget(modal));
+    this.buttonEl.addEventListener('click', () => this.showWidget());
 
     window.addEventListener('message', (event) => {
       const { command, data } = event.data;
 
       switch (command) {
         case 'saia-pf-widget.close':
-          modal.classList.remove('active');
+          this.modal.classList.remove('active');
           break;
         case 'saia-pf-widget.data':
           localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
@@ -164,11 +165,9 @@ class SaiaButton {
 
   /**
    * Show widget
-   *
-   * @param {HTMLElement} modal - modal container element
    */
-  showWidget(modal) {
-    modal.classList.toggle('active');
+  showWidget() {
+    this.modal.classList.toggle('active');
 
     let url = `${this.defaults.widgetUrl}?key=${this.defaults.key}#/?origin=${window.location.origin}&returnUrl=${this.defaults.returnUrl}`;
 
@@ -189,7 +188,7 @@ class SaiaButton {
       url += `&body_part=${this.defaults.bodyPart}`;
     }
 
-    modal.querySelector('iframe').setAttribute('src', url);
+    this.modal.querySelector('iframe').setAttribute('src', url);
   }
 
   /**
