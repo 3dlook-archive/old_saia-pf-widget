@@ -25,12 +25,6 @@
       border: 0;
     }
 
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      padding: 8px 0;
-      margin-bottom: 15px;
-      font-size: 9px;
-    }
-
     b {
       font-weight: bold;
     }
@@ -47,11 +41,6 @@
     @include breakpoint($mobile) {
       margin-bottom: 45px;
     }
-
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      max-width: 215px;
-      margin-bottom: 10px;
-    }
   }
 
   &__size {
@@ -59,10 +48,6 @@
     position: absolute;
     left: 0;
     display: none;
-
-    @include breakpoint((max-width 320px, max-height 568px)) {
-      top: 8px;
-    }
 
     &.active {
       display: block;
