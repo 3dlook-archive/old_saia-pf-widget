@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/3dlook-me/saia-pf-widget/compare/v2.3.0...v2.3.1) (2019-08-16)
+
+
+### Bug Fixes
+
+* button width on soft validation ([ea6dd66](https://github.com/3dlook-me/saia-pf-widget/commit/ea6dd66))
+* change login of the not found screen on mobile devices ([795674e](https://github.com/3dlook-me/saia-pf-widget/commit/795674e))
+* recommendations is null ([ed1754c](https://github.com/3dlook-me/saia-pf-widget/commit/ed1754c))
+* results screen on mobile, remove legacy styles ([50d6bcd](https://github.com/3dlook-me/saia-pf-widget/commit/50d6bcd))
+* typo ([7b3fb7f](https://github.com/3dlook-me/saia-pf-widget/commit/7b3fb7f))
+
+
+
 ## [2.3.0](https://github.com/3dlook-me/saia-pf-widget/compare/v2.2.0...v2.3.0) (2019-08-08)
 
 
