@@ -1,3 +1,9 @@
+export const gaStart = () => ga('send', {
+  hitType: 'event',
+  eventCategory: 'widget',
+  eventAction: 'initiate',
+});
+
 export const gaWelcomeOnContinue = () => ga('send', {
   hitType: 'event',
   eventCategory: 'start',

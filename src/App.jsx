@@ -3,6 +3,7 @@ import Router from 'preact-router';
 import { createHashHistory } from 'history';
 import { Provider } from 'preact-redux';
 import store from './store';
+import { gaStart } from './ga';
 
 /**
  * Components
@@ -28,6 +29,8 @@ require('./scss/widget.scss');
 class App extends Component {
   constructor(props) {
     super(props);
+
+    gaStart();
 
     this.state = {
       isHelpActive: false,
