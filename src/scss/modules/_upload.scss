@@ -13,16 +13,18 @@
     margin-top: 33px;
     margin-bottom: 21px;
 
-    @include breakpoint($mobile) {
-      display: none;
-    }
-
     @include breakpoint((max-width 320px, max-height 568px)) {
       margin-top: 15px;
     }
   }
 
-  & > p {
+  &--is-mobile &__title-2 {
+    @include breakpoint($mobile) {
+      display: none;
+    }
+  }
+
+  &--is-mobile > p {
     @include breakpoint($mobile) {
       display: none;
     }
@@ -35,10 +37,6 @@
 
   &__video {
     margin-right: 35px;
-
-    @include breakpoint($mobile) {
-      display: none;
-    }
 
     &-btn {
       border-radius: 25px;
@@ -74,6 +72,12 @@
     }
   }
 
+  &--is-mobile &__video {
+    @include breakpoint($mobile) {
+      display: none;
+    }
+  }
+
   &__block {
     display: flex;
     justify-content: center;
@@ -84,7 +88,9 @@
     display: flex;
     justify-content: space-between;
     width: 210px;
+  }
 
+  &--is-mobile &__files {
     @include breakpoint($mobile) {
       width: 100%;
       justify-content: center;

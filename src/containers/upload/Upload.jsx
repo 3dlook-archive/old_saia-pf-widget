@@ -421,7 +421,7 @@ class Upload extends Component {
 
     return (
       <div className="screen active">
-        <div className="screen__content upload">
+        <div className={classNames('screen__content', 'upload', { 'upload--is-mobile': isMobile })}>
           <h2 className="screen__subtitle">
             <span className="success">STEP 1</span>
             <span className="screen__subtitle-separ success" />
