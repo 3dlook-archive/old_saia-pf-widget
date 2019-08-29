@@ -107,6 +107,7 @@ class SaiaButton {
       switch (command) {
         case 'saia-pf-widget.close':
           this.modal.classList.remove('active');
+          this.modal.querySelector('iframe').src = '';
           break;
         case 'saia-pf-widget.data':
           localStorage.setItem('saia-pf-widget-data', JSON.stringify(data));
@@ -188,7 +189,7 @@ class SaiaButton {
       url += `&body_part=${this.defaults.bodyPart}`;
     }
 
-    this.modal.querySelector('iframe').setAttribute('src', url);
+    this.modal.querySelector('iframe').src = url;
   }
 
   /**
