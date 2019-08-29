@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/3dlook-me/saia-pf-widget/compare/v2.3.1...v2.3.2) (2019-08-29)
+
+
+### Bug Fixes
+
+* mobile version on desktop ([347bd36](https://github.com/3dlook-me/saia-pf-widget/commit/347bd36))
+* reopen widget ([c2a8495](https://github.com/3dlook-me/saia-pf-widget/commit/c2a8495))
+
+
+
 ### [2.3.1](https://github.com/3dlook-me/saia-pf-widget/compare/v2.3.0...v2.3.1) (2019-08-16)
 
 
