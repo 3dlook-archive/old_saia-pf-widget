@@ -292,32 +292,33 @@ class Upload extends Component {
       gaUploadOnContinue();
 
       // check if there is any soft validation message
-      const isFrontImageHasSoftValidationError = softValidation.front.bodyAreaPercentage < 0.7
-        || softValidation.front.legsDistance < 2
-        || softValidation.front.legsDistance > 15
-        || softValidation.front.messages.length;
-      const isSideImageHasSoftValidationError = softValidation.side.bodyAreaPercentage < 0.7
-      || softValidation.side.messages.length;
+      // const isFrontImageHasSoftValidationError = softValidation.front.bodyAreaPercentage < 0.7
+      //   || softValidation.front.legsDistance < 2
+      //   || softValidation.front.legsDistance > 15
+      //   || softValidation.front.messages.length;
+      // const isSideImageHasSoftValidationError = softValidation.side.bodyAreaPercentage < 0.7
+      // || softValidation.side.messages.length;
 
-      if ((isFrontImageHasSoftValidationError || isSideImageHasSoftValidationError)
-          && (recommendations && (recommendations.normal
-            || recommendations.tight
-            || recommendations.loose))) {
-        // reset front image if there is soft validation error
-        // in the front image
-        if (isFrontImageHasSoftValidationError) {
-          addFrontImage(null);
-        }
+      // if ((isFrontImageHasSoftValidationError || isSideImageHasSoftValidationError)
+      //     && (recommendations && (recommendations.normal
+      //       || recommendations.tight
+      //       || recommendations.loose))) {
+      //   // reset front image if there is soft validation error
+      //   // in the front image
+      //   if (isFrontImageHasSoftValidationError) {
+      //     addFrontImage(null);
+      //   }
 
-        // reset side image if there is soft validation error
-        // in the side image
-        if (isSideImageHasSoftValidationError) {
-          addSideImage(null);
-        }
+      //   // reset side image if there is soft validation error
+      //   // in the side image
+      //   if (isSideImageHasSoftValidationError) {
+      //     addSideImage(null);
+      //   }
 
-        route('/soft-validation', true);
-      // check if there is any size recommendation
-      } else if (!recommendations || (!recommendations.normal
+      //   route('/soft-validation', true);
+      // // check if there is any size recommendation
+      // } else
+      if (!recommendations || (!recommendations.normal
         && !recommendations.tight
         && !recommendations.loose)) {
         route('/not-found', true);
