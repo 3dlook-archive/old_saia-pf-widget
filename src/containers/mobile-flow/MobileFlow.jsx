@@ -44,10 +44,12 @@ class MobileFlow extends Component {
 
     const flowState = await this.flow.get();
 
-    await this.flow.updateState({
-      ...flowState.state,
-      status: 'opened-on-mobile',
-    });
+    if (flowState.state.status !== 'finished') {
+      await this.flow.updateState({
+        ...flowState.state,
+        status: 'opened-on-mobile',
+      });
+    }
 
     setToken(token);
     setPersonId(flowState.person);
